@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "243733550300",
+    "firebase_url": "https://gym-bookinga01-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "gym-bookinga01",
+    "storage_bucket": "gym-bookinga01.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:243733550300:android:cd9cc7eebc059159a75019",
+        "android_client_info": {
+          "package_name": "com.example.login_2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAX9M1ia3X3lYVwjJ2ykTb1BWhzmHmq2Jo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:243733550300:android:60ff3172f8cce223a75019",
+        "android_client_info": {
+          "package_name": "com.example.usernamelogin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAX9M1ia3X3lYVwjJ2ykTb1BWhzmHmq2Jo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

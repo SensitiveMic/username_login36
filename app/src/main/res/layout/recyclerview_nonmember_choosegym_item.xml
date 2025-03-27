@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="2dp"
+    app:cardCornerRadius="15dp"
+    android:layout_margin="16dp"
+    app:cardUseCompatPadding="true"
+    app:cardPreventCornerOverlap="false"
+    android:id="@+id/recyclerView_ca">
+
+    <TextView
+        android:id="@+id/hiddenidwew"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:visibility="invisible" />
+
+    <LinearLayout
+        android:id="@+id/nonmember"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Gym Name :"
+                android:textSize="26sp"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/dbgymname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="  username"
+                android:textSize="26sp"
+                />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/editTextGym_Decrp1"
+            android:layout_width="345dp"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:gravity="top|start"
+            android:hint="Description of the Gym"
+            android:inputType="textMultiLine|textCapSentences"
+            android:maxLines="15"
+            android:minLines="4"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.304"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.256" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Gym Owner  :"
+                android:textSize="26sp"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/dbgymownername"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="  username"
+                android:textSize="26sp"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Member.Reservation.Coach_Res_Scheduler.HealthandAvailabilityFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="health and availability"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="@+id/editTextText2"
+        app:layout_constraintTop_toBottomOf="@+id/editTextText2">
+
+
+        <EditText
+            android:id="@+id/MedicalHist"
+            android:layout_width="match_parent"
+            android:layout_height="145dp"
+            android:layout_marginBottom="34dp"
+            android:background="@drawable/edit_text_border"
+            android:ems="10"
+            android:gravity="top|start"
+            android:hint="  Medical History: (Relevant medical conditions or history)"
+            android:inputType="textMultiLine|textCapSentences"
+            android:maxLines="15"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.387"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.081" />
+
+        <EditText
+            android:id="@+id/RecentSurg_inj"
+            android:layout_width="match_parent"
+            android:layout_height="162dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edit_text_border"
+            android:ems="10"
+            android:gravity="top|start"
+            android:hint="  Recent Surgerues/Injuries"
+            android:inputType="text"
+            android:maxLines="15"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/MedicalHist"
+            app:layout_constraintVertical_bias="1.0"
+            tools:layout_editor_absoluteX="0dp" />
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <Button
+            android:id="@+id/proceedsenttocoach"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Proceed to send"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.88"
+            app:layout_constraintStart_toEndOf="@+id/prev_frag12"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.906" />
+
+
+        <Button
+            android:id="@+id/prev_frag12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Prev"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.123"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+</FrameLayout>

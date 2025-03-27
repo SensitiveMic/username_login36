@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--LinearLayout orientation horizontal -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/coach_formatlist"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="10dp">
+
+    <!--TextView for displaying Name -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@color/white"
+        android:foreground="?attr/selectableItemBackground"
+        app:cardCornerRadius="3dp"
+        app:cardElevation="3dp"
+        app:cardUseCompatPadding="true">
+
+        <!--LinearLayout orientation horizontal -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/Employee_Name"
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:gravity="top|start"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                android:text="*Employee name "
+                />
+            <TextView
+                android:id="@+id/roleoftheemployee"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:textSize="15sp"
+                tools:text="Coach"
+                android:text="Coach"
+                />
+
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

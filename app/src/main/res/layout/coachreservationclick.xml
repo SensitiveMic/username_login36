@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="10dp"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="44dp"
+                    android:padding="10dp"
+                    android:text="Reservation Application"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="#308d46" />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="497dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="vertical">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:orientation="vertical"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent">
+
+                        <TextView
+                            android:id="@+id/textView21"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="6dp"
+                            android:text="Member :"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.029"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.157" />
+
+                        <TextView
+                            android:id="@+id/FullnameIDfrmmem"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="6dp"
+                            android:text=" *Fullname"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/textView21"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.157" />
+
+                        <TextView
+                            android:id="@+id/textView22"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="6dp"
+                            android:text="Age :"
+                            app:layout_constraintBottom_toBottomOf="parent"
+
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.026"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.514" />
+
+                        <TextView
+                            android:id="@+id/member_agefrmre"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="6dp"
+                            android:text=" *Age"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/textView22"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/textView24"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginEnd="6dp"
+                            android:layout_marginBottom="6dp"
+                            android:text="Sex :"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.027"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.857" />
+
+                        <TextView
+                            android:id="@+id/membersex_res"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="6dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="6dp"
+
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/textView24"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.857" />
+
+                        <TextView
+                            android:id="@+id/membernumber"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:text=""
+                            android:visibility="invisible"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <TextView
+                        android:id="@+id/textView21rand"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="6dp"
+                        android:text="Fitness Goals"
+                        />
+
+                    <TextView
+                        android:id="@+id/fitnessgoalsmem"
+                        android:layout_width="match_parent"
+                        android:layout_height="141dp"
+                        android:background="@drawable/edit_text_border"
+                        android:ems="10"
+                        android:gravity="top|start"
+                        android:hint="  Fitness Goals"
+                        android:inputType="textMultiLine|textCapSentences"
+                        android:maxLines="15" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/textView22rand"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="6dp"
+                        android:text="Member's Current Fitness level: "
+                        />
+                    <TextView
+                        android:id="@+id/currentfitness"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="6dp"
+                        android:textSize="20sp"
+                        android:text="5"
+                        android:textStyle="bold"
+                        />
+
+                </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="15dp"
+                                android:text="1 ="
+                                android:textSize="15sp"
+                                />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="15dp"
+                                android:text=" Minimal or no physical activity"
+                                android:textSize="15sp"/>
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="15dp"
+                                android:text="2 ="
+                                android:textSize="15sp"
+                                />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="15dp"
+                                android:text=" Some physical activity, but still mostly sedentary"
+                                android:textSize="15sp"/>
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="15dp"
+                                android:text="3 ="
+                                android:textSize="15sp"
+                                />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="15dp"
+                                android:text=" Engages in regular physical activity (e.g., light jogging, walking, or gym exercises)"
+                                android:textSize="15sp"/>
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="15dp"
+                                android:text="4 ="
+                                android:textSize="15sp"
+                                />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="15dp"
+                                android:text=" Regular, consistent physical activity (e.g., running, cycling, strength training)"
+                                android:textSize="15sp"/>
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="15dp"
+                                android:text="5 ="
+                                android:textSize="15sp"
+                                />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="15dp"
+                                android:text=" Excellent physical condition, potentially involved in competitive sports or intense training"
+                                android:textSize="15sp"/>
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/textView23rand"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="6dp"
+                        android:text="Preferred Days/Time"
+                        />
+
+                    <TextView
+                        android:id="@+id/availability_gym_mem"
+                        android:layout_width="match_parent"
+                        android:layout_height="91dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/edit_text_border"
+                        android:ems="10"
+                        android:gravity="top|start"
+                        android:hint="  Preferred Days/times"
+                        android:inputType="textMultiLine|textCapSentences"
+                        android:maxLines="15" />
+
+                    <TextView
+                        android:id="@+id/textView24rand"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="6dp"
+                        android:text="Medical History: (Relevant medical conditions or history)"
+                        />
+
+                    <TextView
+                        android:id="@+id/MedicalHist"
+                        android:layout_width="match_parent"
+                        android:layout_height="145dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/edit_text_border"
+                        android:ems="10"
+                        android:gravity="top|start"
+                        android:hint="  Medical History: (Relevant medical conditions or history)"
+                        android:inputType="textMultiLine|textCapSentences"
+                        android:maxLines="15" />
+
+                    <TextView
+                        android:id="@+id/textView25rand"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="6dp"
+                        android:text="Recent Surgerues/Injuries"
+                        />
+
+                    <TextView
+                        android:id="@+id/RecentSurg_inj"
+                        android:layout_width="match_parent"
+                        android:layout_height="162dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="50dp"
+                        android:background="@drawable/edit_text_border"
+                        android:ems="10"
+                        android:gravity="top|start"
+                        android:hint="  Recent Surgeries/Injuries"
+                        android:maxLines="15" />
+                </LinearLayout>
+            </ScrollView>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <ImageView
+                    android:id="@+id/accept_id"
+                    android:layout_width="96dp"
+                    android:layout_height="43dp"
+                    android:src="@drawable/accept_box_image"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <ImageView
+                    android:id="@+id/message_id"
+                    android:layout_width="96dp"
+                    android:layout_height="43dp"
+                    android:src="@drawable/message"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <ImageView
+                    android:id="@+id/Reject_Applicationid"
+                    android:layout_width="96dp"
+                    android:layout_height="43dp"
+                    android:src="@drawable/baseline_cancel_24"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

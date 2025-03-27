@@ -1,0 +1,29 @@
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/tabTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="Reservations"
+        android:textColor="@android:color/white"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/notificationBadge"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="1dp"
+        android:background="@drawable/circlebackground"
+        android:gravity="center"
+        android:text="1"
+        android:textColor="@android:color/white"
+        android:textSize="12sp"
+        android:layout_toEndOf="@id/tabTitle"
+        />
+</RelativeLayout>

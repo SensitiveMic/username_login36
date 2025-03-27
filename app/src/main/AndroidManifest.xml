@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.UsernameLogin"
+        tools:targetApi="31">
+        <activity
+            android:name=".Gym_Owner.employeelist.employye_update_profilee"
+            android:exported="false" />
+        <activity
+            android:name=".Gym_Owner.employeelist.Gymowner_employee_configurate"
+            android:exported="false" />
+        <activity
+            android:name=".Gym_Owner.employeelist.employeelists_main"
+            android:exported="false" />
+        <activity
+            android:name=".Admin.coachandgymreservations.See_coachandgym_activereservations"
+            android:exported="false" />
+        <activity
+            android:name=".Admin.Userslist.gymanditsmembers.Admin_employeed_updateprofile"
+            android:exported="false" />
+        <activity
+            android:name=".Admin.Userslist.memberslistactivity"
+            android:exported="false" />
+        <activity
+            android:name=".Admin.Userslist.gymanditsmembers.UsersList_Admin_main"
+            android:exported="false" />
+        <activity
+            android:name=".Admin.Userlist_main"
+            android:exported="false"
+            android:theme="@style/Theme.UsernameLogin" />
+        <activity
+            android:name=".Admin.Userslist.Userlist_main"
+            android:exported="false" />
+        <activity
+            android:name=".Staff.Gym_Management.Moresettins.Main_gymmanagement_moresettins"
+            android:exported="false" />
+        <activity
+            android:name=".Member.Member_Profile"
+            android:exported="false" />
+        <activity
+            android:name=".Member.Reservation.Current_Coach_Res.Current_Coach_Res_Main"
+            android:exported="false" />
+        <activity
+            android:name=".Member.Reservation.Coach_Res_Scheduler.Coach_res_form_main"
+            android:exported="false" />
+        <activity
+            android:name=".Coach.Profile.Coach_Profile_Main"
+            android:exported="false" />
+        <activity
+            android:name=".Coach.Coach_main"
+            android:exported="false" />
+        <activity
+            android:name=".Gym_Owner.Gym_Owner_gymmanagement_add_coach"
+            android:exported="false" />
+        <activity
+            android:name=".Member.Reservation.Coach_Reservation_main"
+            android:exported="false" />
+        <activity
+            android:name=".Member.Member_main"
+            android:exported="false" />
+        <activity
+            android:name=".Staff.Membership_req_management.Membership_requests_main"
+            android:exported="false" />
+        <activity
+            android:name=".trials.replace_itemsin_recyclerview"
+            android:exported="false" />
+        <activity
+            android:name=".Gym_Owner.Gym_Owner_gymmanagement_add_staff"
+            android:exported="false" />
+        <activity
+            android:name=".Gym_Owner.Gym_Owner_Gym_Management"
+            android:exported="false" />
+        <activity
+            android:name=".NonMemberUser.Gym_prop.Gym_Properties_Main"
+            android:exported="false" />
+        <activity
+            android:name=".Staff.Gym_Management.Gym_management_main"
+            android:exported="false" />
+        <activity
+            android:name=".Gym_Owner.Profile_Main_Gym_Owner"
+            android:exported="false" />
+        <activity
+            android:name=".Gym_Owner.Gym_Owner_Main"
+            android:exported="false" />
+        <activity
+            android:name=".Staff.Profile_Staff.Staff_Profile_Main"
+            android:exported="false" />
+        <activity
+            android:name=".standards.Standards_Activity"
+            android:exported="false" />
+        <activity
+            android:name=".Staff.Gym_Management.Gym_package_Creation"
+            android:exported="false" />
+        <activity
+            android:name=".NonMemberUser.NonMemberUSER"
+            android:exported="false" />
+        <activity
+            android:name=".Admin.Admin_Creation"
+            android:exported="false" />
+        <activity
+            android:name=".Admin.Gym.Admin_Update_Gym_Info"
+            android:exported="false" />
+        <activity
+            android:name=".Admin.Admin_user_nonmember_click"
+            android:exported="false" />
+        <activity
+            android:name=".Admin.Gym.Admin_add_gym"
+            android:exported="false" />
+        <activity
+            android:name=".Admin.Gym.Admin_add_gym_Field_Req"
+            android:exported="false" />
+        <activity
+            android:name=".Admin.Admin_profile"
+            android:exported="false" />
+        <activity
+            android:name=".RegisterandLogin.Login"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".NonMemberUser.Reservations.Add_Reservations"
+            android:exported="false" />
+        <activity
+            android:name=".NonMemberUser.Profile"
+            android:exported="false" />
+        <activity
+            android:name=".NonMemberUser.Reservations.Reservations"
+            android:exported="false" />
+        <activity
+            android:name=".Admin.Admin_main"
+            android:exported="false" />
+        <activity
+            android:name=".Staff.Staff_main"
+            android:exported="false" />
+        <activity
+            android:name=".RegisterandLogin.MainActivity"
+            android:exported="false" />
+    </application>
+
+</manifest>

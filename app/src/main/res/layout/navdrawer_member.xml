@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/navdrawer_member">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="176dp"
+        android:background="@drawable/drawer_border"
+        android:gravity="bottom"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/nav_header_desc"
+            android:paddingTop="@dimen/nav_header_vertical_spacing"
+            app:srcCompat="@mipmap/ic_launcher_round" />
+
+        <TextView
+            android:id="@+id/username_nav"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/nav_header_vertical_spacing"
+            android:text="@string/nav_header_title"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/nav_header_subtitle" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/Home_navdrawer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/home"
+            android:drawablePadding="8dp"
+            android:text="HOME" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/Reservations_navdrawer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:orientation="horizontal">
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/reservation"
+            android:drawablePadding="8dp"
+            android:text="HAVE A COACH" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/current_res_coach"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:orientation="horizontal">
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/gym_manage"
+            android:drawablePadding="8dp"
+            android:text="CURRENT RESERVATIONS" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/Profile_navdrawer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:orientation="horizontal">
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/profileic"
+            android:drawablePadding="8dp"
+            android:text="PROFILE" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/Gym_navdrawer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:orientation="horizontal">
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/dumbell_icon"
+            android:drawablePadding="8dp"
+            android:text="GYM" />
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
+
