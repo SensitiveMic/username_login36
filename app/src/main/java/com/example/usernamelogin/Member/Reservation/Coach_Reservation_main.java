@@ -175,18 +175,21 @@ public class Coach_Reservation_main extends AppCompatActivity implements interfa
                 key_Gym_Coach3 = null;
                 DatabaseReference dbcont;
 
+                outerLoop:
                 for (DataSnapshot underGym_Owner : snapshot.getChildren()) {
-                   key_Gym_Coach1 = underGym_Owner.getKey();
+                    key_Gym_Coach1 = underGym_Owner.getKey();
                     Log.d("TAG16", "1st key :" + key_Gym_Coach1);
 
                     for (DataSnapshot undergym : underGym_Owner.getChildren()) {
 
                         for (DataSnapshot underGymchild : undergym.getChildren()) {
-                             key_Gym_Coach3 = underGymchild.getKey();
+                            key_Gym_Coach3 = underGymchild.getKey();
                             Log.d("TAG16", "3rd key :" +  key_Gym_Coach3);
                             String gymnameofcoach = underGymchild.child("gym_name").getValue(String.class);
-                            if(Objects.equals(gymnameofcoach, Member_main.Current_GYM)){
+
+                            if (Objects.equals(gymnameofcoach, Member_main.Current_GYM)) {
                                 Log.d("TAG16", "This is member current Gym: " +  gymnameofcoach);
+
                                 dbcont = FirebaseDatabase.getInstance().getReference("Users/Gym_Owner")
                                         .child(key_Gym_Coach1).child("Gym").child(key_Gym_Coach3).child("Coach");
 
@@ -200,26 +203,22 @@ public class Coach_Reservation_main extends AppCompatActivity implements interfa
                                             Model_class_Coach_list users = underGym_Owner.getValue(Model_class_Coach_list.class);
                                             users.setUsername(key_Gym_);
                                             list.add(users);
-
                                         }
                                         myAdapter.notifyDataSetChanged();
                                     }
 
                                     @Override
-                                    public void onCancelled(@NonNull DatabaseError error) {
-
-                                    }
+                                    public void onCancelled(@NonNull DatabaseError error) { }
                                 });
-                            }
-                            else {
 
+                                // ✅ Break out of all loops once we find the match
+                                break outerLoop;
+                            } else {
                                 Log.d("TAG16", "This is not the member current Gym: " +  gymnameofcoach);
                             }
                         }
-
-                        }
-
                     }
+                }
 
                 }
 

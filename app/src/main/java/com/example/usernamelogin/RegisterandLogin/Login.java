@@ -65,12 +65,13 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 checkUSER();
+                Log.d("TAG5", "LOGIN CLICKED! ");
             }
         });
     }
 
     public void checkUSER(){
-
+        Log.d("TAG5", "LOGIN INnside! ");
         USERNAME = binding2.editTextLoginUsername.getText().toString();
         PASSWORD = binding2.editTextLoginPassword.getText().toString();
 
@@ -83,7 +84,7 @@ public class Login extends AppCompatActivity {
         checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
+                Log.d("TAG5", "Check user  run! ");
                 if(snapshot.exists()){
 
                     binding2.editTextLoginUsername.setError(null);
@@ -99,8 +100,7 @@ public class Login extends AppCompatActivity {
                             Log.e("wee2", "onDataChange: minecraft! ");
                             if(Objects.equals(PasswordfromDB, PASSWORD)){
                                Member_main.Current_GYM = snapshot.child(key).child("Gym Name").getValue(String.class);
-
-
+                                Log.d( "CONFIRMTAG_wew","This is password from db: " + Member_main.Current_GYM);
                                 Intent intent = new Intent(Login.this, Member_main.class);
 
 

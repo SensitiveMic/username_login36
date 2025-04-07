@@ -1,13 +1,10 @@
 package com.example.usernamelogin.Coach;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.content.Context;
@@ -21,29 +18,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.usernamelogin.Coach.Profile.Coach_Profile_Main;
-import com.example.usernamelogin.Member.Reservation.Current_Coach_Res.Fragment_Current_Reservations;
-import com.example.usernamelogin.Member.Reservation.Current_Coach_Res.Fragment_Reservation_Logs;
-import com.example.usernamelogin.NonMemberUser.NonMemberUSER;
-import com.example.usernamelogin.NonMemberUser.Reservations.Gymchoosing.interface_for_recyclerviewAdapter;
-import com.example.usernamelogin.NonMemberUser.Reservations.recyclerviewAdapter;
-import com.example.usernamelogin.NonMemberUser.Reservations.recycleviewReservationlist;
+import com.example.usernamelogin.Coach.Snd_wrkout.sent_workouts.Fragment_sent_workouts;
 import com.example.usernamelogin.R;
 import com.example.usernamelogin.RegisterandLogin.Login;
-import com.example.usernamelogin.Staff.Membership_req_management.Model_class_mmbershpr;
 import com.google.android.material.tabs.TabLayout;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
 
 public class Coach_main extends AppCompatActivity implements interface_click_pendingresfrm_gym_members {
     DrawerLayout drawerLayout;
     ImageView menu;
     LinearLayout home,  profile;
     public static String member_pushid, member_name;
+    public static String activeres_member_pushid;
     FrameLayout frameLayout;
     TabLayout tabLayout;
 
@@ -72,8 +57,10 @@ public class Coach_main extends AppCompatActivity implements interface_click_pen
                         fragment = new Fragment_Current_Active_Coach_reservation() ;
                         break;
                     case 1:
-                        fragment =  new Fragment_current_coach_res_coach_main();
+                        fragment =  new Fragment_current_pending_coach_res_coach_main();
                         break;
+                    case 2:
+                        fragment = new Fragment_sent_workouts();
                 }
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.framelayout3, fragment)

@@ -4,6 +4,7 @@ public class Model_class_for_active_reservations {
 
     String Fullname, Date_sent, Meet_time;
     int viewType;
+    private String pushId;
 
     public String getFullname() {
         return Fullname;
@@ -19,5 +20,13 @@ public class Model_class_for_active_reservations {
 
     public int getViewType() {
         return viewType;
+    }
+
+    public String getPushId() {
+        return pushId;
+    }
+
+    public void setPushId(String pushId) {
+        this.pushId = pushId;
     }
 }

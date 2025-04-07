@@ -80,6 +80,8 @@ public class Membership_requests_main extends AppCompatActivity implements inter
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        gym_name = Login.key_Gym_;
+
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -201,6 +203,8 @@ public class Membership_requests_main extends AppCompatActivity implements inter
                                         // to add the password from the database to a string
                                         DatabaseReference mem_status = gettheusername.child("Non-members").child(key).child("membership_status");
                                         mem_status.setValue(0);
+                                        DatabaseReference Members_gym =  gettheusername.child("Non-members").child(key).child("Gym Name");
+                                        Members_gym.setValue(gym_name);
                                         Log.d("TAG10", "Minecraft Complete!");
                                         storeDates(key);
 

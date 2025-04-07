@@ -1,28 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Coach.Fragment_current_pending_coach_res_coach_main">
+    tools:context=".Coach.Snd_wrkout.sent_workouts.Fragment_sent_workouts">
 
-    <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Pending_Reservations" />
+
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/pendingres_recyclerviewID"
+            android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-
-
     </LinearLayout>
-
 
 </FrameLayout>

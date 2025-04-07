@@ -1,0 +1,442 @@
+[
+  {
+    "exercise_id": 1,
+    "exercise_name": "Bench Press",
+    "exercise_intensity": "High",
+    "muscle_location": "Upper Body",
+    "exercise_descrp": "A compound push exercise targeting the chest, triceps, and shoulders.",
+    "weight_recommendations": [
+      {
+        "beginner": 0.60,
+        "intermediate": 0.75,
+        "advanced": 1.00
+      }
+    ]
+  },
+  {
+    "exercise_id": 2,
+    "exercise_name": "Overhead Press",
+    "exercise_intensity": "High",
+    "muscle_location": "Upper Body",
+    "exercise_descrp": "A shoulder-focused push exercise that also works triceps and upper chest.",
+    "weight_recommendations": [
+      {
+        "beginner": 0.30,
+        "intermediate": 0.50,
+        "advanced": 0.70
+      }
+    ]
+  },
+  {
+    "exercise_id": 3,
+    "exercise_name": "Pull-Ups(Weighted)",
+    "exercise_intensity": "High",
+    "muscle_location": "Upper Body",
+    "exercise_descrp": "A compound pull exercise for building back and biceps strength.",
+    "weight_recommendations": [
+      {
+        "beginner": "BW",
+        "intermediate": 0.10,
+        "advanced": 0.25
+      }
+    ]
+  },
+  {
+    "exercise_id": 4,
+    "exercise_name": "Barbell Row",
+    "exercise_intensity": "High",
+    "muscle_location": "Upper Body",
+    "exercise_descrp": "A pulling movement that targets the upper back, rear delts, and biceps.",
+    "weight_recommendations": [
+      {
+        "beginner": 0.50,
+        "intermediate": 0.75,
+        "advanced": 1.00
+      }
+    ]
+  },
+  {
+    "exercise_id": 5,
+    "exercise_name": "Dips",
+    "exercise_intensity": "Medium",
+    "muscle_location": "Upper Body",
+    "exercise_descrp": "A bodyweight exercise for developing chest, shoulders, and triceps.",
+    "weight_recommendations": [
+      {
+        "beginner": "BW",
+        "intermediate": 0.10,
+        "advanced": 0.25
+      }
+    ]
+  },
+  {
+    "exercise_id": 6,
+    "exercise_name": "Squat",
+    "exercise_intensity": "High",
+    "muscle_location": "Lower Body",
+    "exercise_descrp": "A full-body movement focusing on quads, hamstrings, and glutes.",
+    "weight_recommendations": [
+      {
+        "beginner": 0.70,
+        "intermediate": 1.00,
+        "advanced": 1.50
+      }
+    ]
+  },
+  {
+    "exercise_id": 7,
+    "exercise_name": "Deadlift",
+    "exercise_intensity": "High",
+    "muscle_location": "Lower Body",
+    "exercise_descrp": "A hinge movement that strengthens the hamstrings, glutes, and lower back.",
+    "weight_recommendations": [
+      {
+        "beginner": 1.00,
+        "intermediate": 1.50,
+        "advanced": 2.00
+      }
+    ]
+  },
+  {
+    "exercise_id": 8,
+    "exercise_name": "Romanian Deadlift",
+    "exercise_intensity": "Medium",
+    "muscle_location": "Lower Body",
+    "exercise_descrp": "A deadlift variation targeting hamstrings and glutes with controlled movement.",
+    "weight_recommendations": [
+      {
+        "beginner": 0.50,
+        "intermediate": 0.75,
+        "advanced": 1.00
+      }
+    ]
+  },
+  {
+    "exercise_id": 9,
+    "exercise_name": "Bulgarian Split Squat(Dumbbells)",
+    "exercise_intensity": "Medium",
+    "muscle_location": "Lower Body",
+    "exercise_descrp": "A single-leg squat variation that enhances lower body strength and balance.",
+    "weight_recommendations": [
+      {
+        "beginner": 0.20,
+        "intermediate": 0.30,
+        "advanced": 0.40
+      }
+    ]
+  },
+  {
+    "exercise_id": 10,
+    "exercise_name": "Hip Thrust",
+    "exercise_intensity": "Medium",
+    "muscle_location": "Lower Body",
+    "exercise_descrp": "A glute-focused exercise for power and lower body development.",
+    "weight_recommendations": [
+      {
+        "beginner": 0.70,
+        "intermediate": 1.00,
+        "advanced": 1.50
+      }
+    ]
+  },
+  {
+    "exercise_id": 11,
+    "exercise_name": "Dumbbell Flys",
+    "exercise_intensity": "Low",
+    "muscle_location": "Chest",
+    "exercise_descrp": "An isolation movement for stretching and building chest muscles.",
+    "weight_recommendations": [
+      {
+        "beginner": 0.10,
+        "intermediate": 0.15,
+        "advanced": 0.20
+      }
+    ]
+  },
+  {
+    "exercise_id": 12,
+    "exercise_name": "Cable Crossover",
+    "exercise_intensity": "Medium",
+    "muscle_location": "Chest",
+    "exercise_descrp": "A controlled isolation exercise for chest muscle activation.",
+    "weight_recommendations": [
+      {
+        "beginner": 0.10,
+        "intermediate": 0.15,
+        "advanced": 0.20
+      }
+    ]
+  },
+  {
+    "exercise_id": 13,
+    "exercise_name": "Machine Chest Press",
+    "exercise_intensity": "Low",
+    "muscle_location": "Chest",
+    "exercise_descrp": "A stable pressing movement for chest development.",
+    "weight_recommendations": [
+      {
+        "beginner": 0.50,
+        "intermediate": 0.75,
+        "advanced": 1.00
+      }
+    ]
+  },
+  {
+    "exercise_id": 14,
+    "exercise_name": "Face Pulls",
+    "exercise_intensity": "Low",
+    "muscle_location": "Back",
+    "exercise_descrp": "A pulling movement targeting rear delts and upper traps.",
+    "weight_recommendations": [
+      {
+        "beginner": 0.10,
+        "intermediate": 0.15,
+        "advanced": 0.20
+      }
+    ]
+  },
+  {
+    "exercise_id": 15,
+    "exercise_name": "Straight-Arm Lat Pulldown",
+    "exercise_intensity": "Medium",
+    "muscle_location": "Back",
+    "exercise_descrp": "An isolation exercise for developing lat muscles.",
+    "weight_recommendations": [
+      {
+        "beginner": 0.10,
+        "intermediate": 0.15,
+        "advanced": 0.20
+      }
+    ]
+  },
+  {
+    "exercise_id": 16,
+    "exercise_name": "Rear Delt Flys",
+    "exercise_intensity": "Low",
+    "muscle_location": "Back",
+    "exercise_descrp": "A movement focused on strengthening the rear delts and upper back.",
+    "weight_recommendations": [
+      {
+        "beginner": 0.05,
+        "intermediate": 0.10,
+        "advanced": 0.15
+      }
+    ]
+  },
+  {
+    "exercise_id": 17,
+    "exercise_name": "Lateral Raises",
+    "exercise_intensity": "Low",
+    "muscle_location": "Shoulders",
+    "exercise_descrp": "An isolation exercise for the side delts to enhance shoulder width.",
+    "weight_recommendations": [
+      {
+        "beginner": 0.05,
+        "intermediate": 0.10,
+        "advanced": 0.15
+      }
+    ]
+  },
+  {
+    "exercise_id": 18,
+    "exercise_name": "Front Raises",
+    "exercise_intensity": "Low",
+    "muscle_location": "Shoulders",
+    "exercise_descrp": "An anterior deltoid-focused movement for shoulder strength.",
+    "weight_recommendations": [
+      {
+        "beginner": 0.05,
+        "intermediate": 0.10,
+        "advanced": 0.15
+      }
+    ]
+  },
+  {
+    "exercise_id": 19,
+    "exercise_name": "Reverse Flys",
+    "exercise_intensity": "Low",
+    "muscle_location": "Shoulders",
+    "exercise_descrp": "A movement targeting the rear delts and upper back muscles.",
+    "weight_recommendations": [
+      {
+        "beginner": 0.05,
+        "intermediate": 0.10,
+        "advanced": 0.15
+      }
+    ]
+  },
+  {
+    "exercise_id": 20,
+    "exercise_name": "Barbell Curl",
+    "exercise_intensity": "Medium",
+    "muscle_location": "Biceps",
+    "exercise_descrp": "A fundamental biceps exercise for upper arm growth.",
+    "weight_recommendations": [
+      {
+        "beginner": 0.10,
+        "intermediate": 0.20,
+        "advanced": 0.30
+      }
+    ]
+  },
+  {
+    "exercise_id": 21,
+    "exercise_name": "Dumbbell Curl",
+    "exercise_intensity": "Medium",
+    "muscle_location": "Biceps",
+    "exercise_descrp": "A versatile exercise for biceps development with dumbbells.",
+    "weight_recommendations": [
+      {
+        "beginner": 0.05,
+        "intermediate": 0.10,
+        "advanced": 0.15
+      }
+    ]
+  },
+  {
+    "exercise_id": 22,
+    "exercise_name": "Hammer Curl",
+    "exercise_intensity": "Medium",
+    "muscle_location": "Biceps",
+    "exercise_descrp": "A biceps and forearm exercise for overall arm strength.",
+    "weight_recommendations": [
+      {
+        "beginner": 0.05,
+        "intermediate": 0.10,
+        "advanced": 0.15
+      }
+    ]
+  },
+  {
+    "exercise_id": 23,
+    "exercise_name": "Skull Crushers",
+    "exercise_intensity": "Medium",
+    "muscle_location": "Triceps",
+    "exercise_descrp": "A powerful triceps isolation exercise using a barbell or dumbbells.",
+    "weight_recommendations": [
+      {
+        "beginner": 0.10,
+        "intermediate": 0.15,
+        "advanced": 0.20
+      }
+    ]
+  },
+  {
+    "exercise_id": 24,
+    "exercise_name": "Triceps Rope Pushdown",
+    "exercise_intensity": "Medium",
+    "muscle_location": "Triceps",
+    "exercise_descrp": "A cable machine movement for triceps definition.",
+    "weight_recommendations": [
+      {
+        "beginner": 0.10,
+        "intermediate": 0.15,
+        "advanced": 0.20
+      }
+    ]
+  },
+  {
+    "exercise_id": 25,
+    "exercise_name": "Overhead Triceps Extension",
+    "exercise_intensity": "Medium",
+    "muscle_location": "Triceps",
+    "exercise_descrp": "An overhead movement for full triceps stretch and contraction.",
+    "weight_recommendations": [
+      {
+        "beginner": 0.10,
+        "intermediate": 0.15,
+        "advanced": 0.20
+      }
+    ]
+  },
+  {
+    "exercise_id": 26,
+    "exercise_name": "Wrist Curls",
+    "exercise_intensity": "Low",
+    "muscle_location": "Forearms",
+    "exercise_descrp": "A wrist flexion exercise for strengthening forearm muscles.",
+    "weight_recommendations": [
+      {
+        "beginner": 0.05,
+        "intermediate": 0.10,
+        "advanced": 0.15
+      }
+    ]
+  },
+  {
+    "exercise_id": 27,
+    "exercise_name": "Reverse Wrist Curls",
+    "exercise_intensity": "Low",
+    "muscle_location": "Forearms",
+    "exercise_descrp": "A wrist extension exercise for balanced forearm strength.",
+    "weight_recommendations": [
+      {
+        "beginner": 0.05,
+        "intermediate": 0.10,
+        "advanced": 0.15
+      }
+    ]
+  },
+  {
+    "exercise_id": 28,
+    "exercise_name": "Farmer’s Carry",
+    "exercise_intensity": "Medium",
+    "muscle_location": "Forearms",
+    "exercise_descrp": "A grip and endurance-focused forearm workout.",
+    "weight_recommendations": [
+      {
+        "beginner": 0.25,
+        "intermediate": 0.50,
+        "advanced": 0.75
+      }
+    ]
+  },
+  {
+    "exercise_id": 29,
+    "exercise_name": "Plank",
+    "exercise_intensity": "Low",
+    "muscle_location": "Core",
+    "exercise_descrp": "A full-core stability exercise for endurance and strength.",
+    "exercise_type": "time",
+    "time_recommendations": {
+      "beginner": "20-30 sec",
+      "intermediate": "30-60 sec",
+      "advanced": "60+ sec"
+    },
+    "weight_recommendations": [
+      {
+        "beginner": "BW",
+        "intermediate": 0.10,
+        "advanced": 0.15
+      }
+    ]
+  },
+  {
+    "exercise_id": 30,
+    "exercise_name": "Hanging Leg Raises",
+    "exercise_intensity": "Medium",
+    "muscle_location": "Core",
+    "exercise_descrp": "A lower ab-focused movement for core strength.",
+    "weight_recommendations": [
+      {
+        "beginner": "BW",
+        "intermediate": 0.10,
+        "advanced": 0.15
+      }
+    ]
+  },
+  {
+    "exercise_id": 31,
+    "exercise_name": "Russian Twists",
+    "exercise_intensity": "Medium",
+    "muscle_location": "Core",
+    "exercise_descrp": "A rotational movement for oblique muscle development.",
+    "weight_recommendations": [
+      {
+        "beginner": 0.05,
+        "intermediate": 0.10,
+        "advanced": 0.15
+      }
+    ]
+  }
+]

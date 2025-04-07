@@ -24,10 +24,10 @@ import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link Fragment_current_coach_res_coach_main#newInstance} factory method to
+ * Use the {@link Fragment_current_pending_coach_res_coach_main#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Fragment_current_coach_res_coach_main extends Fragment {
+public class Fragment_current_pending_coach_res_coach_main extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -38,7 +38,7 @@ public class Fragment_current_coach_res_coach_main extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public Fragment_current_coach_res_coach_main() {
+    public Fragment_current_pending_coach_res_coach_main() {
         // Required empty public constructor
     }
 
@@ -51,8 +51,8 @@ public class Fragment_current_coach_res_coach_main extends Fragment {
      * @return A new instance of fragment Current_coach_res_coach_main.
      */
     // TODO: Rename and change types and number of parameters
-    public static Fragment_current_coach_res_coach_main newInstance(String param1, String param2) {
-        Fragment_current_coach_res_coach_main fragment = new Fragment_current_coach_res_coach_main();
+    public static Fragment_current_pending_coach_res_coach_main newInstance(String param1, String param2) {
+        Fragment_current_pending_coach_res_coach_main fragment = new Fragment_current_pending_coach_res_coach_main();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

@@ -188,6 +188,8 @@ public class HealthandAvailabilityFragment extends Fragment {
                         .getReference("Users").child("Gym_Owner").child(Coach_Reservation_main.key_Gym_Coach1)
                         .child("Gym").child(Coach_Reservation_main.key_Gym_Coach3).child("Coach");
 
+                Log.d("TAGmobile", "key_gym_coach3 val: " + Coach_Reservation_main.key_Gym_Coach3 );
+
                 DatabaseReference Toserver = FirebaseDatabase.getInstance()
                         .getReference("Users").child("Non-members").child(Login.key)
                         .child("Coach_Reservation").child("Reservation_Applications").child(Coach_Reservation_main.picked_coach);
@@ -200,6 +202,7 @@ public class HealthandAvailabilityFragment extends Fragment {
                 Modelclass_for_current_member_res_accepted forpendingres = new Modelclass_for_current_member_res_accepted(Coach_Reservation_main.picked_coach,null,null,2);
 
                 Model_Class_healthandavail_procd_snd Appdetails = new Model_Class_healthandavail_procd_snd(FN,Agg,Sx,FG,CF,PD,Medical_history,Recent_injuries,Coach_res_form_main.mobilenumberfromdb);
+                Log.d("TAGmobile", "picked Coach: " + Coach_Reservation_main.picked_coach );
                 Log.d("TAGmobile", "mobile number: " + Coach_res_form_main.mobilenumberfromdb );
                 Toserver.setValue(Appdetails).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -245,6 +248,8 @@ public class HealthandAvailabilityFragment extends Fragment {
                                 break;
                             }
 
+                        }else {
+                            Log.e("TAG20", "Snapshot did not exist!");
                         }
 
 
@@ -259,7 +264,13 @@ public class HealthandAvailabilityFragment extends Fragment {
                 });
 
                 add_as_pending_reservation.setValue(forpendingres);
+                Toast.makeText(getContext(), "Coach Request Sent!", Toast.LENGTH_SHORT).show();
 
+          /*      PersonalandFitnessFragment fragment = new PersonalandFitnessFragment();
+                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.framelayout1, fragment)
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .addToBackStack(null)
+                        .commit();  */
 
             }
         });

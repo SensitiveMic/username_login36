@@ -1,4 +1,4 @@
-package com.example.usernamelogin.Coach;
+package com.example.usernamelogin.Coach.Snd_wrkout.sent_workouts;
 
 import android.os.Bundle;
 
@@ -12,8 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.usernamelogin.Member.Reservation.Current_Coach_Res.Adapter_for_current_coach_res_onmember;
-import com.example.usernamelogin.Member.Reservation.Current_Coach_Res.Modelclass_for_current_member_res_accepted;
 import com.example.usernamelogin.R;
 import com.example.usernamelogin.RegisterandLogin.Login;
 import com.google.firebase.database.DataSnapshot;
@@ -23,13 +21,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link Fragment_Current_Active_Coach_reservation#newInstance} factory method to
+ * Use the {@link clicked_workout_exercises_frag#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Fragment_Current_Active_Coach_reservation extends Fragment {
+public class clicked_workout_exercises_frag extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -39,8 +38,10 @@ public class Fragment_Current_Active_Coach_reservation extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private String selectedKey;
+    private String theworkoutname;
 
-    public Fragment_Current_Active_Coach_reservation() {
+    public clicked_workout_exercises_frag() {
         // Required empty public constructor
     }
 
@@ -50,11 +51,11 @@ public class Fragment_Current_Active_Coach_reservation extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment Fragment_Current_Active_Coach_reservation.
+     * @return A new instance of fragment clicked_workout_exercises_frag.
      */
     // TODO: Rename and change types and number of parameters
-    public static Fragment_Current_Active_Coach_reservation newInstance(String param1, String param2) {
-        Fragment_Current_Active_Coach_reservation fragment = new Fragment_Current_Active_Coach_reservation();
+    public static clicked_workout_exercises_frag newInstance(String param1, String param2) {
+        clicked_workout_exercises_frag fragment = new clicked_workout_exercises_frag();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -66,25 +67,34 @@ public class Fragment_Current_Active_Coach_reservation extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+             selectedKey = getArguments().getString("selectedkey");
+            theworkoutname = getArguments().getString("itsworkoutname");
+            Log.d("TAG", "Received key: " + selectedKey);
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-
-    RecyclerView current_res_recyclerv;
-
+    private RecyclerView recyclerView;
+    private recyclerview_slected_exer_adapter adapter;
+    private List<SentWorkoutModel> exerciseList;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_clicked_workout_exercises_frag, container, false);
+        recyclerView = view.findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        View view = inflater.inflate(R.layout.fragment__current__active__coach_reservation, container, false);
-        current_res_recyclerv = view.findViewById(R.id.activecoachingsessionsRecViewID);
-        pendingresRecyclerVIew1();
+        exerciseList = new ArrayList<>();
+        adapter = new recyclerview_slected_exer_adapter(exerciseList);
+        recyclerView.setAdapter(adapter);
+
+        getWorkoutData(selectedKey,theworkoutname );
+
         return view;
     }
-    public void pendingresRecyclerVIew1(){
 
+    private void getWorkoutData(String workoutPushId, String workout_name){
         DatabaseReference db = FirebaseDatabase.getInstance()
                 .getReference("Users/Gym_Owner")
                 .child(Login.key_Gym_Coach1)
@@ -92,35 +102,25 @@ public class Fragment_Current_Active_Coach_reservation extends Fragment {
                 .child(Login.key_Gym_Coach3)
                 .child("Coach")
                 .child(Login.key_Gym_Coach_key)
-                .child("Accepted_Reservation");
+                .child("Sent_coach_workout")
+                .child(workoutPushId)
+                .child(workout_name);
 
-        current_res_recyclerv.setHasFixedSize(true);
-        current_res_recyclerv.setLayoutManager(new LinearLayoutManager(requireContext()));
-
-        ArrayList<Model_class_for_active_reservations> list = new ArrayList<>();
-        recyclerViewAdapter_Active_reservations adapter = new recyclerViewAdapter_Active_reservations(getContext(),list,getParentFragmentManager());
-        current_res_recyclerv.setAdapter(adapter);
         db.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                for(DataSnapshot gk : snapshot.getChildren()){
-                    String pushID = gk.getKey();
-                    Model_class_for_active_reservations item = gk.getValue(Model_class_for_active_reservations.class);
-                    item.setPushId(pushID);
-                    int viewType = item.getViewType();
-                    Log.d("TAG111", "viewType: " + viewType);
-                    list.add(item);
+                exerciseList.clear();
+                for (DataSnapshot exerciseSnapshot : snapshot.getChildren()) {
+                    SentWorkoutModel exercise = exerciseSnapshot.getValue(SentWorkoutModel.class);
+                    exerciseList.add(exercise);
                 }
                 adapter.notifyDataSetChanged();
-
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Log.e("TAG", "Failed to load workout data.", error.toException());
             }
         });
-
     }
 }

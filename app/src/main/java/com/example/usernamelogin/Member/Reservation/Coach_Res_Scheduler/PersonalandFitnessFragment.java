@@ -125,9 +125,9 @@ public class PersonalandFitnessFragment extends Fragment {
         changefragment = view.findViewById(R.id.next_frag1);
 
         auto_complet = (AutoCompleteTextView) view.findViewById(R.id.auto_complete);
-        adapteritems = new ArrayAdapter<>(requireActivity(),R.layout.list_items,items);
+        adapteritems = new ArrayAdapter<>(requireActivity(),R.layout.list_items_main,items);
 
-        adapterforfitlevel = new ArrayAdapter<>(requireActivity(),R.layout.list_items,fitnessrate);
+        adapterforfitlevel = new ArrayAdapter<>(requireActivity(),R.layout.list_items_main,fitnessrate);
         fitrate = (AutoCompleteTextView) view.findViewById(R.id.fitrateautocomplete);
         fitrate.setAdapter(adapterforfitlevel);
 

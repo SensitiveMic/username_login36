@@ -100,7 +100,7 @@ public class Member_main extends AppCompatActivity {
                 .child("Coach_Reservation").child("Current_Accepted_Res");
 
 
-        expired_coach_res_check();
+      //  expired_coach_res_check();
 
     }
     public void usertoolbarname(Context context, TextView usernamebar, TextView username_nav) {
@@ -206,8 +206,6 @@ public class Member_main extends AppCompatActivity {
 
             }
         });
-
-
 
     }
 
