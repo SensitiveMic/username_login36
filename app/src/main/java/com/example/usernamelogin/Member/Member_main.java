@@ -36,7 +36,7 @@ import java.time.format.DateTimeFormatter;
 public class Member_main extends AppCompatActivity {
     DrawerLayout drawerLayout;
     ImageView menu;
-    LinearLayout home, reservations, profile, gym_membership, currentreservations;
+    LinearLayout home, reservations, profile, gym_membership, currentreservations, workout;
     public static String[] ProfileContents;
     public static String Current_GYM;
     String pushkey;
@@ -57,7 +57,7 @@ public class Member_main extends AppCompatActivity {
         profile = findViewById(R.id.Profile_navdrawer);
         gym_membership = findViewById(R.id.Gym_navdrawer);
         currentreservations = findViewById(R.id.current_res_coach);
-
+        workout = findViewById(R.id.member_workout);
 
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,6 +95,13 @@ public class Member_main extends AppCompatActivity {
                 redirectActivity(Member_main.this, Current_Coach_Res_Main.class);
             }
         });
+        workout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                redirectActivity(Member_main.this, Current_Coach_Res_Main.class);
+            }
+        });
+
         DatabaseReference gotomemberscurrentres = FirebaseDatabase.getInstance()
                 .getReference("Users").child("Non-members").child(Login.key)
                 .child("Coach_Reservation").child("Current_Accepted_Res");
