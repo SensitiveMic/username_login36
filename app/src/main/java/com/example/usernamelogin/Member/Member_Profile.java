@@ -56,6 +56,7 @@ public class Member_Profile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_member_profile);
+
         // set toolbar and navbar name to users username
         TextView textView2 = findViewById(R.id.textView2);
         TextView username_nav = findViewById(R.id.username_nav);
@@ -72,7 +73,7 @@ public class Member_Profile extends AppCompatActivity {
         gym_membership = findViewById(R.id.Gym_navdrawer);
         currentreservations = findViewById(R.id.current_res_coach);
 
-        profileContents();
+      //  profileContents();
 
         //Profile contents
 

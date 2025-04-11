@@ -5,6 +5,7 @@
     "exercise_intensity": "High",
     "muscle_location": "Upper Body",
     "exercise_descrp": "A compound push exercise targeting the chest, triceps, and shoulders.",
+    "exercise_exec_link_detail" : "https://exrx.net/WeightExercises/PectoralSternal/BBBenchPress",
     "weight_recommendations": [
       {
         "beginner": 0.60,
@@ -15,10 +16,11 @@
   },
   {
     "exercise_id": 2,
-    "exercise_name": "Overhead Press",
+    "exercise_name": "Overhead Press/Military Press",
     "exercise_intensity": "High",
     "muscle_location": "Upper Body",
     "exercise_descrp": "A shoulder-focused push exercise that also works triceps and upper chest.",
+    "exercise_exec_link_detail" : "https://exrx.net/WeightExercises/DeltoidAnterior/BBMilitaryPress",
     "weight_recommendations": [
       {
         "beginner": 0.30,
@@ -33,6 +35,7 @@
     "exercise_intensity": "High",
     "muscle_location": "Upper Body",
     "exercise_descrp": "A compound pull exercise for building back and biceps strength.",
+    "exercise_exec_link_detail" : "https://exrx.net/WeightExercises/LatissimusDorsi/BWPullup",
     "weight_recommendations": [
       {
         "beginner": "BW",
@@ -43,10 +46,11 @@
   },
   {
     "exercise_id": 4,
-    "exercise_name": "Barbell Row",
+    "exercise_name": "Barbell Row/Bent-over Row",
     "exercise_intensity": "High",
     "muscle_location": "Upper Body",
     "exercise_descrp": "A pulling movement that targets the upper back, rear delts, and biceps.",
+    "exercise_exec_link_detail" : "https://exrx.net/WeightExercises/BackGeneral/BBBentOverRow",
     "weight_recommendations": [
       {
         "beginner": 0.50,
@@ -61,6 +65,7 @@
     "exercise_intensity": "Medium",
     "muscle_location": "Upper Body",
     "exercise_descrp": "A bodyweight exercise for developing chest, shoulders, and triceps.",
+    "exercise_exec_link_detail" : "https://exrx.net/WeightExercises/PectoralSternal/BWChestDip",
     "weight_recommendations": [
       {
         "beginner": "BW",
@@ -75,6 +80,7 @@
     "exercise_intensity": "High",
     "muscle_location": "Lower Body",
     "exercise_descrp": "A full-body movement focusing on quads, hamstrings, and glutes.",
+    "exercise_exec_link_detail" : "https://exrx.net/WeightExercises/GluteusMaximus/BBSquat",
     "weight_recommendations": [
       {
         "beginner": 0.70,
@@ -89,6 +95,7 @@
     "exercise_intensity": "High",
     "muscle_location": "Lower Body",
     "exercise_descrp": "A hinge movement that strengthens the hamstrings, glutes, and lower back.",
+    "exercise_exec_link_detail" : "https://exrx.net/WeightExercises/GluteusMaximus/BBDeadlift",
     "weight_recommendations": [
       {
         "beginner": 1.00,
@@ -103,6 +110,7 @@
     "exercise_intensity": "Medium",
     "muscle_location": "Lower Body",
     "exercise_descrp": "A deadlift variation targeting hamstrings and glutes with controlled movement.",
+    "exercise_exec_link_detail" : "https://exrx.net/WeightExercises/OlympicLifts/RomanianDeadlift",
     "weight_recommendations": [
       {
         "beginner": 0.50,
@@ -117,6 +125,7 @@
     "exercise_intensity": "Medium",
     "muscle_location": "Lower Body",
     "exercise_descrp": "A single-leg squat variation that enhances lower body strength and balance.",
+    "exercise_exec_link_detail" : "https://www.youtube.com/watch?v=o7yFuIR9XVU",
     "weight_recommendations": [
       {
         "beginner": 0.20,
@@ -131,6 +140,7 @@
     "exercise_intensity": "Medium",
     "muscle_location": "Lower Body",
     "exercise_descrp": "A glute-focused exercise for power and lower body development.",
+    "exercise_exec_link_detail" : "https://exrx.net/WeightExercises/GluteusMaximus/BBHipThrust",
     "weight_recommendations": [
       {
         "beginner": 0.70,
@@ -145,6 +155,7 @@
     "exercise_intensity": "Low",
     "muscle_location": "Chest",
     "exercise_descrp": "An isolation movement for stretching and building chest muscles.",
+    "exercise_exec_link_detail" : "https://exrx.net/WeightExercises/PectoralSternal/DBFly",
     "weight_recommendations": [
       {
         "beginner": 0.10,
@@ -155,10 +166,11 @@
   },
   {
     "exercise_id": 12,
-    "exercise_name": "Cable Crossover",
+    "exercise_name": "Cable Crossover(Standing)/Cable Standing Fly",
     "exercise_intensity": "Medium",
     "muscle_location": "Chest",
     "exercise_descrp": "A controlled isolation exercise for chest muscle activation.",
+    "exercise_exec_link_detail" : "https://exrx.net/WeightExercises/PectoralSternal/CBStandingFly",
     "weight_recommendations": [
       {
         "beginner": 0.10,
@@ -173,6 +185,7 @@
     "exercise_intensity": "Low",
     "muscle_location": "Chest",
     "exercise_descrp": "A stable pressing movement for chest development.",
+    "exercise_exec_link_detail" : "https://exrx.net/WeightExercises/PectoralSternal/LVChestPressS",
     "weight_recommendations": [
       {
         "beginner": 0.50,
@@ -187,6 +200,7 @@
     "exercise_intensity": "Low",
     "muscle_location": "Back",
     "exercise_descrp": "A pulling movement targeting rear delts and upper traps.",
+    "exercise_exec_link_detail" : "https://learn.athleanx.com/articles/shoulders-for-men/stop-doing-face-pulls-like-this",
     "weight_recommendations": [
       {
         "beginner": 0.10,
@@ -197,10 +211,11 @@
   },
   {
     "exercise_id": 15,
-    "exercise_name": "Straight-Arm Lat Pulldown",
+    "exercise_name": "Cable Pulldown",
     "exercise_intensity": "Medium",
     "muscle_location": "Back",
     "exercise_descrp": "An isolation exercise for developing lat muscles.",
+    "exercise_exec_link_detail" : "https://exrx.net/WeightExercises/LatissimusDorsi/CBFrontPulldown",
     "weight_recommendations": [
       {
         "beginner": 0.10,
@@ -215,6 +230,7 @@
     "exercise_intensity": "Low",
     "muscle_location": "Back",
     "exercise_descrp": "A movement focused on strengthening the rear delts and upper back.",
+    "exercise_exec_link_detail" : "https://exrx.net/WeightExercises/DeltoidPosterior/DBRearLateralRaise",
     "weight_recommendations": [
       {
         "beginner": 0.05,
@@ -229,6 +245,7 @@
     "exercise_intensity": "Low",
     "muscle_location": "Shoulders",
     "exercise_descrp": "An isolation exercise for the side delts to enhance shoulder width.",
+    "exercise_exec_link_detail" : "https://exrx.net/WeightExercises/DeltoidLateral/DBLateralRaise",
     "weight_recommendations": [
       {
         "beginner": 0.05,
@@ -243,6 +260,7 @@
     "exercise_intensity": "Low",
     "muscle_location": "Shoulders",
     "exercise_descrp": "An anterior deltoid-focused movement for shoulder strength.",
+    "exercise_exec_link_detail" : "https://exrx.net/WeightExercises/DeltoidAnterior/DBFrontRaise",
     "weight_recommendations": [
       {
         "beginner": 0.05,
@@ -257,6 +275,7 @@
     "exercise_intensity": "Low",
     "muscle_location": "Shoulders",
     "exercise_descrp": "A movement targeting the rear delts and upper back muscles.",
+    "exercise_exec_link_detail" : "https://exrx.net/WeightExercises/DeltoidPosterior/CBStandingReverseFly",
     "weight_recommendations": [
       {
         "beginner": 0.05,
@@ -271,6 +290,7 @@
     "exercise_intensity": "Medium",
     "muscle_location": "Biceps",
     "exercise_descrp": "A fundamental biceps exercise for upper arm growth.",
+    "exercise_exec_link_detail" : "https://exrx.net/WeightExercises/Biceps/DBCurl",
     "weight_recommendations": [
       {
         "beginner": 0.10,
@@ -285,6 +305,7 @@
     "exercise_intensity": "Medium",
     "muscle_location": "Biceps",
     "exercise_descrp": "A versatile exercise for biceps development with dumbbells.",
+    "exercise_exec_link_detail" : "https://exrx.net/WeightExercises/Biceps/BBCurl",
     "weight_recommendations": [
       {
         "beginner": 0.05,
@@ -299,6 +320,7 @@
     "exercise_intensity": "Medium",
     "muscle_location": "Biceps",
     "exercise_descrp": "A biceps and forearm exercise for overall arm strength.",
+    "exercise_exec_link_detail" : "https://exrx.net/WeightExercises/Brachioradialis/DBHammerCurl",
     "weight_recommendations": [
       {
         "beginner": 0.05,
@@ -313,6 +335,7 @@
     "exercise_intensity": "Medium",
     "muscle_location": "Triceps",
     "exercise_descrp": "A powerful triceps isolation exercise using a barbell or dumbbells.",
+    "exercise_exec_link_detail" : "https://exrx.net/WeightExercises/Triceps/BBLyingTriExtSC",
     "weight_recommendations": [
       {
         "beginner": 0.10,
@@ -323,10 +346,11 @@
   },
   {
     "exercise_id": 24,
-    "exercise_name": "Triceps Rope Pushdown",
+    "exercise_name": "Triceps Cable Pushdown",
     "exercise_intensity": "Medium",
     "muscle_location": "Triceps",
     "exercise_descrp": "A cable machine movement for triceps definition.",
+    "exercise_exec_link_detail" : "https://exrx.net/WeightExercises/Triceps/CBPushdown",
     "weight_recommendations": [
       {
         "beginner": 0.10,
@@ -341,6 +365,7 @@
     "exercise_intensity": "Medium",
     "muscle_location": "Triceps",
     "exercise_descrp": "An overhead movement for full triceps stretch and contraction.",
+    "exercise_exec_link_detail" : "https://exrx.net/WeightExercises/Triceps/DBTriExt",
     "weight_recommendations": [
       {
         "beginner": 0.10,
@@ -355,6 +380,7 @@
     "exercise_intensity": "Low",
     "muscle_location": "Forearms",
     "exercise_descrp": "A wrist flexion exercise for strengthening forearm muscles.",
+    "exercise_exec_link_detail" : "https://exrx.net/WeightExercises/WristFlexors/BBWristCurl",
     "weight_recommendations": [
       {
         "beginner": 0.05,
@@ -369,6 +395,7 @@
     "exercise_intensity": "Low",
     "muscle_location": "Forearms",
     "exercise_descrp": "A wrist extension exercise for balanced forearm strength.",
+    "exercise_exec_link_detail" : "https://exrx.net/WeightExercises/Brachioradialis/BBReverseCurl",
     "weight_recommendations": [
       {
         "beginner": 0.05,
@@ -383,6 +410,7 @@
     "exercise_intensity": "Medium",
     "muscle_location": "Forearms",
     "exercise_descrp": "A grip and endurance-focused forearm workout.",
+    "exercise_exec_link_detail" : "https://www.youtube.com/watch?v=p5MNNosenJc",
     "weight_recommendations": [
       {
         "beginner": 0.25,
@@ -397,6 +425,7 @@
     "exercise_intensity": "Low",
     "muscle_location": "Core",
     "exercise_descrp": "A full-core stability exercise for endurance and strength.",
+    "exercise_exec_link_detail" : "https://exrx.net/WeightExercises/RectusAbdominis/BWFrontPlank",
     "exercise_type": "time",
     "time_recommendations": {
       "beginner": "20-30 sec",
@@ -417,6 +446,7 @@
     "exercise_intensity": "Medium",
     "muscle_location": "Core",
     "exercise_descrp": "A lower ab-focused movement for core strength.",
+    "exercise_exec_link_detail" : "https://exrx.net/WeightExercises/HipFlexors/BWHangingLegRaise",
     "weight_recommendations": [
       {
         "beginner": "BW",
@@ -431,6 +461,7 @@
     "exercise_intensity": "Medium",
     "muscle_location": "Core",
     "exercise_descrp": "A rotational movement for oblique muscle development.",
+    "exercise_exec_link_detail" : "https://exrx.net/Plyometrics/MBRussianTwist",
     "weight_recommendations": [
       {
         "beginner": 0.05,

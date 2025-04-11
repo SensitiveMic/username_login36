@@ -15,10 +15,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.usernamelogin.Member.Member_main;
 import com.example.usernamelogin.NonMemberUser.Gym_prop.Gym_Properties_Main;
 import com.example.usernamelogin.R;
 import com.example.usernamelogin.RegisterandLogin.Login;
 import com.example.usernamelogin.NonMemberUser.Reservations.Reservations;
+import com.example.usernamelogin.workout_program.workouts.User_workouts;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,7 +32,7 @@ public class NonMemberUSER extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
     ImageView menu;
-    LinearLayout home, reservations, profile, gym_membership;
+    LinearLayout home, reservations, profile, gym_membership,workout;
     public static String[] ProfileContents;
 
     @Override
@@ -46,7 +48,7 @@ public class NonMemberUSER extends AppCompatActivity {
         reservations = findViewById(R.id.Reservations_navdrawer);
         profile = findViewById(R.id.Profile_navdrawer);
         gym_membership = findViewById(R.id.Gym_navdrawer);
-
+        workout = findViewById(R.id.member_workout);
 
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +78,16 @@ public class NonMemberUSER extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 redirectActivity(NonMemberUSER.this, Gym_Properties_Main.class);
+            }
+        });
+        workout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("COACH_WRKT_SENT_TAG", "Coach workout Sent!");
+                Intent intent = new Intent(NonMemberUSER.this, User_workouts.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+
             }
         });
 
@@ -108,7 +120,7 @@ public class NonMemberUSER extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e("MainActivity", "Failed to read value.", databaseError.toException());
+                Log.e("MainActivity_wrkt_prgrm", "Failed to read value.", databaseError.toException());
             }
         });
     }

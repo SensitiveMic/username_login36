@@ -102,9 +102,9 @@ public class Login extends AppCompatActivity {
                                Member_main.Current_GYM = snapshot.child(key).child("Gym Name").getValue(String.class);
                                 Log.d( "CONFIRMTAG_wew","This is password from db: " + Member_main.Current_GYM);
                                 Intent intent = new Intent(Login.this, Member_main.class);
-
-
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);
+                                finish();
                                 Log.d("kasibag", "onDataChange: minecraft! ");
                             }
                             else {
@@ -120,7 +120,9 @@ public class Login extends AppCompatActivity {
                             Log.e("wee2", "onDataChange: minecraft! ");
                             if(Objects.equals(PasswordfromDB, PASSWORD)){
                                 Intent intent = new Intent(Login.this, NonMemberUSER.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);
+                                finish();
                                 Log.d("kasibag", "onDataChange: minecraft! ");
                             }
                             else {
@@ -172,7 +174,9 @@ public class Login extends AppCompatActivity {
                         Log.e("wee2", "onDataChange: minecraft! ");
                         if(Objects.equals(PasswordfromDB, PASSWORD)){
                             Intent intent = new Intent(Login.this, Admin_main.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
+                            finish();
                             Log.d("kasibag", "onDataChange: minecraft! ");
                         }
                         else {
@@ -220,7 +224,9 @@ public class Login extends AppCompatActivity {
                         Log.e("TAG5", "Going to minecraft ");
                         if(Objects.equals(PasswordfromDB, PASSWORD)){
                             Intent intent = new Intent(Login.this, Gym_Owner_Main.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
+                            finish();
                             Log.d("TAG5", "onDataChange: minecraft! ");
                             break outerLoop;
                         }
@@ -290,7 +296,9 @@ public class Login extends AppCompatActivity {
 
                                         if (Objects.equals(key_Gym_Staff_password, PASSWORD)) {
                                             Intent intent = new Intent(Login.this, Staff_main.class);
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                                             startActivity(intent);
+                                            finish();
                                             Log.d("TAG53", "onDataChange: minecraft! ");
                                             accountFound = true; // Account found, set the flag
                                             break outerLoop;
@@ -371,7 +379,9 @@ public class Login extends AppCompatActivity {
 
                                          if (Objects.equals(key_Gym_Coach_password, PASSWORD)) {
                                            Intent intent = new Intent(Login.this, Coach_main.class);
-                                           startActivity(intent);
+                                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                             startActivity(intent);
+                                             finish();
                                            Log.d("TAG53", "onDataChange: minecraft! ");
                                            accountFound_coach = true; // Account found, set the flag
                                            break outerLoop;

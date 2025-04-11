@@ -216,7 +216,7 @@ public class Gym_Properties_Main extends AppCompatActivity {
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e("MainActivity", "Failed to read value.", databaseError.toException());
+                Log.e("MainActivity_wrkt_prgrm", "Failed to read value.", databaseError.toException());
             }
         });
     }

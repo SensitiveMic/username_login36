@@ -110,6 +110,23 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/member_workout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:orientation="horizontal">
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/dumbell_icon"
+            android:drawablePadding="8dp"
+            android:text="Workout" />
+
+    </LinearLayout>
 
 
 </LinearLayout>

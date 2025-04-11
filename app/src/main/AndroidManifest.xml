@@ -13,6 +13,25 @@
         android:theme="@style/Theme.UsernameLogin"
         tools:targetApi="31">
         <activity
+            android:name=".Exercise_Library.Exercise_Library_main"
+            android:exported="false"/>
+        <activity android:name=".workout_program.grahptry.Graph_main"
+            android:exported="false"/>
+        <activity android:name=".workout_program.logworkouts.Logworkouts_main"
+            android:exported="false"/>
+        <activity
+            android:name=".workout_program.toselect_exercise_jsonlist.Exercises_to_select"
+            android:exported="false" />
+        <activity
+            android:name=".workout_program.to_edit_reps_weight.MainActivity_wrkt_prgrm"
+            android:exported="false" />
+        <activity
+            android:name=".workout_program.personalizing.Personalizing_main"
+            android:exported="false" />
+        <activity
+            android:name=".workout_program.workouts.User_workouts"
+            android:exported="false" />
+        <activity
             android:name=".Gym_Owner.employeelist.employye_update_profilee"
             android:exported="false" />
         <activity
@@ -22,26 +41,10 @@
             android:name=".Gym_Owner.employeelist.employeelists_main"
             android:exported="false" />
         <activity
-            android:name=".Admin.coachandgymreservations.See_coachandgym_activereservations"
-            android:exported="false" />
-        <activity
             android:name=".Admin.Userslist.gymanditsmembers.Admin_employeed_updateprofile"
             android:exported="false" />
         <activity
-            android:name=".Admin.Userslist.memberslistactivity"
-            android:exported="false" />
-        <activity
             android:name=".Admin.Userslist.gymanditsmembers.UsersList_Admin_main"
-            android:exported="false" />
-        <activity
-            android:name=".Admin.Userlist_main"
-            android:exported="false"
-            android:theme="@style/Theme.UsernameLogin" />
-        <activity
-            android:name=".Admin.Userslist.Userlist_main"
-            android:exported="false" />
-        <activity
-            android:name=".Staff.Gym_Management.Moresettins.Main_gymmanagement_moresettins"
             android:exported="false" />
         <activity
             android:name=".Member.Member_Profile"

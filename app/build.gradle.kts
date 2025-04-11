@@ -58,4 +58,6 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
     implementation("androidx.fragment:fragment:$fragment_version")
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
+
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 }
