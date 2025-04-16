@@ -2,6 +2,7 @@ package com.example.usernamelogin.workout_program.to_edit_reps_weight;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -35,7 +36,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -45,6 +48,8 @@ public class MainActivity_wrkt_prgrm extends AppCompatActivity {
     ExerciseAdapter adapter;
     String workoutname;
     private List<Modelclass_forexercises> exerciseList;
+    private static final int REQUEST_CODE_OPEN_JSON = 101;
+    private static final int REQUEST_CODE_CREATE_JSON = 102;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +74,67 @@ public class MainActivity_wrkt_prgrm extends AppCompatActivity {
         File jsonfile = new File(Directory, "custom_workout.json");
 
         return jsonfile.exists();
+    }
+    private void inputtojson2() {
+        // Ask user to open existing file
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.setType("application/json");
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        startActivityForResult(intent, REQUEST_CODE_OPEN_JSON);
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK && data != null && data.getData() != null) {
+            Uri uri = data.getData();
+
+            if (requestCode == REQUEST_CODE_OPEN_JSON) {
+                // Read and continue writing into this file
+                String existingJson = readJsonFromUri(uri);
+                if (existingJson == null || existingJson.isEmpty()) {
+                    // File exists but empty, write an empty array
+                    writeJsonToUri(uri, "[]");
+                    Log.d("TAG_MainACt", "Created new empty JSON array");
+                } else {
+                    Log.d("TAG_MainACt", "File exists and has content");
+                    // Continue with updating or processing
+                }
+            } else if (requestCode == REQUEST_CODE_CREATE_JSON) {
+                writeJsonToUri(uri, "[]");
+                Log.d("TAG_MainACt", "Created new JSON file via SAF");
+            }
+        } else if (requestCode == REQUEST_CODE_OPEN_JSON) {
+            // User canceled or file not found -> ask to create
+            Intent createIntent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+            createIntent.setType("application/json");
+            createIntent.putExtra(Intent.EXTRA_TITLE, "custom_workout.json");
+            startActivityForResult(createIntent, REQUEST_CODE_CREATE_JSON);
+        }
+    }
+    private String readJsonFromUri(Uri uri) {
+        try (InputStream inputStream = getContentResolver().openInputStream(uri)) {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+            StringBuilder builder = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                builder.append(line);
+            }
+            return builder.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private void writeJsonToUri(Uri uri, String jsonString) {
+        try (OutputStream outputStream = getContentResolver().openOutputStream(uri, "wt")) {
+            outputStream.write(jsonString.getBytes());
+            outputStream.flush();
+            Log.d("TAG_MainACt", "Successfully wrote to JSON file");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     private void inputtojson() {
         //check if there is custom_workout.json file

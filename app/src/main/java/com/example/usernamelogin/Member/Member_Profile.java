@@ -60,8 +60,13 @@ public class Member_Profile extends AppCompatActivity {
         // set toolbar and navbar name to users username
         TextView textView2 = findViewById(R.id.textView2);
         TextView username_nav = findViewById(R.id.username_nav);
-        textView2.setText(Member_main.ProfileContents[0]);
-        username_nav.setText(Member_main.ProfileContents[0]);
+        if (Member_main.ProfileContents != null && Member_main.ProfileContents.length >= 4) {
+            textView2.setText(Member_main.ProfileContents[0]);
+            username_nav.setText(Member_main.ProfileContents[0]);
+            // and so on...
+        } else {
+            Toast.makeText(this, "Profile data not loaded", Toast.LENGTH_SHORT).show();
+        }
 
         // Whole layout
         drawerLayout = findViewById(R.id.home_layout);
@@ -73,7 +78,7 @@ public class Member_Profile extends AppCompatActivity {
         gym_membership = findViewById(R.id.Gym_navdrawer);
         currentreservations = findViewById(R.id.current_res_coach);
 
-      //  profileContents();
+        profileContents();
 
         //Profile contents
 
@@ -209,7 +214,7 @@ public class Member_Profile extends AppCompatActivity {
         });
     }
     public void profileContents(){
-        ments = new TextView[3];
+        ments = new TextView[4];
         ments[0] = findViewById(R.id.textView8);
         ments[1] = findViewById(R.id.textView9);
         ments[2] = findViewById(R.id.textView10);
@@ -219,7 +224,7 @@ public class Member_Profile extends AppCompatActivity {
         ments[2].setText(Member_main.ProfileContents[2]);
         ments[3].setText(Member_main.ProfileContents[3]);
         //Profile chg
-        chg = new EditText[3];
+        chg = new EditText[4];
         chg[0] = findViewById(R.id.editTextUsername_chg);
         chg[1] = findViewById(R.id.editTextEmail_chg);
         chg[2] = findViewById(R.id.editTextPassword_chg);

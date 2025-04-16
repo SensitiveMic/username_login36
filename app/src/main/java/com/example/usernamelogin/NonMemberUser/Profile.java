@@ -21,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.usernamelogin.Member.Member_main;
 import com.example.usernamelogin.NonMemberUser.Gym_prop.Gym_Properties_Main;
 import com.example.usernamelogin.R;
 import com.example.usernamelogin.RegisterandLogin.Login;
@@ -56,8 +57,13 @@ public class Profile extends AppCompatActivity {
         // set toolbar and navbar name to users username
         TextView textView2 = findViewById(R.id.textView2);
         TextView username_nav = findViewById(R.id.username_nav);
-        textView2.setText(NonMemberUSER.ProfileContents[0]);
-        username_nav.setText(NonMemberUSER.ProfileContents[0]);
+        if (Member_main.ProfileContents != null && Member_main.ProfileContents.length >= 4) {
+            textView2.setText(Member_main.ProfileContents[0]);
+            username_nav.setText(Member_main.ProfileContents[0]);
+            // and so on...
+        } else {
+            Toast.makeText(this, "Profile data not loaded", Toast.LENGTH_SHORT).show();
+        }
 
         // Whole layout
         drawerLayout = findViewById(R.id.home_layout);
@@ -70,9 +76,6 @@ public class Profile extends AppCompatActivity {
 
         profileContents();
 
-        //Profile contents
-
-        chg[2].setText(NonMemberUSER.ProfileContents[2]);
         Button button_chg = findViewById(R.id.button_chg);
 
 
@@ -193,22 +196,24 @@ public class Profile extends AppCompatActivity {
     }
 
     public void profileContents(){
-        ments = new TextView[3];
-        ments[0] = findViewById(R.id.textView8);
-        ments[1] = findViewById(R.id.textView9);
-        ments[2] = findViewById(R.id.textView10);
+        ments = new TextView[4];
+        ments[0] = findViewById(R.id.textView8); // username
+        ments[1] = findViewById(R.id.textView9); // email
+        ments[2] = findViewById(R.id.textView10);  //passwird
+        ments[3] = findViewById(R.id.mobile_numberrr); //mobile number
         ments[0].setText(NonMemberUSER.ProfileContents[0]);
         ments[1].setText(NonMemberUSER.ProfileContents[1]);
         ments[2].setText(NonMemberUSER.ProfileContents[2]);
         ments[3].setText(NonMemberUSER.ProfileContents[3]);
         //Profile chg
-        chg = new EditText[3];
+        chg = new EditText[4];
         chg[0] = findViewById(R.id.editTextUsername_chg);
         chg[1] = findViewById(R.id.editTextEmail_chg);
         chg[2] = findViewById(R.id.editTextPassword_chg);
         chg[3] = findViewById(R.id.editTextMobilenumber);
         chg[0].setText(NonMemberUSER.ProfileContents[0]);
         chg[1].setText(NonMemberUSER.ProfileContents[1]);
+        chg[2].setText(NonMemberUSER.ProfileContents[2]);
         chg[3].setText(NonMemberUSER.ProfileContents[3]);
     }
 

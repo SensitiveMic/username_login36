@@ -118,13 +118,12 @@
 
                 <TextView
                     android:id="@+id/textView10"
-                    android:layout_width="159dp"
-                    android:layout_height="29dp"
+                    android:layout_width="166dp"
+                    android:layout_height="31dp"
                     android:layout_marginLeft="10dp"
                     android:inputType="textPassword"
                     android:text="TextView"
-                    android:textAlignment="viewStart"
-                    />
+                    android:textAlignment="viewStart" />
 
                 <CheckBox
                     android:id="@+id/showPasswordCheckBoxProfile"

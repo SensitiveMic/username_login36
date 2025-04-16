@@ -113,8 +113,12 @@ public class NonMemberUSER extends AppCompatActivity {
                 Log.d("TAG35","mobile " + ProfileContents[3]);
                 // Update UI elements using the provided context and TextViews
 
+                if (usernamebar != null && username_nav != null) {
                     usernamebar.setText(ProfileContents[0]);
                     username_nav.setText(ProfileContents[0]);
+                } else {
+                    Log.e("NonMemberUSER", "TextViews are null! Check layout file.");
+                }
 
             }
 

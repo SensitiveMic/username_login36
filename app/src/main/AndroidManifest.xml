@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UsernameLogin"
         tools:targetApi="31">
+
         <activity
             android:name=".Exercise_Library.Exercise_Library_main"
             android:exported="false"/>
