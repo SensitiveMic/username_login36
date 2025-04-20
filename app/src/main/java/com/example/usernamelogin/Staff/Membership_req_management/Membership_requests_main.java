@@ -63,6 +63,7 @@ public class Membership_requests_main extends AppCompatActivity implements inter
     String gym_name;
     RecyclerView recyclerView;
     public static String usernamefrmmmbrshpreq;
+    public static String clicked_nonmem_application_dur;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,7 +109,8 @@ public class Membership_requests_main extends AppCompatActivity implements inter
         });
 
         membership_request_lists();
-        checkMembershipExpirations();
+        //---- this method changes membership based on expiration---
+     //  checkMembershipExpirations();
     }
 
     public static void openNavbar(DrawerLayout drawerLayout) {
@@ -265,8 +267,6 @@ public class Membership_requests_main extends AppCompatActivity implements inter
         // Show the dialog
         dialog.show();
 
-
-
          }
 
     private void storeDates(String userKey) {
@@ -274,26 +274,27 @@ public class Membership_requests_main extends AppCompatActivity implements inter
         Date now = new Date();
         DatabaseReference gettheusername1 = FirebaseDatabase.getInstance().getReference("Users")
                 .child("Non-members").child(userKey);
-        // Calculate the date and time 3 minutes later
+
+        // Calculate the expiration date based on the duration in days
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(now);
-        calendar.add(Calendar.MINUTE, 3);
-        Date threeMinutesLater = calendar.getTime();
+        int durationInDays = Integer.parseInt(Membership_requests_main.clicked_nonmem_application_dur);
+        calendar.add(Calendar.DAY_OF_YEAR, durationInDays);
+        Date expirationDate = calendar.getTime();
 
-        // Format the dates
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+        // Format the dates to MM dd yy
+        SimpleDateFormat sdf = new SimpleDateFormat("MM dd yy", Locale.getDefault());
         String formattedNow = sdf.format(now);
-        String formattedThreeMinutesLater = sdf.format(threeMinutesLater);
+        String formattedExpiration = sdf.format(expirationDate);
         String Gymname = Login.key_Gym_;
 
         // Create a map to store both dates
         Map<String, String> dateMap = new HashMap<>();
         dateMap.put("start_date", formattedNow);
-        dateMap.put("expiration_date", formattedThreeMinutesLater);
+        dateMap.put("expiration_date", formattedExpiration);
         dateMap.put("Gym Name", Gymname);
-        // Store the dates in Firebase
 
+        // Store the dates in Firebase
         gettheusername1.child("membership").setValue(dateMap).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 Log.d("TAG10", "Dates stored successfully.");
@@ -303,7 +304,8 @@ public class Membership_requests_main extends AppCompatActivity implements inter
         });
     }
 
-        public static void checkMembershipExpirations() {
+
+    public static void checkMembershipExpirations() {
 
             DatabaseReference nonMembersRef = FirebaseDatabase.getInstance().getReference("Users/Non-members");
             nonMembersRef.addListenerForSingleValueEvent(new ValueEventListener() {

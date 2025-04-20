@@ -85,7 +85,6 @@ public class Apply_a_gym_fragment extends Fragment implements interface_gym_list
 
 
     RecyclerView gymdisplay;
-
     int positionfrmdb;
     Gym_Properties_Main switcheroo ;
     public static String Gymnameformembershipreq ;
@@ -184,8 +183,6 @@ public class Apply_a_gym_fragment extends Fragment implements interface_gym_list
     public void onItemClick(int position)  {
 
         Gym_Properties_Main.storedposition = position;
-
-
         DatabaseReference storetheposition = FirebaseDatabase.getInstance().getReference("Users")
                 .child("Non-members").child(Login.key).child("positionstored");
 
@@ -216,7 +213,7 @@ public class Apply_a_gym_fragment extends Fragment implements interface_gym_list
                                             Query finduser = removeapplication.orderByChild("username")
                                                     .equalTo(NonMemberUSER.ProfileContents[0]);
 
-                                            finduser.addValueEventListener(new ValueEventListener() {
+                                            finduser.addListenerForSingleValueEvent(new ValueEventListener() {
                                                 @Override
                                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                                     if(snapshot.exists()){
@@ -331,12 +328,14 @@ public class Apply_a_gym_fragment extends Fragment implements interface_gym_list
         String Package_Price = Gym_Properties_Main.Gym_package_selected[1];
         Log.d("TAG8","Package_Price" + Package_Price);
 
+        String Package_duration = Gym_Properties_Main.Gym_package_selected[3];
+
         String request_TimeandDate = createLog();
         Log.d("TAG8","Time and date" + request_TimeandDate);
 
         Log.d("TAG8", "Gymname: " + Gymnameformembershipreq);
 
-        Model_class_membershipReq list = new Model_class_membershipReq(Nonmember_Username, Package_name,Package_Price, request_TimeandDate );
+        Model_class_membershipReq list = new Model_class_membershipReq(Nonmember_Username, Package_name,Package_Price, request_TimeandDate,Package_duration );
         DatabaseReference databaseReferenceNon = FirebaseDatabase.getInstance()
                 .getReference("Membership_Request")
                 .child(Gymnameformembershipreq)

@@ -256,7 +256,6 @@ public class Login extends AppCompatActivity {
         myRefLogin = databaseLogin.getReference("Users/Gym_Owner");
 
 
-
         Query query = myRefLogin.orderByKey();
 
         Log.d("TAG53", "Staff start minecraft! ");

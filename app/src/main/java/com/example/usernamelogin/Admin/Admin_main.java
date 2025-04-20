@@ -90,7 +90,6 @@ public class Admin_main extends AppCompatActivity implements RecyclerViewInterfa
     }
     public static void redirectActivity(Activity activity, Class secondActivity){
         Intent intent = new Intent(activity, secondActivity);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         activity.startActivity(intent);
         activity.finish();
     }

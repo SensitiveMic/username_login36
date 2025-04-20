@@ -21,4 +21,24 @@ public class Exercise_selected_helper {
     public int getExercise_ID() {
         return exercise_ID;
     }
+
+    public void setExerciseName(String exerciseName) {
+        this.exerciseName = exerciseName;
+    }
+
+    public void setExercise_ID(int exercise_ID) {
+        this.exercise_ID = exercise_ID;
+    }
+
+    public void setSets(int sets) {
+        this.sets = sets;
+    }
+
+    public void setReps(int reps) {
+        this.reps = reps;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
 }

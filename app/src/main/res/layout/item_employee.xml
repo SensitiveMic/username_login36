@@ -43,18 +43,39 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
+                    android:id="@+id/notshow1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#454545"
                     android:textSize="16sp"
-                    tools:text="Package Price : " />
+                    android:text="Package Price : " />
                 <TextView
                     android:id="@+id/tvEmail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#454545"
                     android:textSize="16sp"
-                    tools:text="*package price" />
+                    android:text="*package price" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/notshow2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:textSize="16sp"
+                    android:text="Duration(days): " />
+                <TextView
+                    android:id="@+id/pckg_dur"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:textSize="16sp"
+                    android:text="*package duration" />
 
             </LinearLayout>
 

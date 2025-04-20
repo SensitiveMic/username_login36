@@ -1,5 +1,8 @@
 package com.example.usernamelogin.workout_program.grahptry;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -10,6 +13,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.documentfile.provider.DocumentFile;
 
 import com.example.usernamelogin.workout_program.workouts.User_workouts;
 import com.example.usernamelogin.R;
@@ -23,11 +27,17 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -41,7 +51,6 @@ public class Graph_main extends AppCompatActivity {
     private JSONArray loggedData = new JSONArray(); // Holds the JSON data
     // Track the next log date globally
     private Calendar nextLogDate = Calendar.getInstance();
-    File jsonFile;
     Spinner spinner;
     File directory;
 
@@ -51,7 +60,7 @@ public class Graph_main extends AppCompatActivity {
         setContentView(R.layout.activity_graph_main_wrkt_prgrm);
 
         directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
-        jsonFile = new File(directory, "custom_workout.json");
+
         spinner = findViewById(R.id.mySpinner);
         dropdownlistpopulate();
         lineChart = findViewById(R.id.lineChart1);
@@ -59,15 +68,6 @@ public class Graph_main extends AppCompatActivity {
         lineChart.setDragEnabled(true);  // Enable dragging
         lineChart.setScaleXEnabled(true);  // Enable horizontal scaling (zooming)
         lineChart.setScaleYEnabled(false);
-
-  //      Button logButton = findViewById(R.id.logButton);
-   //     Button clearlog = findViewById(R.id.clearButton);
-   //     Button tomorrowlog = findViewById(R.id.tomorrowButton);
-        // Initialize JSON file
-       // initialjsoncheck();
-    //    logButton.setOnClickListener(view -> logtoday());
-  //      tomorrowlog.setOnClickListener(view -> log_yesterday());
-    //    clearlog.setOnClickListener(view -> replacelogbuilder());
 
 
 
@@ -88,91 +88,88 @@ public class Graph_main extends AppCompatActivity {
             }
         });
     }
-    private void dropdownlistpopulate(){
+    private void dropdownlistpopulate() {
         try {
-            // Check if file exists
-            if (!jsonFile.exists()) {
-                Log.e("TAG_graphmain", "File does not exist: " + jsonFile.getAbsolutePath());
+            // Load JSON string using SAF
+            String jsonString = loadJsonFromSAF();
+
+            if (jsonString == null) {
+                Log.e("TAG_graphmain", "JSON string is null. File might not exist or failed to load.");
                 return;
             }
-            // Read the JSON file
-            StringBuilder jsonString = new StringBuilder();
-            try (BufferedReader reader = new BufferedReader(new FileReader(jsonFile))) {
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    jsonString.append(line);
-                }
-            }
-            JSONObject rootObject = new JSONObject(jsonString.toString());
+
+            JSONObject rootObject = new JSONObject(jsonString);
             JSONArray selectedWorkoutArray = rootObject.getJSONArray(User_workouts.selectedCustomWOrk);
+
             // Parse JSON data
-            entries.clear(); // Clear old data before adding new entries
+            entries.clear(); // Optional: depends if you're graphing later
             List<String> exerciseNames = new ArrayList<>();
             for (int i = 0; i < selectedWorkoutArray.length(); i++) {
                 JSONObject jsonObject = selectedWorkoutArray.getJSONObject(i);
                 exerciseNames.add(jsonObject.getString("Exercise_name"));
-            } ArrayAdapter<String> adapter = new ArrayAdapter<>(
+            }
+
+            // Populate the spinner
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(
                     this,
                     android.R.layout.simple_spinner_dropdown_item,
                     exerciseNames
             );
             spinner.setAdapter(adapter);
 
-
-        }catch (Exception e) {
-                e.printStackTrace();
-                Log.e("TAG", "Failed to load data from JSON");
-            }
-
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e("TAG", "Failed to load data from JSON in dropdownlistpopulate()");
+        }
     }
+
     private void loadDataFromJson(String selectedExercise) {
         try {
-            // Check if file exists
-            if (!jsonFile.exists()) {
-                Log.e("TAG_graphmain", "File does not exist: " + jsonFile.getAbsolutePath());
+            // Read JSON string from SAF instead of File
+            String jsonString = loadJsonFromSAF();  // SAF method returns full JSON string
+
+            if (jsonString == null) {
+                Log.e("TAG_graphmain", "JSON string is null. File might not exist or failed to load.");
                 return;
             }
-            // Read the JSON file
-            StringBuilder jsonString = new StringBuilder();
-            try (BufferedReader reader = new BufferedReader(new FileReader(jsonFile))) {
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    jsonString.append(line);
-                }
-            }
-            JSONObject rootObject = new JSONObject(jsonString.toString());
+
+            JSONObject rootObject = new JSONObject(jsonString);
             JSONArray selectedWorkoutArray = rootObject.getJSONArray(User_workouts.selectedCustomWOrk);
-            Log.d("TAG_graphmain", "Custom Workout Name: "+User_workouts.selectedCustomWOrk);
+            Log.d("TAG_graphmain", "Custom Workout Name: " + User_workouts.selectedCustomWOrk);
+
             entries.clear(); // Clear old data before adding new entries
             Log.d("TAG_graphmain", "loadDataFromJson: Initial Phase ");
+
             for (int i = 0; i < selectedWorkoutArray.length(); i++) {
                 JSONObject jsonObject = selectedWorkoutArray.getJSONObject(i);
-                String exerciseNames = jsonObject.getString("Exercise_name");
-                Log.d("TAG_graphmain", "Index Exercise Name: "+exerciseNames);
-                if (exerciseNames.equals(selectedExercise)){
-                    Log.d("TAG_graphmain", " Found The Right Exercise ");
+                String exerciseName = jsonObject.getString("Exercise_name");
+                Log.d("TAG_graphmain", "Index Exercise Name: " + exerciseName);
+
+                if (exerciseName.equals(selectedExercise)) {
+                    Log.d("TAG_graphmain", "Found The Right Exercise");
                     JSONArray workoutLogArray = jsonObject.getJSONArray("Workout_log");
+
                     for (int j = 0; j < workoutLogArray.length(); j++) {
                         JSONObject logEntry = workoutLogArray.getJSONObject(j);
                         long date = logEntry.getLong("date");
                         int volume = logEntry.getInt("volume");
-                        //   Add data to LineChart entries
-                        Log.d("TAG_graphmain", "Entry " + i + ": Date = " + date + ", Volume = " + volume);
+
+                        Log.d("TAG_graphmain", "Entry " + j + ": Date = " + date + ", Volume = " + volume);
                         entries.add(new Entry(date, volume));
                     }
-
                 }
-                for (Entry entry : entries) {
-                    Log.d("TAG_graphmain", "Entry: " + entry.toString());
-                }
-                Log.d("TAG_graphmain", "loadDataFromJson: Finish Phase ");
             }
 
-            // Update LineChart
+            for (Entry entry : entries) {
+                Log.d("TAG_graphmain", "Entry: " + entry.toString());
+            }
+
+            Log.d("TAG_graphmain", "loadDataFromJson: Finish Phase ");
             setupLineChart();
+
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e("TAG_graphmain", "Failed to load data from JSON-loadDataFromJson()");
+            Log.e("TAG_graphmain", "Failed to load data from JSON - loadDataFromJson()");
         }
     }
     private void setupLineChart() {
@@ -262,11 +259,52 @@ public class Graph_main extends AppCompatActivity {
         // Refresh the chart
         lineChart.invalidate();
     }
-    private boolean isWorkoutdatajsoninside(){
-        File Directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
-        File jsonfile = new File(Directory, "workout_data.json");
 
-        return jsonfile.exists();
+    private String loadJsonFromSAF() {
+        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+        String folderUriString = prefs.getString("directory_uri", null);
+
+        if (folderUriString == null) {
+            Log.e("SAF", "No directory URI found in SharedPreferences.");
+            return null;
+        }
+
+        Uri folderUri = Uri.parse(folderUriString);
+
+        // Grant persistable permission if needed (only once after SAF selection)
+        getContentResolver().takePersistableUriPermission(
+                folderUri,
+                Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+        );
+
+        // Get DocumentFile representing the directory
+        DocumentFile directoryDocFile = DocumentFile.fromTreeUri(this, folderUri);
+
+        if (directoryDocFile != null && directoryDocFile.isDirectory()) {
+            for (DocumentFile file : directoryDocFile.listFiles()) {
+                if (file.getName().equals("custom_workout.json")) {
+                    try (InputStream is = getContentResolver().openInputStream(file.getUri());
+                         BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
+
+                        StringBuilder builder = new StringBuilder();
+                        String line;
+                        while ((line = reader.readLine()) != null) {
+                            builder.append(line);
+                        }
+                        return builder.toString();
+
+                    } catch (IOException e) {
+                        Log.e("SAF", "Error reading JSON: " + e.getMessage());
+                        e.printStackTrace();
+                    }
+                }
+            }
+            Log.e("SAF", "custom_workout.json not found in directory.");
+        } else {
+            Log.e("SAF", "Invalid directory URI or directory not accessible.");
+        }
+
+        return null;
     }
 
 

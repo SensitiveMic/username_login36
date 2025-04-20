@@ -39,6 +39,7 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.MyView
         holder.name.setText(fromusers1.getPackage_name());
         holder.email.setText(fromusers1.getPackage_price());
         holder.packagedescrp.setText(fromusers1.getPackage_descrp());
+        holder.package_mem__duration.setText(fromusers1.getPackage_mem_duration());
     }
 
     @Override
@@ -50,11 +51,14 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.MyView
         TextView name;
         TextView email;
         TextView packagedescrp;
+        TextView package_mem__duration;
         public MyViewHolder(@NonNull View itemView, interface_dialog_list recycleViewInterface) {
             super(itemView);
             name = itemView.findViewById(R.id.tvName);
             email = itemView.findViewById(R.id.tvEmail);
             packagedescrp = itemView.findViewById(R.id.descrs);
+            package_mem__duration = itemView.findViewById(R.id.pckg_dur);
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -67,11 +71,13 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.MyView
                           //  Log.d("TAG8", "onClick: " +packagename );
                             String packageprice = email.getText().toString();
                             String packagedes = packagedescrp.getText().toString();
+                            String package_duration = package_mem__duration.getText().toString();
                            // Log.d("TAG8", "onClick: " +packageprice );
-                            Gym_Properties_Main.Gym_package_selected = new String[3];
+                            Gym_Properties_Main.Gym_package_selected = new String[4];
                             Gym_Properties_Main.Gym_package_selected[0]= packagename;
                             Gym_Properties_Main.Gym_package_selected[1]= packageprice;
                             Gym_Properties_Main.Gym_package_selected[2]= packagedes;
+                            Gym_Properties_Main.Gym_package_selected[3]= package_duration;
 
                             recycleViewInterface.onItemClick1(pos);
 

@@ -40,7 +40,6 @@ public class Exercises_to_select extends AppCompatActivity {
             List<Modelclass_forexercises> selectedItems = adapter.getSelectedItems();
 
             Intent intent = new Intent(Exercises_to_select.this, MainActivity_wrkt_prgrm.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             intent.putExtra("selected_exercises", new Gson().toJson(selectedItems));
             startActivity(intent);
         });

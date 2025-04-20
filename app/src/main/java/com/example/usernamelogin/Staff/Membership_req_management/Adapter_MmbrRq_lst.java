@@ -44,6 +44,7 @@ public class Adapter_MmbrRq_lst extends RecyclerView.Adapter<Adapter_MmbrRq_lst.
         holder.username.setText(fromusers1.getUsername());
         holder.price.setText(fromusers1.getPackage_price());
         holder.timeanddate.setText(fromusers1.getTimeandDate());
+        holder.package_dur.setText(fromusers1.getPackage_mem_duration());
     }
 
     @Override
@@ -52,7 +53,7 @@ public class Adapter_MmbrRq_lst extends RecyclerView.Adapter<Adapter_MmbrRq_lst.
     }
 
     public static class MyViewHolder extends  RecyclerView.ViewHolder {
-        TextView package_name, username, price, timeanddate;
+        TextView package_name, username, price, timeanddate, package_dur;
         CardView kasibag;
         public MyViewHolder(@NonNull View itemView, interface_membership_requests_list interface_click) {
             super(itemView);
@@ -62,6 +63,7 @@ public class Adapter_MmbrRq_lst extends RecyclerView.Adapter<Adapter_MmbrRq_lst.
             price = itemView.findViewById(R.id.dbprice);
             timeanddate = itemView.findViewById(R.id.dbreqsentdate);
             kasibag = itemView.findViewById(R.id.membership_requests_list);
+            package_dur = itemView.findViewById(R.id.Duration_mem);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -72,7 +74,9 @@ public class Adapter_MmbrRq_lst extends RecyclerView.Adapter<Adapter_MmbrRq_lst.
                         if (pos != RecyclerView.NO_POSITION){
 
                             String text = username.getText().toString();
+                            String dur = package_dur.getText().toString();
                             Membership_requests_main.usernamefrmmmbrshpreq = text;
+                            Membership_requests_main.clicked_nonmem_application_dur = dur;
 
                             interface_click.onItemClick(pos);
                         }

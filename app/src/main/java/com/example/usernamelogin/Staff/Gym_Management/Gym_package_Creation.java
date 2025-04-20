@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.usernamelogin.R;
+import com.example.usernamelogin.RegisterandLogin.Login;
 import com.example.usernamelogin.RegisterandLogin.MainActivity;
 import com.example.usernamelogin.Users;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -19,8 +20,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class Gym_package_Creation extends AppCompatActivity {
-    EditText package_name, package_descrp, package_price;
-    String Name, descrp, price;
+    EditText package_name, package_descrp, package_price, pckage_mem_duration;
+    String Name, descrp, price,package_duration;
     Button Confirm_add_package;
     FirebaseDatabase database;
     DatabaseReference myref;
@@ -34,6 +35,7 @@ public class Gym_package_Creation extends AppCompatActivity {
         package_name = findViewById(R.id.editTextGym_Package_name);
         package_descrp = findViewById(R.id.editTextGym_Package_Decrp);
         package_price = findViewById(R.id.editTextGym_Package_Price);
+        pckage_mem_duration = findViewById(R.id.editTextGym_Package_membership_duration);
         Confirm_add_package = findViewById(R.id.button_chg);
         goback = findViewById(R.id.go_back);
 
@@ -49,16 +51,16 @@ public class Gym_package_Creation extends AppCompatActivity {
                 Name = package_name.getText().toString();
                 descrp = package_descrp.getText().toString();
                 price = package_price.getText().toString();
+                package_duration = pckage_mem_duration.getText().toString();
 
-
-                if(Name.isEmpty() || descrp.isEmpty() || price.isEmpty()) {
+                if(Name.isEmpty() || descrp.isEmpty() || price.isEmpty() || package_duration.isEmpty() ) {
 
                     Toast.makeText(Gym_package_Creation.this, "Enter Texts in the Empty Fields", Toast.LENGTH_SHORT).show();
                 }
                 else{
                     database = FirebaseDatabase.getInstance();
-                    myref = database.getReference("Gym_package").push();
-                    Helper_Gym_adding_staff fromeditText = new Helper_Gym_adding_staff(Name,descrp,price);
+                    myref = database.getReference("Gym_package").child(Login.key_Gym_).push();
+                    Helper_Gym_adding_staff fromeditText = new Helper_Gym_adding_staff(Name,descrp,price,package_duration );
                     myref.setValue(fromeditText).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {

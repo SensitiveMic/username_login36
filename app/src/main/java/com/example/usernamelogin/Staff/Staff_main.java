@@ -133,8 +133,8 @@ public class Staff_main extends AppCompatActivity{
             }
         });
 
-
-       Membership_requests_main.checkMembershipExpirations();
+          //---- this method changes membership based on expiration---
+      // Membership_requests_main.checkMembershipExpirations();
     }
 
     public static void openNavbar(DrawerLayout drawerLayout) {

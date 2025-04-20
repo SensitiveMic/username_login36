@@ -22,12 +22,13 @@ import com.example.usernamelogin.NonMemberUser.NonMemberUSER;
 import com.example.usernamelogin.NonMemberUser.Profile;
 import com.example.usernamelogin.R;
 
+import com.example.usernamelogin.workout_program.workouts.User_workouts;
 import com.google.android.material.tabs.TabLayout;
 
 public class Reservations extends AppCompatActivity{
     DrawerLayout drawerLayout;
     ImageView menu;
-    LinearLayout home, reservations, profile,gym_membership;
+    LinearLayout home, reservations, profile,gym_membership,workout;
     FrameLayout frameLayout;
     TabLayout tabLayout;
     private TextView[] textViews;
@@ -54,6 +55,7 @@ public class Reservations extends AppCompatActivity{
         reservations = findViewById(R.id.Reservations_navdrawer);
         profile = findViewById(R.id.Profile_navdrawer);
         gym_membership = findViewById(R.id.Gym_navdrawer);
+        workout = findViewById(R.id.member_workout);
 
         frameLayout = (FrameLayout) findViewById(R.id.framelayout1);
         tabLayout = (TabLayout) findViewById(R.id.tablayout);
@@ -145,6 +147,13 @@ public class Reservations extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 redirectActivity(Reservations.this, Gym_Properties_Main.class);
+            }
+        });
+        workout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                redirectActivity(Reservations.this, User_workouts.class);
+
             }
         });
 

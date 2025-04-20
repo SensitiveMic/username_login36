@@ -28,6 +28,7 @@ import com.example.usernamelogin.RegisterandLogin.Login;
 import com.example.usernamelogin.NonMemberUser.Reservations.Reservations;
 
 import com.example.usernamelogin.Users;
+import com.example.usernamelogin.workout_program.workouts.User_workouts;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
@@ -41,7 +42,7 @@ public class Profile extends AppCompatActivity {
     String USERNAME, PASSWORD, EMAIL,MOBILENUMBER;
     DrawerLayout drawerLayout;
     ImageView menu;
-    LinearLayout home, reservations, profile, gym_membership;
+    LinearLayout home, reservations, profile, gym_membership,workout;
     Button changeprof_i;
     private TextView[] ments;
     private EditText[] chg;
@@ -73,6 +74,7 @@ public class Profile extends AppCompatActivity {
         profile = findViewById(R.id.Profile_navdrawer);
         changeprof_i = findViewById(R.id.changeP_I);
         gym_membership = findViewById(R.id.Gym_navdrawer);
+        workout = findViewById(R.id.member_workout);
 
         profileContents();
 
@@ -142,6 +144,12 @@ public class Profile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 openchg(drawerLayout);
+            }
+        });
+        workout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                redirectActivity(Profile.this, User_workouts.class);
             }
         });
         button_chg.setOnClickListener(new View.OnClickListener() {

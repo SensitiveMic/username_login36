@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.usernamelogin.NonMemberUser.Gym_prop.Apply_a_gym_fragment;
 import com.example.usernamelogin.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -49,7 +50,7 @@ public abstract class DialogList extends Dialog implements interface_dialog_list
         adapter = new EmployeeAdapter(getContext(), list, (interface_dialog_list) this);
         recyclerView.setAdapter(adapter);
 
-        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("Gym_package");
+        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("Gym_package").child(Apply_a_gym_fragment.Gymnameformembershipreq);
         Query myRefQuery = myRef.orderByKey();
 
         myRefQuery.addListenerForSingleValueEvent(new ValueEventListener() {

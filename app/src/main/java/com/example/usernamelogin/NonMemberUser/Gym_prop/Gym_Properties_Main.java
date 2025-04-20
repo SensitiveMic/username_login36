@@ -25,6 +25,7 @@ import com.example.usernamelogin.NonMemberUser.Profile;
 import com.example.usernamelogin.R;
 import com.example.usernamelogin.RegisterandLogin.Login;
 import com.example.usernamelogin.NonMemberUser.Reservations.Reservations;
+import com.example.usernamelogin.workout_program.workouts.User_workouts;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,7 +37,7 @@ import com.google.firebase.database.ValueEventListener;
 public class Gym_Properties_Main extends AppCompatActivity {
     DrawerLayout drawerLayout;
     ImageView menu;
-    LinearLayout home, reservations, profile, gym_membership;
+    LinearLayout home, reservations, profile, gym_membership, workout;
     public static String[] ProfileContents;
     public static String[] Gym_package_selected;
     FrameLayout frameLayout;
@@ -59,6 +60,7 @@ public class Gym_Properties_Main extends AppCompatActivity {
         reservations = findViewById(R.id.Reservations_navdrawer);
         profile = findViewById(R.id.Profile_navdrawer);
         gym_membership = findViewById(R.id.Gym_navdrawer);
+        workout = findViewById(R.id.member_workout);
 
         frameLayout = (FrameLayout) findViewById(R.id.framelayout1);
         tabLayout = (TabLayout) findViewById(R.id.tablayout);
@@ -153,6 +155,12 @@ public class Gym_Properties_Main extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 closeNavbar(drawerLayout);
+            }
+        });
+        workout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                redirectActivity(Gym_Properties_Main.this, User_workouts.class);
             }
         });
 

@@ -71,11 +71,7 @@ public class first_Frag extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_first__wrkt_prgrm, container, false);
 
-
-        fitnessgoal = view.findViewById(R.id.button1);
         buildmuscle = view.findViewById(R.id.button2);
-        stayfit = view.findViewById(R.id.button3);
-
 
         buildmuscle.setOnClickListener(v -> nextfrag());
 

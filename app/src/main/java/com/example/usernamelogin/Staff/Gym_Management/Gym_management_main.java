@@ -8,16 +8,22 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 
 import com.example.usernamelogin.R;
 
+import com.example.usernamelogin.RegisterandLogin.Login;
 import com.example.usernamelogin.Staff.Gym_Management.Gymmng_changestogym.OCtimechange;
 import com.example.usernamelogin.Staff.Profile_Staff.Staff_Profile_Main;
 import com.example.usernamelogin.Staff.Staff_main;
@@ -29,12 +35,13 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class Gym_management_main extends AppCompatActivity  {
+public class Gym_management_main extends AppCompatActivity implements interface_Adapter_Gym_packages  {
     DrawerLayout drawerLayout;
     ImageView menu, gotoaddgym;
     LinearLayout home, Gym_management, profile;
     RecyclerView recyclerView;
     Button changedescrp, changeOCtime;
+    public static String selected_pkg_pk;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,11 +145,11 @@ public class Gym_management_main extends AppCompatActivity  {
     }
     private void populate_gympackage_list(){
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();;
-        DatabaseReference myref = database.getReference("Gym_package") ;
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myref = database.getReference("Gym_package").child(Login.key_Gym_) ;
 
         ArrayList<Model_Class_Adapter_Gym_Packages> list = new ArrayList<>();
-        Adapter_Gym_Packages adapter = new Adapter_Gym_Packages(this,list);
+        Adapter_Gym_Packages adapter = new Adapter_Gym_Packages((Context) this,list,this);
         recyclerView.setAdapter(adapter);
 
         myref.addValueEventListener(new ValueEventListener() {
@@ -150,6 +157,8 @@ public class Gym_management_main extends AppCompatActivity  {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot dataSnapshot:snapshot.getChildren()){
                     Model_Class_Adapter_Gym_Packages res_list = dataSnapshot.getValue(Model_Class_Adapter_Gym_Packages.class);
+
+                    res_list.setPackage_pushkey(dataSnapshot.getKey());
                     list.add(res_list);
                 }
                 adapter.notifyDataSetChanged();
@@ -163,5 +172,128 @@ public class Gym_management_main extends AppCompatActivity  {
 
     }
 
+    private void change_pckg_dts(int decider){
+        DatabaseReference myref = FirebaseDatabase.getInstance().getReference("Gym_package")
+                .child(Login.key_Gym_)
+                .child(selected_pkg_pk);
 
+        if(decider == 0){
+            myref.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        Model_Class_Adapter_Gym_Packages res_lk = snapshot.getValue(Model_Class_Adapter_Gym_Packages.class);
+
+                        showCustomDialog(Gym_management_main.this,res_lk.getPackage_name(), res_lk.getPackage_descrp(), res_lk.getPackage_price()
+                                , res_lk.getPackage_mem_duration(), myref);
+
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }else{
+            myref.removeValue();
+            recreate();
+        }
+
+
+
+
+
+
+    }
+    private void showCustomDialog(Context context,String pkgName, String pkg_descrp, String prce, String dur, DatabaseReference myref){
+
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View view = inflater.inflate(R.layout.dialog_add_package, null);
+        // Access views inside the custom layout if needed
+        EditText packageName = view.findViewById(R.id.editTextGym_Package_name);
+        packageName.setText(pkgName);
+        EditText description = view.findViewById(R.id.editTextGym_Package_Decrp);
+        description.setText(pkg_descrp);
+        EditText price = view.findViewById(R.id.editTextGym_Package_Price);
+        price.setText(prce);
+        EditText duration = view.findViewById(R.id.editTextGym_Package_membership_duration);
+        duration.setText(dur);
+        Button confirmBtn = view.findViewById(R.id.button_chg);
+        ImageView goBackBtn = view.findViewById(R.id.go_back);
+
+        // Create the dialog
+        AlertDialog dialog = new AlertDialog.Builder(context)
+                .setView(view)
+                .setCancelable(false) // optional: force user to choose an action
+                .create();
+
+        confirmBtn.setOnClickListener(v -> {
+
+            String name = packageName.getText().toString().trim();
+            String descrp = description.getText().toString().trim();
+            String packagePrice = price.getText().toString().trim();
+            String durationDays = duration.getText().toString().trim();
+
+            myref.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        // Retrieve the current package data from Firebase
+                        Model_Class_Adapter_Gym_Packages res_lk = snapshot.getValue(Model_Class_Adapter_Gym_Packages.class);
+
+                        // Update the existing fields of res_lk
+                        res_lk.setPackage_name(name);
+                        res_lk.setPackage_descrp(descrp);
+                        res_lk.setPackage_price(packagePrice);
+                        res_lk.setPackage_mem_duration(durationDays);
+
+                        // Save the updated object back to Firebase
+                        myref.setValue(res_lk).addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                Log.d("TAGPO", "Package updated successfully.");
+                            } else {
+                                Log.e("TAGPO", "Failed to update package.", task.getException());
+                            }
+                        });
+                    } else {
+                        Log.e("TAGPO", "Package does not exist in Firebase.");
+                    }
+
+                    dialog.dismiss(); // Close the dialog after saving
+                    recreate();
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Log.e("TAG", "Failed to read value.", error.toException());
+                }
+            });
+        });
+
+        // Go back button logic
+        goBackBtn.setOnClickListener(v -> dialog.dismiss());
+
+        // Show the dialog
+        dialog.show();
+
+
+    }
+    @Override
+    public void onItemClick(int position) {
+        AlertDialog crerdel = new AlertDialog.Builder(this)
+                .setTitle("Confirmation")
+                .setMessage("Are you sure you want to proceed?")
+                .setPositiveButton("Change Contents", (dialog, which) -> {
+                    int chg = 0;
+                    change_pckg_dts(chg);
+                })
+                .setNegativeButton("Delete Package", (dialog, which) -> {
+                    int chg2 = 1;
+                    change_pckg_dts(chg2);
+                })
+                .show();
+
+
+    }
 }

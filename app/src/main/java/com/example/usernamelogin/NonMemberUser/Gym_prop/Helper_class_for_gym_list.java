@@ -3,6 +3,7 @@ package com.example.usernamelogin.NonMemberUser.Gym_prop;
 public class Helper_class_for_gym_list {
     String gym_name, gym_descrp, gym_owner_username;
 
+
     public String getGym_name() {
         return gym_name;
     }

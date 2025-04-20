@@ -1,6 +1,9 @@
 package com.example.usernamelogin.workout_program.personalizing.Exercise_category.selected_exercises;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -12,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.documentfile.provider.DocumentFile;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,7 +37,10 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -202,33 +209,7 @@ public class Selected_Exercise_frag extends Fragment {
                 .show();
     }
     private void inputtojson() {
-        //check if there is custom_workout.json file
-        if(isWorkoutdatajsoninside()){
-            Log.d("TAG_MainACt_save_tojson", "initialjsoncheck: TRUE " );
-        }else {
-            Log.e("TAG_MainACt_save_tojson", "initialjsoncheck: FALSE " );
-            //create the jsonfile
-            try{
-                File Directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
 
-                if (!Directory.exists()) {
-                    boolean dirCreated = Directory.mkdirs();
-                    if (!dirCreated) {
-                        Log.e("TAG_MainACt_save_tojson", "Failed to create Documents directory!");
-                        return;
-                    }
-                }
-
-                File jsonFile = new File(Directory, "custom_workout.json");
-                FileWriter writer = new FileWriter(jsonFile);
-                writer.write("[]"); // empty json array
-                writer.flush();
-                writer.close();
-                Log.d("TAG_MainACt_save_tojson", "Successful json file creation" );
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }
 
         // Retrieve exercise data
         Map<Integer, Triple<List<String>, List<String>, List<String>>> allData = adapter.getAllData();
@@ -247,10 +228,9 @@ public class Selected_Exercise_frag extends Fragment {
             }
         }
 
-        File jsonfile = new File(directory,"custom_workout.json");
-        if (jsonfile.exists()) {
+
             try {
-                String jsonString = readJsonFromFile(jsonfile);
+                String jsonString = loadJsonFromSAF();
                 Log.d("TAG_MainACt_save_tojson", "OLD JSON: " + jsonString);
                 root = new JSONObject(jsonString);  // Parse the current JSON string into a JSONObject
                 workoutArray = root.optJSONArray(workoutname);  // Get the existing workout array
@@ -260,10 +240,7 @@ public class Selected_Exercise_frag extends Fragment {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        } else {
-            Log.d("TAG_MainACt_save_tojson", "did not find jsonfile");
-            workoutArray = new JSONArray();  // Initialize the workout array
-        }
+
 
         for (int position : allData.keySet()) {
             Modelclass_forexercises exercise_pos = exerciseList.get(position);
@@ -327,7 +304,7 @@ public class Selected_Exercise_frag extends Fragment {
             String jsonString = root.toString();
 
             // Save to internal storage
-            saveJsonToexternalStorage(jsonString);
+            saveJsonToSAF(jsonString);
 
             Log.d("TAG9", "Updated JSON: " + jsonString);
         } catch (JSONException e) {
@@ -340,46 +317,96 @@ public class Selected_Exercise_frag extends Fragment {
 
         return jsonfile.exists();
     }
-    private String readJsonFromFile(File fileName) {
+    private String loadJsonFromSAF() {
+        SharedPreferences prefs = requireContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
+        String folderUriString = prefs.getString("directory_uri", null);
 
-        String json = "";
+        if (folderUriString == null) {
+            Log.e("SAF", "No directory URI found in SharedPreferences.");
+            return null;
+        }
+
+        Uri folderUri = Uri.parse(folderUriString);
+
+        // Grant persistable permission (usually done right after folder selection, so you can omit this here if already persisted)
+        requireContext().getContentResolver().takePersistableUriPermission(
+                folderUri,
+                Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+        );
+
+        DocumentFile directoryDocFile = DocumentFile.fromTreeUri(requireContext(), folderUri);
+
+        if (directoryDocFile != null && directoryDocFile.isDirectory()) {
+            for (DocumentFile file : directoryDocFile.listFiles()) {
+                if ("custom_workout.json".equals(file.getName())) {
+                    try (InputStream is = requireContext().getContentResolver().openInputStream(file.getUri());
+                         BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
+
+                        StringBuilder builder = new StringBuilder();
+                        String line;
+                        while ((line = reader.readLine()) != null) {
+                            builder.append(line);
+                        }
+                        return builder.toString();
+
+                    } catch (IOException e) {
+                        Log.e("SAF", "Error reading JSON: " + e.getMessage());
+                        e.printStackTrace();
+                    }
+                }
+            }
+            Log.e("SAF", "custom_workout.json not found in directory.");
+        } else {
+            Log.e("SAF", "Invalid directory URI or directory not accessible.");
+        }
+
+        return null;
+    }
+
+    private void saveJsonToSAF(String jsonString) {
+        SharedPreferences prefs = requireContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
+        String folderUriString = prefs.getString("directory_uri", null);
+
+        if (folderUriString == null) {
+            Toast.makeText(getContext(), "No directory selected to save the file.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Uri folderUri = Uri.parse(folderUriString);
+        DocumentFile pickedDir = DocumentFile.fromTreeUri(requireContext(), folderUri);
+        if (pickedDir == null || !pickedDir.canWrite()) {
+            Toast.makeText(getContext(), "Unable to access the selected directory.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Delete existing file if it exists (to overwrite cleanly)
+        DocumentFile existingFile = pickedDir.findFile("custom_workout.json");
+        if (existingFile != null) {
+            existingFile.delete();
+        }
+
+        // Create new JSON file
+        DocumentFile newJsonFile = pickedDir.createFile("application/json", "custom_workout");
+
         try {
-            File directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
-            File jsonFile = new File(directory, fileName.getName()); // File in Documents folder
-
-            // Check if the file exists
-            if (!jsonFile.exists()) {
-                Log.d("ReadJSON", "File not found: " + jsonFile.getAbsolutePath());
-                return null; // Return null if the file does not exist
+            OutputStream outputStream = requireContext().getContentResolver().openOutputStream(newJsonFile.getUri());
+            if (outputStream != null) {
+                outputStream.write(jsonString.getBytes(StandardCharsets.UTF_8));
+                outputStream.flush();
+                outputStream.close();
+                Toast.makeText(getContext(), "JSON saved using SAF!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getContext(), "Failed to open output stream.", Toast.LENGTH_SHORT).show();
             }
-            FileInputStream fis = new FileInputStream(jsonFile);
-            InputStreamReader inputStreamReader = new InputStreamReader(fis);
-            BufferedReader reader = new BufferedReader(inputStreamReader);
-            StringBuilder stringBuilder = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                stringBuilder.append(line);
-            }
-            json = stringBuilder.toString();
-            fis.close();
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        return json;
-    }
-    private void saveJsonToexternalStorage(String jsonString) {
-        try {
-            File Directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
-            File jsonfile = new File(Directory, "custom_workout.json");
-            FileOutputStream fos = new FileOutputStream(jsonfile);
-            fos.write(jsonString.getBytes());
-            fos.close();
-            Toast.makeText(getContext(), "JSON saved to internal storage!", Toast.LENGTH_SHORT).show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            Toast.makeText(getContext(), "Failed to save JSON.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Error saving JSON with SAF.", Toast.LENGTH_SHORT).show();
         }
     }
+
+
+
+    // _________ Set reps and weight giver__
     private int getmidval(int min, int max){
         return (min+max)/2;
     }

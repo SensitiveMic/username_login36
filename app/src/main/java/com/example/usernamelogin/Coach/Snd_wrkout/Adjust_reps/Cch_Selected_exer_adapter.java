@@ -1,5 +1,7 @@
 package com.example.usernamelogin.Coach.Snd_wrkout.Adjust_reps;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -15,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.usernamelogin.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,9 +26,9 @@ import kotlin.Triple;
 
 public class Cch_Selected_exer_adapter extends RecyclerView.Adapter<Cch_Selected_exer_adapter.MYViewHolder> {
     private List<Exercise_selected_helper> exerciseList;
-    private Map<Integer, List<EditText>> weightEditTextsMap = new HashMap<>();
-    private Map<Integer, List<EditText>> repsEditTextsMap = new HashMap<>();
-    private Map<Integer, List<EditText>> setsEditTextsMap = new HashMap<>();
+    private final Map<Integer, List<EditText>> weightEditTextsMap = new HashMap<>();
+    private final Map<Integer, List<EditText>> repsEditTextsMap = new HashMap<>();
+    private final Map<Integer, List<EditText>> setsEditTextsMap = new HashMap<>();
 
     public Cch_Selected_exer_adapter(List<Exercise_selected_helper> exerciseList) {
         this.exerciseList = exerciseList != null ? exerciseList : new ArrayList<>();
@@ -33,68 +36,55 @@ public class Cch_Selected_exer_adapter extends RecyclerView.Adapter<Cch_Selected
 
     @NonNull
     @Override
-    public Cch_Selected_exer_adapter.MYViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MYViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_ch_selected_exerc, parent, false);
         return new MYViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Cch_Selected_exer_adapter.MYViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MYViewHolder holder, int position) {
         Exercise_selected_helper item = exerciseList.get(position);
-        holder.exerciseName.setText(item.getExerciseName());
-        holder.setsText.setText(String.valueOf(item.getSets()));
-        holder.repsText.setText(String.valueOf(item.getReps()));
-        holder.weightText.setText(String.valueOf(item.getWeight()));
 
-        List<EditText> weightList = new ArrayList<>();
-        List<EditText> repsList = new ArrayList<>();
-        List<EditText> setsList = new ArrayList<>();
+        holder.bind(item);
 
-        weightList.add(holder.weightText);
-        repsList.add(holder.repsText);
-        setsList.add(holder.setsText);
-
-        weightEditTextsMap.put(position, weightList);
-        repsEditTextsMap.put(position, repsList);
-        setsEditTextsMap.put(position, setsList);
-
-        holder.setSeekBar(holder.setsSeek, 99,  holder.setsText);
-        holder.setSeekBar(holder.repsSeek,29,holder.repsText);
-
+        // Register EditTexts for data collection
+        weightEditTextsMap.put(position, Collections.singletonList(holder.weightText));
+        repsEditTextsMap.put(position, Collections.singletonList(holder.repsText));
+        setsEditTextsMap.put(position, Collections.singletonList(holder.setsText));
     }
 
+    @Override
+    public int getItemCount() {
+        return exerciseList.size();
+    }
 
     public Map<Integer, Triple<List<String>, List<String>, List<String>>> getAllData() {
         Map<Integer, Triple<List<String>, List<String>, List<String>>> allData = new HashMap<>();
-        Map<Integer, Pair<String, Integer>> exerciseDetails = new HashMap<>();  // Map to hold exercise name and ID
+        Map<Integer, Pair<String, Integer>> exerciseDetails = new HashMap<>();
 
         for (int position : weightEditTextsMap.keySet()) {
             List<String> weightValues = new ArrayList<>();
             List<String> repsValues = new ArrayList<>();
             List<String> setsValues = new ArrayList<>();
 
-            for (EditText weightEditText : weightEditTextsMap.get(position)) {
-                weightValues.add(weightEditText.getText().toString().trim());
+            for (EditText et : weightEditTextsMap.get(position)) {
+                weightValues.add(et.getText().toString().trim());
             }
-            for (EditText repsEditText : repsEditTextsMap.get(position)) {
-                repsValues.add(repsEditText.getText().toString().trim());
+            for (EditText et : repsEditTextsMap.get(position)) {
+                repsValues.add(et.getText().toString().trim());
             }
-            for (EditText setsEditText : setsEditTextsMap.get(position)) {
-                setsValues.add(setsEditText.getText().toString().trim());
+            for (EditText et : setsEditTextsMap.get(position)) {
+                setsValues.add(et.getText().toString().trim());
             }
 
-            // Assuming exercise name and ID are from exerciseList
-            Exercise_selected_helper exercise = exerciseList.get(position);  // or whichever list holds your exercises
+            Exercise_selected_helper exercise = exerciseList.get(position);
             String exerciseName = exercise.getExerciseName();
             int exerciseId = exercise.getExercise_ID();
 
-            // Store exercise name and ID in exerciseDetails map
             exerciseDetails.put(position, new Pair<>(exerciseName, exerciseId));
-
             allData.put(position, new Triple<>(weightValues, repsValues, setsValues));
         }
 
-        // Logging the exercise details
         for (int position : exerciseDetails.keySet()) {
             Pair<String, Integer> exerciseInfo = exerciseDetails.get(position);
             Log.d("TAG_MAIN_Selected_ex", "Exercise ID: " + exerciseInfo.second + ", Exercise Name: " + exerciseInfo.first);
@@ -103,15 +93,11 @@ public class Cch_Selected_exer_adapter extends RecyclerView.Adapter<Cch_Selected
         return allData;
     }
 
-    @Override
-    public int getItemCount() {
-        return exerciseList.size();
-    }
-
     public static class MYViewHolder extends RecyclerView.ViewHolder {
         TextView exerciseName;
         EditText setsText, repsText, weightText;
-        SeekBar setsSeek, repsSeek;
+
+        private TextWatcher setsWatcher, repsWatcher, weightWatcher;
 
         public MYViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -119,28 +105,63 @@ public class Cch_Selected_exer_adapter extends RecyclerView.Adapter<Cch_Selected
             setsText = itemView.findViewById(R.id.Sets_TextNumber);
             repsText = itemView.findViewById(R.id.Reps_TextNumber);
             weightText = itemView.findViewById(R.id.Weight_TextNumber);
-            setsSeek = itemView.findViewById(R.id.seekBar);
-            repsSeek = itemView.findViewById(R.id.seekBar2);
+
         }
 
-        void setSeekBar(SeekBar seekBar,int max, EditText editText) {
-            seekBar.setMax(max);
+        void bind(Exercise_selected_helper item) {
+            exerciseName.setText(item.getExerciseName());
+
+            // Remove previous watchers if they exist
+            if (setsWatcher != null) setsText.removeTextChangedListener(setsWatcher);
+            if (repsWatcher != null) repsText.removeTextChangedListener(repsWatcher);
+            if (weightWatcher != null) weightText.removeTextChangedListener(weightWatcher);
+
+            // Set current values
+            setsText.setText(String.valueOf(item.getSets()));
+            repsText.setText(String.valueOf(item.getReps()));
+            weightText.setText(String.valueOf(item.getWeight()));
 
 
-            seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            // Create fresh watchers
+            setsWatcher = new SimpleTextWatcher() {
                 @Override
-                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                    int actualValue = progress + 1;
-                    editText.setText(String.valueOf(actualValue));
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    item.setSets(parseSafeInt(s.toString(), 1));
                 }
-
+            };
+            repsWatcher = new SimpleTextWatcher() {
                 @Override
-                public void onStartTrackingTouch(SeekBar seekBar) {}
-
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    item.setReps(parseSafeInt(s.toString(), 1));
+                }
+            };
+            weightWatcher = new SimpleTextWatcher() {
                 @Override
-                public void onStopTrackingTouch(SeekBar seekBar) {}
-            });
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    item.setWeight(parseSafeInt(s.toString(), 0));
+                }
+            };
+
+            setsText.addTextChangedListener(setsWatcher);
+            repsText.addTextChangedListener(repsWatcher);
+            weightText.addTextChangedListener(weightWatcher);
         }
 
+
+
+        private int parseSafeInt(String value, int defaultVal) {
+            try {
+                return Integer.parseInt(value.trim());
+            } catch (NumberFormatException e) {
+                return defaultVal;
+            }
+        }
+
+
+    }
+
+    public abstract static class SimpleTextWatcher implements TextWatcher {
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+        public void afterTextChanged(Editable s) {}
     }
 }

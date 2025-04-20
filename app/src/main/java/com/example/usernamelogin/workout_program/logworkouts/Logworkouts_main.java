@@ -1,6 +1,8 @@
 package com.example.usernamelogin.workout_program.logworkouts;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -12,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.documentfile.provider.DocumentFile;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,10 +29,12 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
+
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -42,7 +47,7 @@ public class Logworkouts_main extends AppCompatActivity {
     RecyclerView recyclerView;
     Adapter_Logworkouts adapter;
     List<Exercise> exercises;
-    File directory;
+
     String jsonString;
 
     @Override
@@ -56,11 +61,10 @@ public class Logworkouts_main extends AppCompatActivity {
             return insets;
         });
 
-        directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
         recyclerView =findViewById(R.id.recviewofworkouts);
         doneButton = findViewById(R.id.done_button);
         seelog = findViewById(R.id.log_button);
-        jsonString = loadJsonFromFile("custom_workout.json");
+        jsonString = loadJsonFromSAF();
 
         if(jsonString != null){
             exercises = parseJson(jsonString);
@@ -159,45 +163,104 @@ private void save_logs(Map<Integer, Integer> exerciseSums){
             }
 
             }
-        try (FileWriter fileWriter = new FileWriter(jsonfilename())) {
-            fileWriter.write(rootObject.toString(4)); // Pretty-print with indentation
-            fileWriter.flush();
-            Log.d("TAG!!", "Logged!");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        saveJsonToSAF(rootObject);
 
     }  catch (JSONException e) {
         throw new RuntimeException(e);
     }
 }
-    private File jsonfilename(){
-        File jsonFile = new File(directory, "custom_workout.json");
-        return jsonFile;
-    }
-    private String loadJsonFromFile(String fileName) {
-        try {
-            File jsonFile = jsonfilename(); // File in Documents folder
+    private void saveJsonToSAF(JSONObject rootObject) {
+        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+        String folderUriString = prefs.getString("directory_uri", null);
 
-            // Check if the file exists
-            if (!jsonFile.exists()) {
-                Log.d("ReadJSON", "File not found: " + jsonFile.getAbsolutePath());
-                return null; // Return null if the file does not exist
+        if (folderUriString == null) {
+            Log.e("SAF", "No directory URI found in SharedPreferences.");
+            return;
+        }
+
+        Uri folderUri = Uri.parse(folderUriString);
+        DocumentFile directoryDocFile = DocumentFile.fromTreeUri(this, folderUri);
+
+        if (directoryDocFile == null || !directoryDocFile.isDirectory()) {
+            Log.e("SAF", "Invalid directory DocumentFile.");
+            return;
+        }
+
+        // Look for the file named custom_workout.json
+        DocumentFile jsonFile = null;
+        for (DocumentFile file : directoryDocFile.listFiles()) {
+            if (file.getName().equals("custom_workout.json")) {
+                jsonFile = file;
+                break;
             }
-            FileInputStream fis = new FileInputStream(jsonFile);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(fis));
-            StringBuilder jsonBuilder = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                jsonBuilder.append(line);
+        }
+
+        // If file doesn't exist, create it
+        if (jsonFile == null) {
+            jsonFile = directoryDocFile.createFile("application/json", "custom_workout.json");
+        }
+
+        if (jsonFile != null) {
+            try (OutputStream os = getContentResolver().openOutputStream(jsonFile.getUri(), "wt")) {
+                if (os != null) {
+                    os.write(rootObject.toString(4).getBytes(StandardCharsets.UTF_8));
+                    os.flush();
+                    Log.d("SAF", "Successfully saved to custom_workout.json");
+                }
+            } catch (IOException e) {
+                Log.e("SAF", "Failed to write JSON: " + e.getMessage(), e);
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
             }
-            reader.close();
-            fis.close();
-            return jsonBuilder.toString();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } else {
+            Log.e("SAF", "Unable to create or access custom_workout.json");
+        }
+    }
+    private String loadJsonFromSAF() {
+        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+        String folderUriString = prefs.getString("directory_uri", null);
+
+        if (folderUriString == null) {
+            Log.e("SAF", "No directory URI found in SharedPreferences.");
             return null;
         }
+
+        Uri folderUri = Uri.parse(folderUriString);
+
+        // Grant persistable permission if needed (only once after SAF selection)
+        getContentResolver().takePersistableUriPermission(
+                folderUri,
+                Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+        );
+
+        // Get DocumentFile representing the directory
+        DocumentFile directoryDocFile = DocumentFile.fromTreeUri(this, folderUri);
+
+        if (directoryDocFile != null && directoryDocFile.isDirectory()) {
+            for (DocumentFile file : directoryDocFile.listFiles()) {
+                if (file.getName().equals("custom_workout.json")) {
+                    try (InputStream is = getContentResolver().openInputStream(file.getUri());
+                         BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
+
+                        StringBuilder builder = new StringBuilder();
+                        String line;
+                        while ((line = reader.readLine()) != null) {
+                            builder.append(line);
+                        }
+                        return builder.toString();
+
+                    } catch (IOException e) {
+                        Log.e("SAF", "Error reading JSON: " + e.getMessage());
+                        e.printStackTrace();
+                    }
+                }
+            }
+            Log.e("SAF", "custom_workout.json not found in directory.");
+        } else {
+            Log.e("SAF", "Invalid directory URI or directory not accessible.");
+        }
+
+        return null;
     }
 
     private List<Exercise> parseJson(String jsonString) {
