@@ -34,6 +34,7 @@ import com.example.usernamelogin.RegisterandLogin.Login;
 
 import com.example.usernamelogin.Staff.Gym_Management.Gym_management_main;
 
+import com.example.usernamelogin.Staff.Memberslist.Staff_mem_list_main;
 import com.example.usernamelogin.Staff.Profile_Staff.Staff_Profile_Main;
 import com.example.usernamelogin.Staff.Staff_main;
 
@@ -59,7 +60,7 @@ import java.util.TimeZone;
 public class Membership_requests_main extends AppCompatActivity implements interface_membership_requests_list {
     DrawerLayout drawerLayout;
     ImageView menu;
-    LinearLayout home, reservations, profile;
+    LinearLayout home, reservations, profile,member_lists;
     String gym_name;
     RecyclerView recyclerView;
     public static String usernamefrmmmbrshpreq;
@@ -77,6 +78,8 @@ public class Membership_requests_main extends AppCompatActivity implements inter
         home = findViewById(R.id.Home_navdrawer);
         reservations = findViewById(R.id.Gym_manage_navdrawer);
         profile = findViewById(R.id.Profile_navdrawer);
+        member_lists = findViewById(R.id.Gym_manage_members);
+
         recyclerView = findViewById(R.id.membership_requests_list);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -105,6 +108,12 @@ public class Membership_requests_main extends AppCompatActivity implements inter
             @Override
             public void onClick(View v) {
                 redirectActivity(Membership_requests_main.this, Staff_Profile_Main.class);
+            }
+        });
+        member_lists.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                redirectActivity(Membership_requests_main.this, Staff_mem_list_main.class);
             }
         });
 
@@ -205,7 +214,7 @@ public class Membership_requests_main extends AppCompatActivity implements inter
                                         // to add the password from the database to a string
                                         DatabaseReference mem_status = gettheusername.child("Non-members").child(key).child("membership_status");
                                         mem_status.setValue(0);
-                                        DatabaseReference Members_gym =  gettheusername.child("Non-members").child(key).child("Gym Name");
+                                        DatabaseReference Members_gym =  gettheusername.child("Non-members").child(key).child("GymName");
                                         Members_gym.setValue(gym_name);
                                         Log.d("TAG10", "Minecraft Complete!");
                                         storeDates(key);
@@ -292,7 +301,7 @@ public class Membership_requests_main extends AppCompatActivity implements inter
         Map<String, String> dateMap = new HashMap<>();
         dateMap.put("start_date", formattedNow);
         dateMap.put("expiration_date", formattedExpiration);
-        dateMap.put("Gym Name", Gymname);
+        dateMap.put("GymName", Gymname);
 
         // Store the dates in Firebase
         gettheusername1.child("membership").setValue(dateMap).addOnCompleteListener(task -> {

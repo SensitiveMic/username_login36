@@ -25,6 +25,7 @@ import com.example.usernamelogin.R;
 
 import com.example.usernamelogin.RegisterandLogin.Login;
 import com.example.usernamelogin.Staff.Gym_Management.Gymmng_changestogym.OCtimechange;
+import com.example.usernamelogin.Staff.Memberslist.Staff_mem_list_main;
 import com.example.usernamelogin.Staff.Profile_Staff.Staff_Profile_Main;
 import com.example.usernamelogin.Staff.Staff_main;
 import com.google.firebase.database.DataSnapshot;
@@ -38,7 +39,7 @@ import java.util.ArrayList;
 public class Gym_management_main extends AppCompatActivity implements interface_Adapter_Gym_packages  {
     DrawerLayout drawerLayout;
     ImageView menu, gotoaddgym;
-    LinearLayout home, Gym_management, profile;
+    LinearLayout home, Gym_management, profile,member_lists;
     RecyclerView recyclerView;
     Button changedescrp, changeOCtime;
     public static String selected_pkg_pk;
@@ -53,6 +54,8 @@ public class Gym_management_main extends AppCompatActivity implements interface_
         home = findViewById(R.id.Home_navdrawer);
         Gym_management = findViewById(R.id.Gym_manage_navdrawer);
         profile = findViewById(R.id.Profile_navdrawer);
+        member_lists = findViewById(R.id.Gym_manage_members);
+
         gotoaddgym = findViewById(R.id.Add_Gym_Package_button);
         changedescrp = findViewById(R.id.change_descrp_button);
         changeOCtime = findViewById(R.id.change_OC_button);
@@ -100,6 +103,12 @@ public class Gym_management_main extends AppCompatActivity implements interface_
             @Override
             public void onClick(View v) {
                 redirectActivity(Gym_management_main.this, Staff_Profile_Main.class);
+            }
+        });
+        member_lists.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                redirectActivity(Gym_management_main.this, Staff_mem_list_main.class);
             }
         });
         gotoaddgym.setOnClickListener(new View.OnClickListener() {

@@ -12,14 +12,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UsernameLogin"
         tools:targetApi="31">
-
+        <activity
+            android:name=".Staff.Memberslist.Staff_mem_list_main"
+            android:exported="false" />
         <activity
             android:name=".Exercise_Library.Exercise_Library_main"
-            android:exported="false"/>
-        <activity android:name=".workout_program.grahptry.Graph_main"
-            android:exported="false"/>
-        <activity android:name=".workout_program.logworkouts.Logworkouts_main"
-            android:exported="false"/>
+            android:exported="false" />
+        <activity
+            android:name=".workout_program.grahptry.Graph_main"
+            android:exported="false" />
+        <activity
+            android:name=".workout_program.logworkouts.Logworkouts_main"
+            android:exported="false" />
         <activity
             android:name=".workout_program.toselect_exercise_jsonlist.Exercises_to_select"
             android:exported="false" />

@@ -26,6 +26,7 @@ import com.example.usernamelogin.Coach.Profile.Coach_Profile_Main;
 import com.example.usernamelogin.R;
 import com.example.usernamelogin.RegisterandLogin.Login;
 import com.example.usernamelogin.Staff.Gym_Management.Gym_management_main;
+import com.example.usernamelogin.Staff.Memberslist.Staff_mem_list_main;
 import com.example.usernamelogin.Staff.Staff_main;
 import com.example.usernamelogin.Users;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -43,7 +44,7 @@ public class Staff_Profile_Main extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
     ImageView menu;
-    LinearLayout home, Gym_management, profile;
+    LinearLayout home, Gym_management, profile,member_lists;
     Button changeprof_i, button_frchg;
     private EditText[] chg;
     private TextView[] ments;
@@ -57,6 +58,8 @@ public class Staff_Profile_Main extends AppCompatActivity {
         menu = findViewById(R.id.nav_menu);
         home = findViewById(R.id.Home_navdrawer);
         profile = findViewById(R.id.Profile_navdrawer);
+        member_lists = findViewById(R.id.Gym_manage_members);
+
         changeprof_i = findViewById(R.id.changeP_I);
         button_frchg = findViewById(R.id.button_chg);
         Gym_management = findViewById(R.id.Gym_manage_navdrawer);
@@ -219,6 +222,12 @@ public class Staff_Profile_Main extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 recreate();
+            }
+        });
+        member_lists.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                redirectActivity(Staff_Profile_Main.this, Staff_mem_list_main.class);
             }
         });
     }
