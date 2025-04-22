@@ -65,6 +65,7 @@ public class Membership_requests_main extends AppCompatActivity implements inter
     RecyclerView recyclerView;
     public static String usernamefrmmmbrshpreq;
     public static String clicked_nonmem_application_dur;
+    public static String user_slected_pkg_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -216,9 +217,11 @@ public class Membership_requests_main extends AppCompatActivity implements inter
                                         mem_status.setValue(0);
                                         DatabaseReference Members_gym =  gettheusername.child("Non-members").child(key).child("GymName");
                                         Members_gym.setValue(gym_name);
+
                                         Log.d("TAG10", "Minecraft Complete!");
                                         storeDates(key);
-
+                                        DatabaseReference Members_pckgname = gettheusername.child("Non-members").child(key).child("membership").child("package_name");
+                                        Members_pckgname.setValue(user_slected_pkg_name);
                                     }
                                 }
                                 else{

@@ -13,6 +13,9 @@
         android:theme="@style/Theme.UsernameLogin"
         tools:targetApi="31">
         <activity
+            android:name=".Member.Gym_Info.Member_Gym_info_main"
+            android:exported="false" />
+        <activity
             android:name=".Staff.Memberslist.Staff_mem_list_main"
             android:exported="false" />
         <activity

@@ -215,7 +215,9 @@ public class Gym_management_main extends AppCompatActivity implements interface_
 
 
     }
-    private void showCustomDialog(Context context,String pkgName, String pkg_descrp, String prce, String dur, DatabaseReference myref){
+    private void showCustomDialog(Context context,String pkgName
+            , String pkg_descrp, String prce, String dur
+            , DatabaseReference myref){
 
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.dialog_add_package, null);

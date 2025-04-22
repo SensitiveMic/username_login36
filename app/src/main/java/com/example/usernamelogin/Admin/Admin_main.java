@@ -91,7 +91,7 @@ public class Admin_main extends AppCompatActivity implements RecyclerViewInterfa
     public static void redirectActivity(Activity activity, Class secondActivity){
         Intent intent = new Intent(activity, secondActivity);
         activity.startActivity(intent);
-        activity.finish();
+
     }
     @Override
     protected void onPause(){
@@ -101,7 +101,7 @@ public class Admin_main extends AppCompatActivity implements RecyclerViewInterfa
     private void refresh_res_list(){
         recyclerView = findViewById(R.id.adminalluserList);
         db = FirebaseDatabase.getInstance().getReference("/Users/Non-members");
-        db1 = FirebaseDatabase.getInstance().getReference("/Users/Gym_Owner");
+
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -122,20 +122,7 @@ public class Admin_main extends AppCompatActivity implements RecyclerViewInterfa
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-        db1.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot dataSnapshot:snapshot.getChildren()){
-                    users_all res_list1 = dataSnapshot.getValue(users_all.class);
-                    list.add(res_list1);
-                }
-                myadapter.notifyDataSetChanged();
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });
     }
     @Override
     public void onItemClick(int position) {

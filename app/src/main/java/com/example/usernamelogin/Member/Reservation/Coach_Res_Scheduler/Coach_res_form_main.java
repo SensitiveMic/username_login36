@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.usernamelogin.Member.Gym_Info.Member_Gym_info_main;
 import com.example.usernamelogin.Member.Member_Profile;
 import com.example.usernamelogin.Member.Member_main;
 import com.example.usernamelogin.Member.Reservation.Coach_Reservation_main;
@@ -126,12 +127,12 @@ public class Coach_res_form_main extends AppCompatActivity implements Personalan
                 redirectActivity(Coach_res_form_main.this, Member_Profile.class);
             }
         });
-    /*     gym_membership.setOnClickListener(new View.OnClickListener() {
+        gym_membership.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                redirectActivity(Member_main.this, Gym_Properties_Main.class);
+                redirectActivity(Coach_res_form_main.this, Member_Gym_info_main.class);
             }
-        }); */
+        });
         currentreservations.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

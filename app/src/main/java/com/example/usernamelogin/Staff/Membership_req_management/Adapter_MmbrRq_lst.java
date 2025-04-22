@@ -75,8 +75,11 @@ public class Adapter_MmbrRq_lst extends RecyclerView.Adapter<Adapter_MmbrRq_lst.
 
                             String text = username.getText().toString();
                             String dur = package_dur.getText().toString();
+                            String pkg_nme = package_name.getText().toString();
+
                             Membership_requests_main.usernamefrmmmbrshpreq = text;
                             Membership_requests_main.clicked_nonmem_application_dur = dur;
+                            Membership_requests_main.user_slected_pkg_name = pkg_nme;
 
                             interface_click.onItemClick(pos);
                         }

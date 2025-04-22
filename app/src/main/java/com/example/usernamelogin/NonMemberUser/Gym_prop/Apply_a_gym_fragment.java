@@ -335,7 +335,8 @@ public class Apply_a_gym_fragment extends Fragment implements interface_gym_list
 
         Log.d("TAG8", "Gymname: " + Gymnameformembershipreq);
 
-        Model_class_membershipReq list = new Model_class_membershipReq(Nonmember_Username, Package_name,Package_Price, request_TimeandDate,Package_duration );
+        Model_class_membershipReq list = new Model_class_membershipReq(Nonmember_Username, Package_name,Package_Price
+                , request_TimeandDate,Package_duration );
         DatabaseReference databaseReferenceNon = FirebaseDatabase.getInstance()
                 .getReference("Membership_Request")
                 .child(Gymnameformembershipreq)

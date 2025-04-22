@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -35,7 +36,7 @@ public class Admin_user_nonmember_click extends AppCompatActivity {
     private EditText[] chg ;
     String key1;
     ImageView goback;
-
+    int valueToSave;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +50,13 @@ public class Admin_user_nonmember_click extends AppCompatActivity {
         chg[0].setText(Admin_main.non_member_username);
         button_chg = findViewById(R.id.button_chg);
         goback = findViewById(R.id.go_back);
+        CheckBox myCheckBox = findViewById(R.id.myCheckBox);
+
+        myCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            valueToSave = isChecked ? 1 : 0;
+
+        });
+
         checkUSER();
 
         goback.setOnClickListener(new View.OnClickListener() {
@@ -64,6 +72,7 @@ public class Admin_user_nonmember_click extends AppCompatActivity {
             public void onClick(View v) {
                 databaseprofile = FirebaseDatabase.getInstance();
                 myRefprofile = databaseprofile.getReference("Users/Non-members").child(key1);
+
                 // Create a HashMap to hold the updates you want to make
                 String USERNAME = chg[0].getText().toString();
                 String EMAIL    = chg[1].getText().toString();
@@ -78,6 +87,10 @@ public class Admin_user_nonmember_click extends AppCompatActivity {
 
                 Users user = new Users(USERNAME, PASSWORD, EMAIL, MOBILENUMBER);
                 Log.d("TAG6", "To run on update");
+
+                DatabaseReference ban_check = databaseprofile.getReference("Users/Non-members").child("ban_status");
+                ban_check.setValue(valueToSave);
+
                 if(USERNAME.isEmpty() || PASSWORD.isEmpty() || EMAIL.isEmpty() || MOBILENUMBER.isEmpty()) {
 
                     Toast.makeText(Admin_user_nonmember_click.this,"Enter Texts in the Empty Fields",Toast.LENGTH_SHORT).show();
