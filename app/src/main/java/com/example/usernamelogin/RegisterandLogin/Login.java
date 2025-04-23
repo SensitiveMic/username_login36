@@ -99,7 +99,7 @@ public class Login extends AppCompatActivity {
                             Log.e( "TAG2","This is password from db: " +PasswordfromDB);
                             Log.e("wee2", "onDataChange: minecraft! ");
                             if(Objects.equals(PasswordfromDB, PASSWORD)){
-                               Member_main.Current_GYM = snapshot.child(key).child("Gym Name").getValue(String.class);
+                               Member_main.Current_GYM = snapshot.child(key).child("GymName").getValue(String.class);
                                 Log.d( "CONFIRMTAG_wew","This is password from db: " + Member_main.Current_GYM);
                                 Intent intent = new Intent(Login.this, Member_main.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);

@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.example.usernamelogin.Admin.Gym.Helper_Gym_adder;
 import com.example.usernamelogin.R;
+import com.example.usernamelogin.RegisterandLogin.Login;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
@@ -91,8 +92,8 @@ public class Profile_Main_Gym_Owner extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 FirebaseDatabase databaseprofile = FirebaseDatabase.getInstance();
-                DatabaseReference myRefprofile = databaseprofile.getReference("Users/Gym_Owner").child(Gym_Owner_Main.key1);
-                DatabaseReference myRefprofile1 = databaseprofile.getReference("Users/Gym_Owner").child(Gym_Owner_Main.key1)
+                DatabaseReference myRefprofile = databaseprofile.getReference("Users/Gym_Owner").child(Login.key_GymOwner);
+                DatabaseReference myRefprofile1 = databaseprofile.getReference("Users/Gym_Owner").child(Login.key_GymOwner)
                         .child("Gym").child(Gym_Owner_Main.key2);
                 // Create a HashMap to hold the updates you want to make
                 String USERNAME = chg[0].getText().toString();
@@ -103,8 +104,8 @@ public class Profile_Main_Gym_Owner extends AppCompatActivity {
 
                 Map<String, Object> updates = new HashMap<>();
                 updates.put("gym_owner_username", USERNAME);
-                updates.put("email",    EMAIL);
-                updates.put("password", PASSWORD);
+                updates.put("gym_owner_email",    EMAIL);
+                updates.put("gym_owner_password", PASSWORD);
 
                 Map<String, Object> updates1 = new HashMap<>();
                 updates1.put("gym_name",    GYMNAME);
