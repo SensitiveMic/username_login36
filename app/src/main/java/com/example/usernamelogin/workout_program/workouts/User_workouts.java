@@ -127,7 +127,7 @@ public class User_workouts extends AppCompatActivity implements interface_clickc
                         String keycontents = keyList.toString();
                         Log.d("TAG_KeyContent", "onCreate: "+keycontents );
                         // Set up the adapter
-                        KeyAdapter adapter = new KeyAdapter(keyList, (interface_clickcustomW) this);
+                        KeyAdapter adapter = new KeyAdapter(keyList, (interface_clickcustomW) this, User_workouts.this);
                         recyclerView.setAdapter(adapter);
                     }
                 } else {
@@ -541,5 +541,29 @@ public class User_workouts extends AppCompatActivity implements interface_clickc
                 .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
                 .show();
     }
+
+    // ____ Deletion__
+    public void deleteWorkoutFromJson(String workoutKey) {
+        if (folderUriString == null) return;
+
+        Uri folderUri = Uri.parse(folderUriString);
+        DocumentFile pickedDir = DocumentFile.fromTreeUri(this, folderUri);
+
+        if (pickedDir != null) {
+            DocumentFile jsonFile = pickedDir.findFile("custom_workout.json");
+
+            if (jsonFile != null && jsonFile.exists()) {
+                JSONObject jsonObject = readJsonFromUri(jsonFile.getUri());
+                if (jsonObject != null && jsonObject.has(workoutKey)) {
+                    jsonObject.remove(workoutKey); // 🔥 Remove the key
+
+                    // 🔄 Save updated JSON
+                    writeJsonToUri(jsonFile.getUri(), jsonObject.toString());
+                    Toast.makeText(this, "Workout deleted", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    }
+
 
 }

@@ -117,7 +117,7 @@ public class fragment_current_reservations_Fragment extends Fragment implements 
         ArrayList<recycleviewReservationlist> list = new ArrayList<>();
         myadapter = new recyclerviewAdapter(getContext(),list, (interface_for_recyclerviewAdapter) this,this::deletebuttonclciked);
         recyclerView.setAdapter(myadapter);
-        dbweww.addValueEventListener(new ValueEventListener() {
+        dbweww.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 

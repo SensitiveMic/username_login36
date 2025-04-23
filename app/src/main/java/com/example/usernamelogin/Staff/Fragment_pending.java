@@ -268,7 +268,7 @@ private void nextset(){
                                         Intent intent = new Intent(requireActivity(), Staff_main.class);
                                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                                         getActivity().startActivity(intent);
-                                        getActivity().finish();
+
 
                                         Log.d("TAG121", "Successful refresh click launch " );
 

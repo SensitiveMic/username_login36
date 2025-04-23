@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 
 import com.example.usernamelogin.Admin.Admin_main;
 import com.example.usernamelogin.Coach.Coach_main;
@@ -45,7 +46,7 @@ public class Login extends AppCompatActivity {
     DatabaseReference myRefLogin;
     ActivityLoginBinding binding2;
     DatabaseReference findstaffaccount;
-    ProgressDialog progressDialog;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +54,8 @@ public class Login extends AppCompatActivity {
         binding2 = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding2.getRoot());
 
-        progressDialog = new ProgressDialog(Login.this);
-        progressDialog.setMessage("Loading data...");
-        progressDialog.setCancelable(false);
+        progressBar = findViewById(R.id.progressBar);
+
 
         Button buttonlogin = findViewById(R.id.buttonLogin);
 
@@ -71,9 +71,8 @@ public class Login extends AppCompatActivity {
         buttonlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ProgressDialog progressDialog = new ProgressDialog(Login.this);
 
-                progressDialog.show();
+                progressBar.setVisibility(View.VISIBLE);
                 checkUSER();
                 Log.d("TAG5", "LOGIN CLICKED! ");
             }
@@ -109,7 +108,7 @@ public class Login extends AppCompatActivity {
                             Log.e( "TAG2","This is password from db: " +PasswordfromDB);
                             Log.e("wee2", "onDataChange: minecraft! ");
                             if(Objects.equals(PasswordfromDB, PASSWORD)){
-                                progressDialog.dismiss();
+                                progressBar.setVisibility(View.GONE);
                                Member_main.Current_GYM = snapshot.child(key).child("GymName").getValue(String.class);
                                 Log.d( "CONFIRMTAG_wew","This is password from db: " + Member_main.Current_GYM);
                                 Intent intent = new Intent(Login.this, Member_main.class);
@@ -119,6 +118,7 @@ public class Login extends AppCompatActivity {
                                 Log.d("kasibag", "onDataChange: minecraft! ");
                             }
                             else {
+                                progressBar.setVisibility(View.GONE);
                                 binding2.editTextLoginPassword.setError("Wrong password");
                                 binding2.editTextLoginPassword.requestFocus();
                                 Log.e("kasibag2", "onDataChange: password not found ");
@@ -130,7 +130,7 @@ public class Login extends AppCompatActivity {
                             Log.e( "TAG2",PasswordfromDB);
                             Log.e("wee2", "onDataChange: minecraft! ");
                             if(Objects.equals(PasswordfromDB, PASSWORD)){
-                                progressDialog.dismiss();
+                                progressBar.setVisibility(View.GONE);
                                 Intent intent = new Intent(Login.this, NonMemberUSER.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);
@@ -138,6 +138,7 @@ public class Login extends AppCompatActivity {
                                 Log.d("kasibag", "onDataChange: minecraft! ");
                             }
                             else {
+                                progressBar.setVisibility(View.GONE);
                                 binding2.editTextLoginPassword.setError("Wrong password");
                                 binding2.editTextLoginPassword.requestFocus();
                                 Log.e("kasibag2", "onDataChange: password not found ");
@@ -185,7 +186,7 @@ public class Login extends AppCompatActivity {
                         Log.e( "TAG2",PasswordfromDB);
                         Log.e("wee2", "onDataChange: minecraft! ");
                         if(Objects.equals(PasswordfromDB, PASSWORD)){
-                            progressDialog.dismiss();
+                            progressBar.setVisibility(View.GONE);
                             Intent intent = new Intent(Login.this, Admin_main.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
@@ -193,6 +194,7 @@ public class Login extends AppCompatActivity {
                             Log.d("kasibag", "onDataChange: minecraft! ");
                         }
                         else {
+                            progressBar.setVisibility(View.GONE);
                             binding2.editTextLoginPassword.setError("Wrong password");
                             binding2.editTextLoginPassword.requestFocus();
                             Log.e("kasibag2", "onDataChange: password not found ");
@@ -236,7 +238,7 @@ public class Login extends AppCompatActivity {
                         Log.e( "TAG5",PasswordfromDB);
                         Log.e("TAG5", "Going to minecraft ");
                         if(Objects.equals(PasswordfromDB, PASSWORD)){
-                            progressDialog.dismiss();
+                            progressBar.setVisibility(View.GONE);
                             Intent intent = new Intent(Login.this, Gym_Owner_Main.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
@@ -245,6 +247,7 @@ public class Login extends AppCompatActivity {
                             break outerLoop;
                         }
                         else {
+                            progressBar.setVisibility(View.GONE);
                             binding2.editTextLoginPassword.setError("Wrong password");
                             binding2.editTextLoginPassword.requestFocus();
                             Log.e("TAG5", "onDataChange: password not found ");
@@ -308,7 +311,7 @@ public class Login extends AppCompatActivity {
                                         key_Gym_Staff_username = usernamestaff;
 
                                         if (Objects.equals(key_Gym_Staff_password, PASSWORD)) {
-                                            progressDialog.dismiss();
+                                            progressBar.setVisibility(View.GONE);
                                             Intent intent = new Intent(Login.this, Staff_main.class);
                                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                                             startActivity(intent);
@@ -318,6 +321,7 @@ public class Login extends AppCompatActivity {
                                             break outerLoop;
 
                                         } else {
+                                            progressBar.setVisibility(View.GONE);
                                             binding2.editTextLoginPassword.setError("Wrong password");
                                             binding2.editTextLoginPassword.requestFocus();
                                             Log.e("TAG53", "onDataChange: password not found ");
@@ -392,7 +396,7 @@ public class Login extends AppCompatActivity {
                                        key_Gym_Coach_username = usernamestaff;
 
                                          if (Objects.equals(key_Gym_Coach_password, PASSWORD)) {
-                                             progressDialog.dismiss();
+                                             progressBar.setVisibility(View.GONE);
                                            Intent intent = new Intent(Login.this, Coach_main.class);
                                              intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                                              startActivity(intent);
@@ -402,6 +406,7 @@ public class Login extends AppCompatActivity {
                                            break outerLoop;
 
                                         } else {
+                                             progressBar.setVisibility(View.GONE);
                                             binding2.editTextLoginPassword.setError("Wrong password");
                                             binding2.editTextLoginPassword.requestFocus();
                                             Log.e("TAG53", "onDataChange: password not found ");
@@ -421,8 +426,10 @@ public class Login extends AppCompatActivity {
 
 
                 if (!accountFound_coach) {
+
                     binding2.editTextLoginUsername.setError("No user found");
                     binding2.editTextLoginUsername.requestFocus();
+                    progressBar.setVisibility(View.GONE);
                 }
 
                 }

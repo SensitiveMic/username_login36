@@ -106,7 +106,7 @@ public class fragment_paid_reservations extends Fragment {
 
         Log.d("TAG299", "Start DB!" );
 
-        db.addValueEventListener(new ValueEventListener() {
+        db.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 

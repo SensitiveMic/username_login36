@@ -189,6 +189,8 @@ public class Member_Profile extends AppCompatActivity {
                     Toast.makeText(Member_Profile.this,"Enter Texts in the Empty Fields",Toast.LENGTH_SHORT).show();
 
                 }
+
+
                 else{
                     myRefprofile.updateChildren(updates)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -254,7 +256,7 @@ public class Member_Profile extends AppCompatActivity {
         Intent intent = new Intent(activity, secondActivity);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         activity.startActivity(intent);
-        activity.finish();
+
     }
     @Override
     protected void onPause(){

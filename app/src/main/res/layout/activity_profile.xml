@@ -192,6 +192,14 @@
 
         <include layout="@layout/profile_change" />
 
+        <ProgressBar
+            android:id="@+id/progressBar3"
+            android:visibility="gone"
+            tools:viewBindingType="android.widget.ProgressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
     </RelativeLayout>
 
 </androidx.drawerlayout.widget.DrawerLayout>

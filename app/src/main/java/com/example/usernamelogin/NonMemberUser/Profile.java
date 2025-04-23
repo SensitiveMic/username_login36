@@ -18,9 +18,11 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.usernamelogin.Admin.Admin_main;
 import com.example.usernamelogin.Member.Member_main;
 import com.example.usernamelogin.NonMemberUser.Gym_prop.Gym_Properties_Main;
 import com.example.usernamelogin.R;
@@ -31,8 +33,11 @@ import com.example.usernamelogin.Users;
 import com.example.usernamelogin.workout_program.workouts.User_workouts;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -49,11 +54,14 @@ public class Profile extends AppCompatActivity {
     private
     FirebaseDatabase databaseprofile ;
     DatabaseReference myRefprofile ;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        progressBar = findViewById(R.id.progressBar3);
 
         // set toolbar and navbar name to users username
         TextView textView2 = findViewById(R.id.textView2);
@@ -158,6 +166,11 @@ public class Profile extends AppCompatActivity {
                 String pushkey = Login.key;
                 databaseprofile = FirebaseDatabase.getInstance();
                 myRefprofile = databaseprofile.getReference("Users/Non-members").child(pushkey);
+
+                DatabaseReference under_Reservations = databaseprofile.getReference("Reservations/Accepted");
+                DatabaseReference under_Reservations_Pending = databaseprofile.getReference("Reservations/Pending_Requests");
+                DatabaseReference under_Membership_req = databaseprofile.getReference("Membership_Request");
+
                 // Create a HashMap to hold the updates you want to make
                 USERNAME = chg[0].getText().toString();
                 EMAIL    = chg[1].getText().toString();
@@ -178,6 +191,93 @@ public class Profile extends AppCompatActivity {
 
                 }
                 else{
+
+                    progressBar.setVisibility(View.VISIBLE);
+                    //Under Reservations
+                    under_Reservations.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                            for (DataSnapshot resSnap : snapshot.getChildren()) {
+                                String resKey = resSnap.getKey();  // Get the reservation key
+
+                                for (DataSnapshot entry : resSnap.getChildren()) {
+                                    String entryKey = entry.getKey();  // Get the entry key
+
+                                    if (entry.hasChild("user")) {
+                                        String userVal = entry.child("user").getValue(String.class);
+
+                                        if (userVal != null && userVal.equals(NonMemberUSER.ProfileContents[0])) {
+                                            // Replace the old username with the new USERNAME
+                                            entry.getRef().child("user").setValue(USERNAME);
+
+                                        }
+                                    }
+                                }
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Log.e("FirebaseUpdate", "Error: " + error.getMessage());
+                        }
+                    });
+                    //Under Membership_Requests
+                    under_Membership_req.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for (DataSnapshot resSnap : snapshot.getChildren()) {
+                                String resKey = resSnap.getKey();  // Get the reservation key
+
+                                for (DataSnapshot entry : resSnap.getChildren()) {
+                                    String entryKey = entry.getKey();  // Get the entry key
+
+                                    if (entry.hasChild("username")) {
+                                        String userVal = entry.child("username").getValue(String.class);
+
+                                        if (userVal != null && userVal.equals(NonMemberUSER.ProfileContents[0])) {
+                                            // Replace the old username with the new USERNAME
+                                            entry.getRef().child("username").setValue(USERNAME);
+
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {}
+                    });
+                    //Under Pending Requests
+                    under_Reservations_Pending.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for (DataSnapshot resSnap : snapshot.getChildren()) {
+                                String resKey = resSnap.getKey();  // Get the reservation key
+
+                                for (DataSnapshot entry : resSnap.getChildren()) {
+                                    String entryKey = entry.getKey();  // Get the entry key
+
+                                    if (entry.hasChild("user")) {
+                                        String userVal = entry.child("user").getValue(String.class);
+
+                                        if (userVal != null && userVal.equals(NonMemberUSER.ProfileContents[0])) {
+                                            // Replace the old username with the new USERNAME
+                                            entry.getRef().child("user").setValue(USERNAME);
+
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
                     myRefprofile.updateChildren(updates)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
@@ -195,9 +295,16 @@ public class Profile extends AppCompatActivity {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
                                     // Failed to update data
+
+                                    progressBar.setVisibility(View.GONE);
+                                    NonMemberUSER yourClass = new NonMemberUSER();
+                                    TextView usernamebar = findViewById(R.id.textView2);
+                                    TextView username_nav = findViewById(R.id.username_nav);
+                                    yourClass.usertoolbarname(getApplicationContext(), usernamebar, username_nav);
                                     Log.e("TAG11", "Error updating data", e);
                                 }
                             });
+                    progressBar.setVisibility(View.GONE);
                 }
             }
         });
@@ -245,7 +352,7 @@ public class Profile extends AppCompatActivity {
         Intent intent = new Intent(activity, secondActivity);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         activity.startActivity(intent);
-        activity.finish();
+
     }
     @Override
     protected void onPause(){

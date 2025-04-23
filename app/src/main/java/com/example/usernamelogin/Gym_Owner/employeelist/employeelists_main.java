@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.usernamelogin.Admin.Gym.Admin_add_gym;
 import com.example.usernamelogin.Gym_Owner.Gym_Owner_Gym_Management;
 import com.example.usernamelogin.Gym_Owner.Gym_Owner_Main;
+import com.example.usernamelogin.Gym_Owner.Gym_Owner_gymmanagement_add_staff;
 import com.example.usernamelogin.Gym_Owner.Profile_Main_Gym_Owner;
 import com.example.usernamelogin.Member.Reservation.Model_class_Coach_list;
 import com.example.usernamelogin.R;
@@ -83,7 +84,7 @@ public class employeelists_main extends AppCompatActivity implements toeditcoach
         Gym_management.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                redirectActivity(employeelists_main.this, Gym_Owner_Gym_Management.class);
+                redirectActivity(employeelists_main.this, Gym_Owner_gymmanagement_add_staff.class);
             }
         });
         profile.setOnClickListener(new View.OnClickListener() {

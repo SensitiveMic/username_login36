@@ -133,7 +133,7 @@ public class Apply_a_gym_fragment extends Fragment implements interface_gym_list
         gymdisplay.setAdapter(adapter);
 
         // Firebase listener
-        checkname.addValueEventListener(new ValueEventListener() {
+        checkname.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot underGym_Owner : snapshot.getChildren()) {

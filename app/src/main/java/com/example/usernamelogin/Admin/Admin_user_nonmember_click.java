@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.usernamelogin.Admin.Userslist.gymanditsmembers.UsersList_Admin_main;
@@ -37,6 +39,7 @@ public class Admin_user_nonmember_click extends AppCompatActivity {
     String key1;
     ImageView goback;
     int valueToSave;
+    ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +53,7 @@ public class Admin_user_nonmember_click extends AppCompatActivity {
         chg[0].setText(Admin_main.non_member_username);
         button_chg = findViewById(R.id.button_chg);
         goback = findViewById(R.id.go_back);
+        progressBar = findViewById(R.id.progressBar2);
         CheckBox myCheckBox = findViewById(R.id.myCheckBox);
 
         myCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -89,7 +93,11 @@ public class Admin_user_nonmember_click extends AppCompatActivity {
                 Log.d("TAG6", "To run on update");
 
                 DatabaseReference ban_check = databaseprofile.getReference("Users/Non-members").child("ban_status");
-                ban_check.setValue(valueToSave);
+               // ban_check.setValue(valueToSave);
+
+                DatabaseReference underGym_owner = databaseprofile.getReference("Users/Gym_Owner");
+                DatabaseReference under_Reservations = databaseprofile.getReference("Reservations/Accepted");
+                DatabaseReference under_Membership_req = databaseprofile.getReference("Membership_Request");
 
                 if(USERNAME.isEmpty() || PASSWORD.isEmpty() || EMAIL.isEmpty() || MOBILENUMBER.isEmpty()) {
 
@@ -100,13 +108,112 @@ public class Admin_user_nonmember_click extends AppCompatActivity {
                     Toast.makeText(Admin_user_nonmember_click.this, "Enter a valid mobile number starting with 09 and 11 digits long", Toast.LENGTH_SHORT).show();
                 }
                 else{
+                    progressBar.setVisibility(View.VISIBLE);
+                    //UnderGym_Owner
+                    underGym_owner.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for (DataSnapshot ownerSnap : snapshot.getChildren()) {
+                                String ownerKey = ownerSnap.getKey();
+                                if (ownerSnap.hasChild("Gym")) {
+                                    for (DataSnapshot gymSnap : ownerSnap.child("Gym").getChildren()) {
+                                        String gymKey = gymSnap.getKey();
+                                        if (gymSnap.hasChild("Coach")) {
+                                            for (DataSnapshot coachSnap : gymSnap.child("Coach").getChildren()) {
+                                                String coachKey = coachSnap.getKey();
+                                                if (coachSnap.hasChild("Sent_coach_workout")) {
+                                                    for (DataSnapshot workoutSnap : coachSnap.child("Sent_coach_workout").getChildren()) {
+                                                        String workoutKey = workoutSnap.getKey();
+                                                        if (workoutSnap.hasChild("member_username")) {
+                                                            String currentMemberUsername = workoutSnap.child("member_username").getValue(String.class);
+
+                                                            if (currentMemberUsername != null && currentMemberUsername.equals(Admin_main.non_member_username)) {
+                                                                // Replace old username with new USERNAME
+                                                                workoutSnap.getRef().child("member_username").setValue(USERNAME);
+                                                                Log.d("FirebaseUpdate", "Replaced member_username under: " +
+                                                                        "Users/Gym_Owner/" + ownerKey + "/Gym/" + gymKey +
+                                                                        "/Coach/" + coachKey + "/Sent_coach_workout/" + workoutKey);
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Log.e("FirebaseUpdate", "Error: " + error.getMessage());
+                        }
+                    });
+                    //Under Reservations
+                    under_Reservations.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                for (DataSnapshot resSnap : snapshot.getChildren()) {
+                                    String resKey = resSnap.getKey();  // Get the reservation key
+
+                                    for (DataSnapshot entry : resSnap.getChildren()) {
+                                        String entryKey = entry.getKey();  // Get the entry key
+
+                                        if (entry.hasChild("user")) {
+                                            String userVal = entry.child("user").getValue(String.class);
+
+                                            if (userVal != null && userVal.equals(Admin_main.non_member_username)) {
+                                                // Replace the old username with the new USERNAME
+                                                entry.getRef().child("user").setValue(USERNAME);
+
+                                            }
+                                        }
+                                    }
+                                }
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Log.e("FirebaseUpdate", "Error: " + error.getMessage());
+                        }
+                    });
+                    //Under Membership_Requests
+                    under_Membership_req.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for (DataSnapshot resSnap : snapshot.getChildren()) {
+                                String resKey = resSnap.getKey();  // Get the reservation key
+
+                                for (DataSnapshot entry : resSnap.getChildren()) {
+                                    String entryKey = entry.getKey();  // Get the entry key
+
+                                    if (entry.hasChild("username")) {
+                                        String userVal = entry.child("username").getValue(String.class);
+
+                                        if (userVal != null && userVal.equals(Admin_main.non_member_username)) {
+                                            // Replace the old username with the new USERNAME
+                                            entry.getRef().child("username").setValue(USERNAME);
+
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {}
+                    });
                     myRefprofile.updateChildren(updates)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
-                                    // Update successfully completed
-                                    Log.d("TAG10", "Data updated successfully");
 
+                                    // Update successfully completed
+
+                                    Log.d("TAG10", "Data updated successfully");
+                                    progressBar.setVisibility(View.GONE);
                                     redirectActivity(Admin_user_nonmember_click.this, Admin_main.class);
                                 }
                             })
@@ -157,7 +264,7 @@ public class Admin_user_nonmember_click extends AppCompatActivity {
         Intent intent = new Intent(activity, secondActivity);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         activity.startActivity(intent);
-        activity.finish();
+
     }
 
 

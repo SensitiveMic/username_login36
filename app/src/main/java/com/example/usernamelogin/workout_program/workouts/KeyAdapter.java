@@ -1,23 +1,26 @@
 package com.example.usernamelogin.workout_program.workouts;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
 public class KeyAdapter extends RecyclerView.Adapter<KeyAdapter.KeyViewHolder> {
-
-private final List<String> keyList;
+Context context;
+private static List<String> keyList;
 interface_clickcustomW onclick;
 
-public KeyAdapter(List<String> keyList,interface_clickcustomW onclick) {
+public KeyAdapter(List<String> keyList,interface_clickcustomW onclick,Context context) {
     this.keyList = keyList;
     this.onclick = onclick;
+    this.context = context;
 }
 
 @NonNull
@@ -37,13 +40,39 @@ public void onBindViewHolder(@NonNull KeyViewHolder holder, int position) {
 public int getItemCount() {
     return keyList.size();
 }
+    private void showDeleteDialog(String key, int pos) {
+        new AlertDialog.Builder(context)
+                .setTitle("Delete Workout")
+                .setMessage("Are you sure you want to delete this workout?")
+                .setPositiveButton("Delete", (dialog, which) -> {
+                    if (context instanceof User_workouts) {
+                        ((User_workouts) context).deleteWorkoutFromJson(key);
+                        keyList.remove(pos);
+                        notifyItemRemoved(pos);
+                    }
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
+    }
 
-public static class KeyViewHolder extends RecyclerView.ViewHolder {
+public class KeyViewHolder extends RecyclerView.ViewHolder {
     TextView textView;
 
     public KeyViewHolder(@NonNull View itemView, interface_clickcustomW onclick) {
         super(itemView);
         textView = itemView.findViewById(android.R.id.text1);
+
+        itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                int pos = getAdapterPosition();
+                if (pos != RecyclerView.NO_POSITION) {
+                    showDeleteDialog(keyList.get(pos), pos);
+                }
+                return true;
+            }
+        });
+
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

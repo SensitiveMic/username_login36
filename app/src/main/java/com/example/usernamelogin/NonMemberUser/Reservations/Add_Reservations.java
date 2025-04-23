@@ -43,7 +43,6 @@ import java.util.Locale;
 public class Add_Reservations extends AppCompatActivity {
     DrawerLayout drawerLayout;
     ImageView menu;
-    ActivityMainBinding binding;
     LinearLayout home, reservations, profile;
     private TextView[] textViews;
     private Calendar startDate;
@@ -159,7 +158,7 @@ public class Add_Reservations extends AppCompatActivity {
         Intent intent = new Intent(activity, secondActivity);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         activity.startActivity(intent);
-        activity.finish();
+
     }
     @Override
     protected void onPause(){

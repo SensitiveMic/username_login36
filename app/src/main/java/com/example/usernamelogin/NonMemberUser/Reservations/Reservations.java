@@ -22,6 +22,7 @@ import com.example.usernamelogin.NonMemberUser.NonMemberUSER;
 import com.example.usernamelogin.NonMemberUser.Profile;
 import com.example.usernamelogin.R;
 
+import com.example.usernamelogin.Staff.Memberslist.members_not_exp.Fragment_members_list;
 import com.example.usernamelogin.workout_program.workouts.User_workouts;
 import com.google.android.material.tabs.TabLayout;
 
@@ -29,7 +30,7 @@ public class Reservations extends AppCompatActivity{
     DrawerLayout drawerLayout;
     ImageView menu;
     LinearLayout home, reservations, profile,gym_membership,workout;
-    FrameLayout frameLayout;
+    FrameLayout frameLayout123;
     TabLayout tabLayout;
     private TextView[] textViews;
     public static String mobilenumberofgyminres;
@@ -47,7 +48,6 @@ public class Reservations extends AppCompatActivity{
         textView2.setText(NonMemberUSER.ProfileContents[0]);
         username_nav.setText(NonMemberUSER.ProfileContents[0]);
 
-
         // Whole layout
         drawerLayout = findViewById(R.id.home_layout);
         menu = findViewById(R.id.nav_menu);
@@ -57,8 +57,8 @@ public class Reservations extends AppCompatActivity{
         gym_membership = findViewById(R.id.Gym_navdrawer);
         workout = findViewById(R.id.member_workout);
 
-        frameLayout = (FrameLayout) findViewById(R.id.framelayout1);
-        tabLayout = (TabLayout) findViewById(R.id.tablayout);
+        frameLayout123 =  findViewById(R.id.framelayout1);
+        tabLayout =  findViewById(R.id.tablayout);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.framelayout1, new fragment_current_reservations_Fragment())
                 .addToBackStack(null)
@@ -68,21 +68,30 @@ public class Reservations extends AppCompatActivity{
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
 
-                Fragment fragment = null;
+                Fragment fragmentwew = null;
+                String tagtea34 = null;
                 switch (tab.getPosition()){
 
                     case 0:
-                        fragment = new fragment_current_reservations_Fragment();
+                        tagtea34 = "Non_mem_res";
+                        fragmentwew = getSupportFragmentManager().findFragmentByTag(tagtea34);
+                        if (fragmentwew == null) {
+                            fragmentwew = new fragment_current_reservations_Fragment();
+                        }
                         break;
                     case 1:
-                        fragment = new fragment_paid_reservations();
-                        break;
+                        tagtea34 = "Non_mem_Recent_res";
+                        fragmentwew = getSupportFragmentManager().findFragmentByTag(tagtea34);
+                        if (fragmentwew == null) {
+                            fragmentwew = new fragment_paid_reservations();
+                        }
 
 
                 }
 
-                getSupportFragmentManager().beginTransaction().replace(R.id.framelayout1, fragment)
+                getSupportFragmentManager().beginTransaction().replace(R.id.framelayout1,fragmentwew, tagtea34)
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .addToBackStack(null)
                         .commit();
 
 
@@ -199,7 +208,7 @@ public class Reservations extends AppCompatActivity{
         Intent intent = new Intent(activity, secondActivity);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         activity.startActivity(intent);
-        activity.finish();
+
     }
     @Override
     protected void onPause(){
