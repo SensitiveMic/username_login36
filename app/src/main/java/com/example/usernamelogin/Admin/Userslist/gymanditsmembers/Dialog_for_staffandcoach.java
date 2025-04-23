@@ -127,9 +127,10 @@ outerLoop:
         recyclerView.setAdapter(adapter);
 
         DatabaseReference dbrunadapter_notes = dbrunadapter.child("Coach");
-        dbrunadapter_notes.addValueEventListener(new ValueEventListener() {
+        dbrunadapter_notes.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                list.clear();
                 for (DataSnapshot underGym_Owner : snapshot.getChildren()) {
 
                     String key_Gym_ = underGym_Owner.child("username").getValue(String.class);
@@ -137,7 +138,7 @@ outerLoop:
 
                     Model_class_Coach_list users = underGym_Owner.getValue(Model_class_Coach_list.class);
                     users.setUsername(key_Gym_);
-                    list.clear();
+
                     list.add(users);
 
                 }
@@ -164,9 +165,10 @@ outerLoop:
         recyclerView.setAdapter(adapter);
 
         DatabaseReference dbrunadapter_nest = dbrunadapter.child("Staff");
-        dbrunadapter_nest.addValueEventListener(new ValueEventListener() {
+        dbrunadapter_nest.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                list.clear();
                 for (DataSnapshot underGym_Owner : snapshot.getChildren()) {
 
                     String key_Gym_ = underGym_Owner.child("username").getValue(String.class);
@@ -174,7 +176,7 @@ outerLoop:
 
                     Model_class_Coach_list users = underGym_Owner.getValue(Model_class_Coach_list.class);
                     users.setUsername(key_Gym_);
-                    list.clear();
+
                     list.add(users);
 
                 }
