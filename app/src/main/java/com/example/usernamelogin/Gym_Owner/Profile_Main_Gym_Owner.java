@@ -23,8 +23,11 @@ import com.example.usernamelogin.R;
 import com.example.usernamelogin.RegisterandLogin.Login;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -95,6 +98,11 @@ public class Profile_Main_Gym_Owner extends AppCompatActivity {
                 DatabaseReference myRefprofile = databaseprofile.getReference("Users/Gym_Owner").child(Login.key_GymOwner);
                 DatabaseReference myRefprofile1 = databaseprofile.getReference("Users/Gym_Owner").child(Login.key_GymOwner)
                         .child("Gym").child(Gym_Owner_Main.key2);
+
+                DatabaseReference gympackage = databaseprofile.getReference("Gym_package").child(Gym_Owner_Main.ProfileContents[3]);
+                DatabaseReference MembershipRequest = databaseprofile.getReference();
+
+
                 // Create a HashMap to hold the updates you want to make
                 String USERNAME = chg[0].getText().toString();
                 String EMAIL    = chg[1].getText().toString();
@@ -119,6 +127,7 @@ public class Profile_Main_Gym_Owner extends AppCompatActivity {
 
                 }
                 else{
+
                     myRefprofile.updateChildren(updates)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
@@ -126,6 +135,41 @@ public class Profile_Main_Gym_Owner extends AppCompatActivity {
                                     // Update successfully completed
                                     Log.d("TAG10", "Data updated successfully");
                                     myRefprofile1.updateChildren(updates1);
+                                    //GYM NAME CHANGE OF DB Gym_package
+                                    DatabaseReference gympackagenew = databaseprofile.getReference("Gym_package").child(GYMNAME);
+                                    gympackage.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            if (snapshot.exists()) {
+                                                gympackagenew.setValue(snapshot.getValue(),(error, ref) ->{
+                                                    if(error == null){
+                                                        gympackage.removeValue();
+                                                    }
+                                                });
+
+
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                                     redirectActivity(Profile_Main_Gym_Owner.this, Gym_Owner_Main.class);
                                 }
@@ -137,6 +181,9 @@ public class Profile_Main_Gym_Owner extends AppCompatActivity {
                                     Log.e("TAG11", "Error updating data", e);
                                 }
                             });
+
+
+
                 }
             }
         });
@@ -153,7 +200,7 @@ public class Profile_Main_Gym_Owner extends AppCompatActivity {
         ments[0].setText(Gym_Owner_Main.ProfileContents[0]);
         ments[1].setText(Gym_Owner_Main.ProfileContents[1]);
         ments[2].setText(Gym_Owner_Main.ProfileContents[2]);
-        ments[3].setText(Gym_Owner_Main.ProfileContents[3]);
+        ments[3].setText(Gym_Owner_Main.ProfileContents[3]); // GYM NAME
         ments[4].setText(Gym_Owner_Main.ProfileContents[4]);
         //Profile chg
         chg = new EditText[5];
