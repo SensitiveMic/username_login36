@@ -100,7 +100,9 @@ public class Profile_Main_Gym_Owner extends AppCompatActivity {
                         .child("Gym").child(Gym_Owner_Main.key2);
 
                 DatabaseReference gympackage = databaseprofile.getReference("Gym_package").child(Gym_Owner_Main.ProfileContents[3]);
-                DatabaseReference MembershipRequest = databaseprofile.getReference();
+                DatabaseReference MembershipRequest = databaseprofile.getReference("Membership_Request").child(Gym_Owner_Main.ProfileContents[3]);
+                DatabaseReference ReservationsOld = databaseprofile.getReference("Reservations/Accepted").child(Gym_Owner_Main.ProfileContents[3]);
+                DatabaseReference NonmembersOld = databaseprofile.getReference("Users/Non-members");
 
 
                 // Create a HashMap to hold the updates you want to make
@@ -156,20 +158,102 @@ public class Profile_Main_Gym_Owner extends AppCompatActivity {
 
                                         }
                                     });
+                                    //Membership_requests
+                                    DatabaseReference membershipreqnew = databaseprofile.getReference("Membership_Request").child(GYMNAME);
+                                    MembershipRequest.addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            if (snapshot.exists()) {
+                                                // Step 1: Copy data to new key
+                                                membershipreqnew.setValue(snapshot.getValue(), (databaseError, databaseReference) -> {
+                                                    if (databaseError == null) {
+                                                        // Step 2: Delete old key
+                                                        MembershipRequest.removeValue((error, ref) -> {
+                                                            if (error == null) {
+                                                                Log.d("KEY_RENAME", "Successfully renamed Mamoin1 to YourNewKey");
+                                                            } else {
+                                                                Log.e("KEY_RENAME", "Failed to delete old key: " + error.getMessage());
+                                                            }
+                                                        });
+                                                    } else {
+                                                        Log.e("KEY_RENAME", "Failed to copy data to new key: " + databaseError.getMessage());
+                                                    }
+                                                });
+                                            } else {
+                                                Log.d("KEY_RENAME", "Mamoin1 does not exist.");
+                                            }
+                                        }
 
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
 
+                                        }
+                                    });
+                                    //Reservations
+                                    DatabaseReference Reservationsnew = databaseprofile.getReference("Reservations/Accepted").child(GYMNAME);
+                                    ReservationsOld.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            if (snapshot.exists()) {
+                                                Reservationsnew.setValue(snapshot.getValue(), (databaseError, databaseReference) -> {
+                                                    if (databaseError == null) {
+                                                        ReservationsOld.removeValue((error, ref) -> {
+                                                            if (error == null) {
+                                                                Log.d("KEY_RENAME", "Successfully renamed reservation key");
+                                                            } else {
+                                                                Log.e("KEY_RENAME", "Failed to delete old reservation key: " + error.getMessage());
+                                                            }
+                                                        });
+                                                    } else {
+                                                        Log.e("KEY_RENAME", "Failed to copy reservation data: " + databaseError.getMessage());
+                                                    }
+                                                });
+                                            } else {
+                                                Log.d("KEY_RENAME", "Old reservation key does not exist.");
+                                            }
+                                        }
 
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
 
+                                        }
+                                    });
+                                    //Users-Non-members
 
+                                    NonmembersOld.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            for (DataSnapshot userSnapshot : snapshot.getChildren()) {
+                                                // Update top-level GymName if it exists
+                                                if (userSnapshot.hasChild("GymName")) {
+                                                    userSnapshot.getRef().child("GymName").setValue(GYMNAME);
+                                                }
 
+                                                // Update membership/GymName if it exists
+                                                if (userSnapshot.hasChild("membership")) {
+                                                    DataSnapshot membership = userSnapshot.child("membership");
+                                                    if (membership.hasChild("GymName")) {
+                                                        userSnapshot.getRef().child("membership").child("GymName").setValue(GYMNAME);
+                                                    }
+                                                }
 
+                                                // Update gym_name under positionstored
+                                                if (userSnapshot.hasChild("positionstored")) {
+                                                    DataSnapshot positionstored = userSnapshot.child("positionstored");
+                                                    for (DataSnapshot positionEntry : positionstored.getChildren()) {
+                                                        if (positionEntry.hasChild("gym_name")) {
+                                                            positionEntry.getRef().child("gym_name").setValue(GYMNAME);
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
 
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
 
-
-
-
-
-
+                                        }
+                                    });
 
                                     redirectActivity(Profile_Main_Gym_Owner.this, Gym_Owner_Main.class);
                                 }
