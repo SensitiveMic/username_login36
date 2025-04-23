@@ -224,25 +224,34 @@ public class Profile_Main_Gym_Owner extends AppCompatActivity {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                                             for (DataSnapshot userSnapshot : snapshot.getChildren()) {
-                                                // Update top-level GymName if it exists
+                                                // Top-level GymName
                                                 if (userSnapshot.hasChild("GymName")) {
-                                                    userSnapshot.getRef().child("GymName").setValue(GYMNAME);
-                                                }
-
-                                                // Update membership/GymName if it exists
-                                                if (userSnapshot.hasChild("membership")) {
-                                                    DataSnapshot membership = userSnapshot.child("membership");
-                                                    if (membership.hasChild("GymName")) {
-                                                        userSnapshot.getRef().child("membership").child("GymName").setValue(GYMNAME);
+                                                    String currentGymName = userSnapshot.child("GymName").getValue(String.class);
+                                                    if (currentGymName != null && currentGymName.equals(Gym_Owner_Main.ProfileContents[3])) {
+                                                        userSnapshot.getRef().child("GymName").setValue(GYMNAME);
                                                     }
                                                 }
 
-                                                // Update gym_name under positionstored
+                                                // membership/GymName
+                                                if (userSnapshot.hasChild("membership")) {
+                                                    DataSnapshot membership = userSnapshot.child("membership");
+                                                    if (membership.hasChild("GymName")) {
+                                                        String currentMembershipGym = membership.child("GymName").getValue(String.class);
+                                                        if (currentMembershipGym != null && currentMembershipGym.equals(Gym_Owner_Main.ProfileContents[3])) {
+                                                            userSnapshot.getRef().child("membership").child("GymName").setValue(GYMNAME);
+                                                        }
+                                                    }
+                                                }
+
+                                                // positionstored/*/gym_name
                                                 if (userSnapshot.hasChild("positionstored")) {
                                                     DataSnapshot positionstored = userSnapshot.child("positionstored");
                                                     for (DataSnapshot positionEntry : positionstored.getChildren()) {
                                                         if (positionEntry.hasChild("gym_name")) {
-                                                            positionEntry.getRef().child("gym_name").setValue(GYMNAME);
+                                                            String currentStoredName = positionEntry.child("gym_name").getValue(String.class);
+                                                            if (currentStoredName != null && currentStoredName.equals(Gym_Owner_Main.ProfileContents[3])) {
+                                                                positionEntry.getRef().child("gym_name").setValue(GYMNAME);
+                                                            }
                                                         }
                                                     }
                                                 }
@@ -251,7 +260,7 @@ public class Profile_Main_Gym_Owner extends AppCompatActivity {
 
                                         @Override
                                         public void onCancelled(@NonNull DatabaseError error) {
-
+                                            // Handle error here
                                         }
                                     });
 
