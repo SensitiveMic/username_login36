@@ -7,6 +7,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -129,6 +130,11 @@ public class Profile_Main_Gym_Owner extends AppCompatActivity {
 
                 }
                 else{
+
+                    ProgressDialog progressDialog = new ProgressDialog(Profile_Main_Gym_Owner.this);
+                    progressDialog.setMessage("Loading data...");
+                    progressDialog.setCancelable(false);
+                    progressDialog.show();
 
                     myRefprofile.updateChildren(updates)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -263,7 +269,7 @@ public class Profile_Main_Gym_Owner extends AppCompatActivity {
                                             // Handle error here
                                         }
                                     });
-
+                                    progressDialog.dismiss();
                                     redirectActivity(Profile_Main_Gym_Owner.this, Gym_Owner_Main.class);
                                 }
                             })
