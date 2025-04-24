@@ -121,6 +121,9 @@ public class Coach_Profile_Main extends AppCompatActivity {
                         .child(Login.key_Gym_Coach3)
                         .child("Coach")
                         .child(Login.key_Gym_Coach_key);
+
+                DatabaseReference completed_res_logs = databaseprofile.getReference("Users/Non-members");
+
                 String USERNAME,EMAIL,PASSWORD, MOB_NUM;
                 // Create a HashMap to hold the updates you want to make
                 USERNAME = chg[0].getText().toString();
@@ -142,6 +145,68 @@ public class Coach_Profile_Main extends AppCompatActivity {
 
                 }
                 else{
+
+                    completed_res_logs.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for (DataSnapshot snapshot1 : snapshot.getChildren()){
+                                String namesnap = snapshot1.getKey().toString();
+                                if(snapshot1.child("Coach_Reservation").exists()){
+                                    Log.d("TAGWORKING", "Coach_Reservation exists under: "+namesnap);
+                                    for(DataSnapshot snapshot2 :snapshot1.child("Coach_Reservation").child("Completed_res_logs").getChildren()){
+                                        String snap2 = snapshot2.getKey().toString();
+                                        Log.d("TAGWORKING", "Keys running: " +snap2);
+                                        if(snapshot2.child("coach_name").exists()){
+                                            String coachName = snapshot2.child("coach_name").getValue(String.class);
+
+                                            if (coachName != null && coachName.equals(Coach_main.ProfileContents[0])) {
+                                                DatabaseReference coachNameRef = snapshot2.getRef().child("coach_name");
+                                                coachNameRef.setValue(USERNAME);
+                                            }
+                                        }
+
+                                    }
+                                    for(DataSnapshot snapshot23 :snapshot1.child("Coach_Reservation").child("Reservation_Applications").getChildren()){
+                                        String snap22 = snapshot23.getKey().toString();
+                                        Log.d("TAGWORKING", "Keys running from Reserv_app: " + snap22);
+
+                                            if (snap22 != null && snap22.equals(Coach_main.ProfileContents[0])) {
+                                                Object value = snapshot23.getValue();
+                                                DatabaseReference parentRef = snapshot1.getRef()
+                                                        .child("Coach_Reservation")
+                                                        .child("Reservation_Applications");
+
+                                                if (!Coach_main.ProfileContents[0].equals(USERNAME)) {
+                                                    parentRef.child(USERNAME).setValue(value).addOnCompleteListener(task -> {
+                                                        if (task.isSuccessful()) {
+                                                            // Delete the old key only after a successful write
+                                                            parentRef.child(Coach_main.ProfileContents[0]).removeValue();
+
+                                                        } else {
+                                                            Log.e("TAGWORKING", "Failed to write new key");
+                                                        }
+                                                    });
+                                                } else {
+                                                    Log.d("TAGWORKING", "Old key and new key are the same. No changes made.");
+                                                }
+
+                                        }
+
+                                    }
+                                }
+                                else {
+                                    Log.e("TAGWORKING", "Coach_Reservation does NOT exist under this key: " + namesnap);
+                                }
+
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
                     myRefprofile.updateChildren(updates)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
@@ -170,6 +235,9 @@ public class Coach_Profile_Main extends AppCompatActivity {
                                             chg[3].setText(mobnum);
 
                                             drawerLayout.closeDrawer(GravityCompat.END);
+                                            Intent intent = new Intent(Coach_Profile_Main.this, Coach_main.class);
+                                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                            startActivity(intent);
 
                                         }
 
@@ -190,8 +258,6 @@ public class Coach_Profile_Main extends AppCompatActivity {
                 }
             }
         });
-
-
 
         menu.setOnClickListener(new View.OnClickListener() {
             @Override

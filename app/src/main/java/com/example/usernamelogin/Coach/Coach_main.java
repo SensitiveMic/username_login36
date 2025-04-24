@@ -1,5 +1,6 @@
 package com.example.usernamelogin.Coach;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -22,6 +23,11 @@ import com.example.usernamelogin.Coach.Snd_wrkout.sent_workouts.Fragment_sent_wo
 import com.example.usernamelogin.R;
 import com.example.usernamelogin.RegisterandLogin.Login;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class Coach_main extends AppCompatActivity implements interface_click_pendingresfrm_gym_members {
     DrawerLayout drawerLayout;
@@ -121,7 +127,7 @@ public class Coach_main extends AppCompatActivity implements interface_click_pen
         Intent intent = new Intent(activity, secondActivity);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         activity.startActivity(intent);
-        activity.finish();
+
     }
 
     @Override
@@ -131,11 +137,33 @@ public class Coach_main extends AppCompatActivity implements interface_click_pen
     }
 
     public void usertoolbarname(Context context, TextView usernamebar, TextView username_nav) {
+
+        DatabaseReference myRefprofile = FirebaseDatabase.getInstance().getReference("Users/Gym_Owner")
+                .child(Login.key_Gym_Coach1)
+                .child(Login.key_Gym_Coach2)
+                .child(Login.key_Gym_Coach3)
+                .child("Coach")
+                .child(Login.key_Gym_Coach_key);
+
         ProfileContents = new String[4];
-        ProfileContents[0] = Login.key_Gym_Coach_username;
-        ProfileContents[1] = Login.key_Gym_Coach_email;
-        ProfileContents[2] = Login.key_Gym_Coach_password;
-        ProfileContents[3] = Login.key_Gym_Coach_mobile_number;
+
+
+        myRefprofile.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                ProfileContents[0] = dataSnapshot.child("username").getValue(String.class);
+                ProfileContents[1] = dataSnapshot.child("email").getValue(String.class);
+                ProfileContents[2] = dataSnapshot.child("password").getValue(String.class);
+                ProfileContents[3] = dataSnapshot.child("mobile_number").getValue(String.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         Log.d("TAG6", "username :" + ProfileContents[0]);
         Log.d("TAG6", "email :" + ProfileContents[1]);
         Log.d("TAG6", "password :" + ProfileContents[2]);

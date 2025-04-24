@@ -144,7 +144,7 @@ public class Fragment_pending extends Fragment implements recyclerViewInterface_
         Intent intent = new Intent(activity, secondActivity);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         activity.startActivity(intent);
-        activity.finish();
+
     }
 
     @Override

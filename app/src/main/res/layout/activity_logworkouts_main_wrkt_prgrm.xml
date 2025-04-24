@@ -30,24 +30,41 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recviewofworkouts"
             android:layout_width="match_parent"
-            android:layout_height="600dp"
+            android:layout_height="500dp"
             android:background="@drawable/border_wrkt_prgrm"/>
 
-
-
-
     </LinearLayout>
-    <Button
-        android:id="@+id/log_button"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:text="See Logs" />
-    <Button
-        android:id="@+id/done_button"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:text="Done" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <Button
+                android:id="@+id/log_button"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:text="See Logs" />
+
+            <Button
+                android:id="@+id/done_button"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Done" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </LinearLayout>
