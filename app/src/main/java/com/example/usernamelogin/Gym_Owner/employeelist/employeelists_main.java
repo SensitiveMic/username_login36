@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.GravityCompat;
@@ -40,7 +41,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class employeelists_main extends AppCompatActivity implements toeditcoachandstaff {
+public class employeelists_main extends AppCompatActivity implements toeditcoachandstaff,interface_Adapter_employee_list {
     RecyclerView employeeslist;
     private Button button_chg;
     DrawerLayout drawerLayout;
@@ -109,7 +110,7 @@ public class employeelists_main extends AppCompatActivity implements toeditcoach
                 .child("Gym");
 
 
-        adapter = new Adapter_employee_list_fromgymowner(this,list,this);
+        adapter = new Adapter_employee_list_fromgymowner(this,list,this,this);
 
         employeeslist.setAdapter(adapter);
 
@@ -245,4 +246,57 @@ public class employeelists_main extends AppCompatActivity implements toeditcoach
     }
 
 
+    @Override
+    public void onItemLongClick(int position) {
+        new AlertDialog.Builder(employeelists_main.this)
+                .setTitle("Delete Item?")
+                .setMessage("Are you sure you want to remove the account?")
+                .setPositiveButton("Delete", (dialog, which) -> {
+                    remove_selected_employee();
+                })
+                .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
+                .show();
+
+    }
+    private void remove_selected_employee(){
+        DatabaseReference myRefLogin = FirebaseDatabase.getInstance().getReference("Users/Gym_Owner")
+                .child(Login.key_GymOwner)
+                .child("Gym");
+        myRefLogin.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot gk : snapshot.getChildren()) {
+                    for(DataSnapshot childrenofgk :gk.child("Coach").getChildren()) {
+                        String userkey = childrenofgk.getKey();
+                           String usernam = childrenofgk.child("username").getValue(String.class);
+                            Log.d("TAGREMOVALOFEMP", "(Coach)username in db: "+ usernam);
+                            if (usernam!= null && usernam.equals(employeeclicked)) {
+                                DatabaseReference coachNameRef = childrenofgk.getRef();
+                                coachNameRef.getRef().removeValue();
+                                Log.d("TAGREMOVALOFEMP", "User Key: "+userkey);
+                            }
+
+
+                    }
+                    for(DataSnapshot childrenofgk2 :gk.child("Staff").getChildren()){
+                        String userkey2 = childrenofgk2.getKey();
+                            String usernam12 = childrenofgk2.child("username").getValue(String.class);
+                            Log.d("TAGREMOVALOFEMP", "(Staff)username in db: "+ usernam12);
+                            if (usernam12!= null && usernam12.equals(employeeclicked)) {
+                                DatabaseReference coachNameRef = childrenofgk2.getRef();
+                                coachNameRef.getRef().removeValue();
+                                Log.d("TAGREMOVALOFEMP", "User Key: "+userkey2);
+                            }
+
+                    }
+                }
+                checkUSER();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
 }

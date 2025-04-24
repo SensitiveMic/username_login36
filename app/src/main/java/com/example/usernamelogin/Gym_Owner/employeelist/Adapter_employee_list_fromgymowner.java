@@ -21,11 +21,17 @@ public class Adapter_employee_list_fromgymowner extends RecyclerView.Adapter<Ada
     private static final int VIEW_TYPE_COACH = 0;
     private static final int VIEW_TYPE_STAFF = 1;
     private toeditcoachandstaff itemclick;
+    private interface_Adapter_employee_list holdclick;
 
-    public Adapter_employee_list_fromgymowner(Context context, ArrayList<Model_class_staffandcoachlist> list, toeditcoachandstaff itemclick) {
+
+    public Adapter_employee_list_fromgymowner(Context context, ArrayList<Model_class_staffandcoachlist> list
+            , toeditcoachandstaff itemclick
+           ,interface_Adapter_employee_list holdclick) {
         this.context = context;
         this.list = list;
         this.itemclick = itemclick;
+        this.holdclick = holdclick;
+
     }
     @Override
     public int getItemViewType(int position) {
@@ -49,7 +55,7 @@ public class Adapter_employee_list_fromgymowner extends RecyclerView.Adapter<Ada
         else {
             v = LayoutInflater.from(context).inflate(R.layout.item_list_gymowner_coachlist_wewstaff,parent,false);
         }
-        return new MyViewHolder(v,itemclick );
+        return new MyViewHolder(v,itemclick,holdclick );
     }
 
     @Override
@@ -68,9 +74,27 @@ public class Adapter_employee_list_fromgymowner extends RecyclerView.Adapter<Ada
 
         TextView employeename, emprole;
 
-        public MyViewHolder(@NonNull View itemView, toeditcoachandstaff itemclick) {
+        public MyViewHolder(@NonNull View itemView, toeditcoachandstaff itemclick ,interface_Adapter_employee_list holdclick) {
             super(itemView);
             employeename = itemView.findViewById(R.id.Employee_Name);
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    if (holdclick!=null){
+                        int pos = getAdapterPosition();
+
+                        if(pos != RecyclerView.NO_POSITION){
+                            String username = employeename.getText().toString();
+                            employeelists_main.employeeclicked = username;
+
+                            holdclick.onItemLongClick(pos);
+                        }
+
+                    }
+                    return false;
+                }
+            });
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
