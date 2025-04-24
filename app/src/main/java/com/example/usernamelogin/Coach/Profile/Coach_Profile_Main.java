@@ -165,7 +165,7 @@ public class Coach_Profile_Main extends AppCompatActivity {
                                             }
                                         }
 
-                                    }
+                                    }  //Reservation_Applications
                                     for(DataSnapshot snapshot23 :snapshot1.child("Coach_Reservation").child("Reservation_Applications").getChildren()){
                                         String snap22 = snapshot23.getKey().toString();
                                         Log.d("TAGWORKING", "Keys running from Reserv_app: " + snap22);
@@ -192,7 +192,23 @@ public class Coach_Profile_Main extends AppCompatActivity {
 
                                         }
 
+                                    }  //
+                                    for(DataSnapshot snapshot1_2 :snapshot1.child("Coach_Reservation").child("Current_Accepted_Res").getChildren()){
+
+                                        String snap2 = snapshot1_2.getKey().toString();
+                                        Log.d("TAGWORKING", "Keys running: " +snap2);
+                                        if(snapshot1_2.child("coach_name").exists()){
+                                            String coachName = snapshot1_2.child("coach_name").getValue(String.class);
+
+                                            if (coachName != null && coachName.equals(Coach_main.ProfileContents[0])) {
+                                                DatabaseReference coachNameRef = snapshot1_2.getRef().child("coach_name");
+                                                coachNameRef.setValue(USERNAME);
+                                            }
+                                        }
+
                                     }
+
+
                                 }
                                 else {
                                     Log.e("TAGWORKING", "Coach_Reservation does NOT exist under this key: " + namesnap);

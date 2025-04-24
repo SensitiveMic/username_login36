@@ -234,7 +234,7 @@ public class employeelists_main extends AppCompatActivity implements toeditcoach
         Intent intent = new Intent(activity, secondActivity);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         activity.startActivity(intent);
-        activity.finish();
+       
     }
 
     @Override

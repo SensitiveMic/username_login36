@@ -19,6 +19,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.usernamelogin.Admin.Userslist.gymanditsmembers.Admin_employeed_updateprofile;
 import com.example.usernamelogin.Admin.Userslist.gymanditsmembers.UsersList_Admin_main;
+import com.example.usernamelogin.Coach.Coach_main;
 import com.example.usernamelogin.NonMemberUser.Profile;
 import com.example.usernamelogin.R;
 import com.example.usernamelogin.RegisterandLogin.Login;
@@ -38,6 +39,7 @@ public class employye_update_profilee extends AppCompatActivity {
     ImageView goback;
     DatabaseReference myRefLogin;
     String updatekey, employeetype;
+    String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +94,7 @@ public class employye_update_profilee extends AppCompatActivity {
                     if("Coach".equals(Gymdetailskey)){
                         for(DataSnapshot coachlists: childrenofgk.getChildren()){
                             String coachkey = coachlists.getKey().toString();
-                                String username = coachlists.child("username").getValue(String.class);
+                                 username = coachlists.child("username").getValue(String.class);
                                 if(username.equals(employeelists_main.employeeclicked)){
 
                                     employeetype= "Coach";
@@ -179,6 +181,11 @@ public class employye_update_profilee extends AppCompatActivity {
                     .child(employeetype)
                     .child(updatekey);
 
+            if (employeetype.equals("Coach")){
+                changecoach_db(USERNAME);
+            }
+
+
             updateempprofile.updateChildren(updates)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
@@ -189,6 +196,82 @@ public class employye_update_profilee extends AppCompatActivity {
             });
         }
     }
+private void changecoach_db(String USERNAME){
+    DatabaseReference completed_res_logs = FirebaseDatabase.getInstance().getReference("Users/Non-members");
+    completed_res_logs.addListenerForSingleValueEvent(new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot snapshot) {
+            for (DataSnapshot snapshot1 : snapshot.getChildren()){
+                String namesnap = snapshot1.getKey().toString();
+                if(snapshot1.child("Coach_Reservation").exists()){
+                    Log.d("TAGWORKING", "Coach_Reservation exists under: "+namesnap);
+                    for(DataSnapshot snapshot2 :snapshot1.child("Coach_Reservation").child("Completed_res_logs").getChildren()){
+                        String snap2 = snapshot2.getKey().toString();
+                        Log.d("TAGWORKING", "Keys running: " +snap2);
+                        if(snapshot2.child("coach_name").exists()){
+                            String coachName = snapshot2.child("coach_name").getValue(String.class);
 
+                            if (coachName != null && coachName.equals(username)) {
+                                DatabaseReference coachNameRef = snapshot2.getRef().child("coach_name");
+                                coachNameRef.setValue(USERNAME);
+                            }
+                        }
+
+                    }
+                    for(DataSnapshot snapshot23 :snapshot1.child("Coach_Reservation").child("Reservation_Applications").getChildren()){
+                        String snap22 = snapshot23.getKey().toString();
+                        Log.d("TAGWORKING", "Keys running from Reserv_app: " + snap22);
+
+                        if (snap22 != null && snap22.equals(username)) {
+                            Object value = snapshot23.getValue();
+                            DatabaseReference parentRef = snapshot1.getRef()
+                                    .child("Coach_Reservation")
+                                    .child("Reservation_Applications");
+
+                            if (!username.equals(USERNAME)) {
+                                parentRef.child(USERNAME).setValue(value).addOnCompleteListener(task -> {
+                                    if (task.isSuccessful()) {
+                                        // Delete the old key only after a successful write
+                                        parentRef.child(username).removeValue();
+
+                                    } else {
+                                        Log.e("TAGWORKING", "Failed to write new key");
+                                    }
+                                });
+                            } else {
+                                Log.d("TAGWORKING", "Old key and new key are the same. No changes made.");
+                            }
+
+                        }
+
+                    }
+                    for(DataSnapshot snapshot1_2 :snapshot1.child("Coach_Reservation").child("Current_Accepted_Res").getChildren()){
+
+                        String snap2 = snapshot1_2.getKey().toString();
+                        Log.d("TAGWORKING", "Keys running: " +snap2);
+                        if(snapshot1_2.child("coach_name").exists()){
+                            String coachName = snapshot1_2.child("coach_name").getValue(String.class);
+
+                            if (coachName != null && coachName.equals(username)) {
+                                DatabaseReference coachNameRef = snapshot1_2.getRef().child("coach_name");
+                                coachNameRef.setValue(USERNAME);
+                            }
+                        }
+
+                    }
+                }
+                else {
+                    Log.e("TAGWORKING", "Coach_Reservation does NOT exist under this key: " + namesnap);
+                }
+
+            }
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError error) {
+
+        }
+    });
+}
 
 }
