@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 
 import com.example.usernamelogin.R;
@@ -43,7 +44,7 @@ public class Gym_management_main extends AppCompatActivity implements interface_
     RecyclerView recyclerView;
     Button changedescrp, changeOCtime;
     public static String selected_pkg_pk;
-
+    String db_descrip;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +64,7 @@ public class Gym_management_main extends AppCompatActivity implements interface_
         changedescrp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                showDescriptionDialog();
             }
         });
 
@@ -73,7 +74,6 @@ public class Gym_management_main extends AppCompatActivity implements interface_
                 octimedialog();
             }
         });
-
 
         recyclerView = findViewById(R.id.Gym_Packages_List);
         recyclerView.setHasFixedSize(true);
@@ -119,7 +119,51 @@ public class Gym_management_main extends AppCompatActivity implements interface_
         });
 
     }
+    private void showDescriptionDialog() {
+        // Inflate custom layout with EditText
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View dialogView = inflater.inflate(R.layout.staff_descrp_dialogbox, null);
 
+        EditText editTextDescription = dialogView.findViewById(R.id.edit_text_description);
+
+        DatabaseReference myRefprofile = FirebaseDatabase.getInstance().getReference("Users/Gym_Owner")
+                .child(Login.key_Gym_Staff1)
+                .child(Login.key_Gym_Staff2)
+                .child(Login.key_Gym_Staff3)
+                .child("gym_descrp");
+
+        myRefprofile.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                db_descrip = snapshot.getValue(String.class);
+                editTextDescription.setText(db_descrip);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        // Build the AlertDialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Enter Description")
+                .setView(dialogView)
+                .setPositiveButton("Save", (dialog, which) -> {
+
+                    String description = editTextDescription.getText().toString().trim();
+
+                    if (!description.isEmpty()) {
+                       myRefprofile.setValue(description);
+                        Log.d("TAG_STAFF_DESCRP", "running, The value is " +description);
+                    } else {
+                        Toast.makeText(this, "Description cannot be empty", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
+
+    }
     private void octimedialog(){
         OCtimechange timchangedialog = new OCtimechange(this) {
             @Override
