@@ -35,8 +35,11 @@ import com.example.usernamelogin.Users;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -52,6 +55,7 @@ public class Member_Profile extends AppCompatActivity {
     private
     FirebaseDatabase databaseprofile ;
     DatabaseReference myRefprofile ;
+    String myGYM;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -192,6 +196,50 @@ public class Member_Profile extends AppCompatActivity {
 
 
                 else{
+
+                    DatabaseReference gotogym_coach_Sent_workout = FirebaseDatabase.getInstance().getReference("Users/Gym_Owner");
+
+                    gotogym_coach_Sent_workout.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for(DataSnapshot snapshot1 : snapshot.getChildren()){
+                                Log.d("TAG_MEMBERCHECK", "StarT! " );
+                                String key = snapshot1.getKey().toString();
+                                Log.d("TAG_MEMBERCHECK", "key in snapshot1: " + key);
+                                if(snapshot1.child("Gym").exists()) {
+                                    for (DataSnapshot snapshot2 : snapshot1.child("Gym").getChildren()){
+                                        String key1 = snapshot2.getKey().toString();
+                                        Log.d("TAG_MEMBERCHECK", "key in snapshot2: "+key1 );
+                                        for (DataSnapshot snapshot3 : snapshot2.child("Coach").getChildren()){
+                                            String key3 = snapshot3.getKey().toString();
+                                            Log.d("TAG_MEMBERCHECK", "key in snapshot3: "+key3 );
+                                            for(DataSnapshot snapshot4 : snapshot3.child("Sent_coach_workout").getChildren()){
+                                                Log.d("TAG_MEMBERCHECK", "key reached Initial Destination ");
+                                                String key2 = snapshot4.getKey().toString();
+                                                Log.d("TAG_MEMBERCHECK", "key in snapshot4: "+key2 );
+                                                String oldnam = snapshot4.child("member_username").getValue(String.class);
+                                                Log.d("TAG_MEMBERCHECK", "member_username: "+oldnam );
+                                                if(oldnam != null && oldnam.equals(Member_main.ProfileContents[0])){
+                                                    Log.d("TAG_MEMBERCHECK", "key reached final destination! ");
+                                                    DatabaseReference replaceval = snapshot4.getRef().child("member_username");
+                                                      replaceval.setValue(USERNAME);
+                                                     }
+                                            }
+
+                                        }
+
+                                    }
+                                }
+
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
                     myRefprofile.updateChildren(updates)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
@@ -202,6 +250,10 @@ public class Member_Profile extends AppCompatActivity {
                                     TextView usernamebar = findViewById(R.id.textView2);
                                     TextView username_nav = findViewById(R.id.username_nav);
                                    yourClass.usertoolbarname(getApplicationContext(), usernamebar, username_nav);
+
+                                   Intent intent = new Intent(Member_Profile.this,Member_main.class);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                   startActivity(intent);
 
                                 }
                             })
