@@ -168,8 +168,10 @@ public class Profile extends AppCompatActivity {
                 myRefprofile = databaseprofile.getReference("Users/Non-members").child(pushkey);
 
                 DatabaseReference under_Reservations = databaseprofile.getReference("Reservations/Accepted");
+                DatabaseReference under_Reservations_pend = databaseprofile.getReference("Reservations/Pending_Requests");
                 DatabaseReference under_Reservations_Pending = databaseprofile.getReference("Reservations/Pending_Requests");
                 DatabaseReference under_Membership_req = databaseprofile.getReference("Membership_Request");
+                DatabaseReference under_non_member_gymres = myRefprofile.child("Non_member_Gym_res");
 
                 // Create a HashMap to hold the updates you want to make
                 USERNAME = chg[0].getText().toString();
@@ -193,6 +195,34 @@ public class Profile extends AppCompatActivity {
                 else{
 
                     progressBar.setVisibility(View.VISIBLE);
+                    //Under pending reservations
+                    under_Reservations_pend.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for (DataSnapshot resSnap : snapshot.getChildren()) {
+                                String resKey = resSnap.getKey();  // Get the reservation key
+
+                                for (DataSnapshot entry : resSnap.getChildren()) {
+                                    String entryKey = entry.getKey();  // Get the entry key
+
+                                    if (entry.hasChild("user")) {
+                                        String userVal = entry.child("user").getValue(String.class);
+
+                                        if (userVal != null && userVal.equals(NonMemberUSER.ProfileContents[0])) {
+                                            // Replace the old username with the new USERNAME
+                                            entry.getRef().child("user").setValue(USERNAME);
+
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
                     //Under Reservations
                     under_Reservations.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -249,8 +279,8 @@ public class Profile extends AppCompatActivity {
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {}
                     });
-                    //Under Pending Requests
-                    under_Reservations_Pending.addValueEventListener(new ValueEventListener() {
+                    //Under Pending membership Requests
+                    under_Reservations_Pending.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             for (DataSnapshot resSnap : snapshot.getChildren()) {
@@ -267,6 +297,27 @@ public class Profile extends AppCompatActivity {
                                             entry.getRef().child("user").setValue(USERNAME);
 
                                         }
+                                    }
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                    //Under non_member_res
+                    under_non_member_gymres.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.exists()) {
+                                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                                    String key = snapshot1.getKey().toString();
+                                    String usernamE = snapshot1.child("user").getValue().toString();
+                                    if (usernamE != null && usernamE.equals(NonMemberUSER.ProfileContents[0])){
+                                        DatabaseReference newnamE = under_non_member_gymres.child(key).child("user");
+                                        newnamE.setValue(USERNAME);
                                     }
                                 }
                             }
@@ -305,6 +356,9 @@ public class Profile extends AppCompatActivity {
                                 }
                             });
                     progressBar.setVisibility(View.GONE);
+                    Intent intent = new Intent(Profile.this, NonMemberUSER.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
                 }
             }
         });

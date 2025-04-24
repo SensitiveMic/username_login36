@@ -103,9 +103,8 @@ public class Profile_Main_Gym_Owner extends AppCompatActivity {
                 DatabaseReference gympackage = databaseprofile.getReference("Gym_package").child(Gym_Owner_Main.ProfileContents[3]);
                 DatabaseReference MembershipRequest = databaseprofile.getReference("Membership_Request").child(Gym_Owner_Main.ProfileContents[3]);
                 DatabaseReference ReservationsOld = databaseprofile.getReference("Reservations/Accepted").child(Gym_Owner_Main.ProfileContents[3]);
+                DatabaseReference ReservationsOld_pending_req = databaseprofile.getReference("Reservations/Pending_Requests").child(Gym_Owner_Main.ProfileContents[3]);
                 DatabaseReference NonmembersOld = databaseprofile.getReference("Users/Non-members");
-
-
                 // Create a HashMap to hold the updates you want to make
                 String USERNAME = chg[0].getText().toString();
                 String EMAIL    = chg[1].getText().toString();
@@ -127,10 +126,8 @@ public class Profile_Main_Gym_Owner extends AppCompatActivity {
                 if(USERNAME.isEmpty() || PASSWORD.isEmpty() || EMAIL.isEmpty()) {
 
                     Toast.makeText(Profile_Main_Gym_Owner.this,"Enter Texts in the Empty Fields",Toast.LENGTH_SHORT).show();
-
                 }
                 else{
-
                     ProgressDialog progressDialog = new ProgressDialog(Profile_Main_Gym_Owner.this);
                     progressDialog.setMessage("Loading data...");
                     progressDialog.setCancelable(false);
@@ -166,7 +163,7 @@ public class Profile_Main_Gym_Owner extends AppCompatActivity {
                                     });
                                     //Membership_requests
                                     DatabaseReference membershipreqnew = databaseprofile.getReference("Membership_Request").child(GYMNAME);
-                                    MembershipRequest.addValueEventListener(new ValueEventListener() {
+                                    MembershipRequest.addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                                             if (snapshot.exists()) {
@@ -224,51 +221,121 @@ public class Profile_Main_Gym_Owner extends AppCompatActivity {
 
                                         }
                                     });
-                                    //Users-Non-members
-
-                                    NonmembersOld.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    // for pending_reservations
+                                    DatabaseReference Reservationsnew_pend_req = databaseprofile.getReference("Reservations/Pending_Requests").child(GYMNAME);
+                                    ReservationsOld_pending_req.addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                            for (DataSnapshot userSnapshot : snapshot.getChildren()) {
-                                                // Top-level GymName
-                                                if (userSnapshot.hasChild("GymName")) {
-                                                    String currentGymName = userSnapshot.child("GymName").getValue(String.class);
-                                                    if (currentGymName != null && currentGymName.equals(Gym_Owner_Main.ProfileContents[3])) {
-                                                        userSnapshot.getRef().child("GymName").setValue(GYMNAME);
-                                                    }
-                                                }
+                                            if (snapshot.exists()) {
 
-                                                // membership/GymName
-                                                if (userSnapshot.hasChild("membership")) {
-                                                    DataSnapshot membership = userSnapshot.child("membership");
-                                                    if (membership.hasChild("GymName")) {
-                                                        String currentMembershipGym = membership.child("GymName").getValue(String.class);
-                                                        if (currentMembershipGym != null && currentMembershipGym.equals(Gym_Owner_Main.ProfileContents[3])) {
-                                                            userSnapshot.getRef().child("membership").child("GymName").setValue(GYMNAME);
-                                                        }
-                                                    }
-                                                }
-
-                                                // positionstored/*/gym_name
-                                                if (userSnapshot.hasChild("positionstored")) {
-                                                    DataSnapshot positionstored = userSnapshot.child("positionstored");
-                                                    for (DataSnapshot positionEntry : positionstored.getChildren()) {
-                                                        if (positionEntry.hasChild("gym_name")) {
-                                                            String currentStoredName = positionEntry.child("gym_name").getValue(String.class);
-                                                            if (currentStoredName != null && currentStoredName.equals(Gym_Owner_Main.ProfileContents[3])) {
-                                                                positionEntry.getRef().child("gym_name").setValue(GYMNAME);
+                                                Reservationsnew_pend_req.setValue(snapshot.getValue(), (databaseError, databaseReference) -> {
+                                                    if (databaseError == null) {
+                                                        ReservationsOld_pending_req.removeValue((error, ref) -> {
+                                                            if (error == null) {
+                                                                Log.d("KEY_RENAME", "Successfully renamed reservation key");
+                                                            } else {
+                                                                Log.e("KEY_RENAME", "Failed to delete old reservation key: " + error.getMessage());
                                                             }
-                                                        }
+                                                        });
+                                                    } else {
+                                                        Log.e("KEY_RENAME", "Failed to copy reservation data: " + databaseError.getMessage());
+                                                    }
+                                                });
+                                                for (DataSnapshot snapshot1: snapshot.getChildren()){
+                                                    String gymname_dv = snapshot1.child("gym").getValue().toString();
+                                                    if (gymname_dv != null && gymname_dv.equals(Gym_Owner_Main.ProfileContents[3])){
+                                                        String parenkey = snapshot1.getKey().toString();
+                                                        Reservationsnew_pend_req.child(parenkey).child("gym").setValue(GYMNAME);
                                                     }
                                                 }
+
+
+                                            } else {
+                                                Log.d("KEY_RENAME", "Old reservation key does not exist.");
                                             }
                                         }
 
                                         @Override
                                         public void onCancelled(@NonNull DatabaseError error) {
-                                            // Handle error here
+
                                         }
                                     });
+                               //Non-members Non_member_Gym_res
+                                    DatabaseReference replacefromnon_member = databaseprofile.getReference("Users/Non-members");
+                                    replacefromnon_member.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                                                   String key = snapshot1.getKey().toString();
+                                                    Log.d("NON_MEMBER_RES_TAG", "Snapshot1: "+key);
+                                                   for (DataSnapshot snapshot2: snapshot1.child("Non_member_Gym_res").getChildren()){
+
+                                                       String gymname_db = snapshot2.child("gym_name").getValue(String.class);
+                                                       Log.d("NON_MEMBER_RES_TAG", "gym_name: "+gymname_db);
+                                                       if (gymname_db != null && gymname_db.equals(Gym_Owner_Main.ProfileContents[3])) {
+                                                           DatabaseReference newGymName = snapshot2.getRef().child("gym_name");
+                                                           newGymName.setValue(GYMNAME);
+                                                           Log.d("NON_MEMBER_RES_TAG", "Succesful Tap!");
+                                                       }
+                                                    }
+
+
+
+                                                }
+
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
+
+                                            //Users-Non-members
+                                            NonmembersOld.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                    for (DataSnapshot userSnapshot : snapshot.getChildren()) {
+                                                        // Top-level GymName
+                                                        if (userSnapshot.hasChild("GymName")) {
+                                                            String currentGymName = userSnapshot.child("GymName").getValue(String.class);
+                                                            if (currentGymName != null && currentGymName.equals(Gym_Owner_Main.ProfileContents[3])) {
+                                                                userSnapshot.getRef().child("GymName").setValue(GYMNAME);
+                                                            }
+                                                        }
+
+                                                        // membership/GymName
+                                                        if (userSnapshot.hasChild("membership")) {
+                                                            DataSnapshot membership = userSnapshot.child("membership");
+                                                            if (membership.hasChild("GymName")) {
+                                                                String currentMembershipGym = membership.child("GymName").getValue(String.class);
+                                                                if (currentMembershipGym != null && currentMembershipGym.equals(Gym_Owner_Main.ProfileContents[3])) {
+                                                                    userSnapshot.getRef().child("membership").child("GymName").setValue(GYMNAME);
+                                                                }
+                                                            }
+                                                        }
+
+                                                        // positionstored/*/gym_name
+                                                        if (userSnapshot.hasChild("positionstored")) {
+                                                            DataSnapshot positionstored = userSnapshot.child("positionstored");
+                                                            for (DataSnapshot positionEntry : positionstored.getChildren()) {
+                                                                if (positionEntry.hasChild("gym_name")) {
+                                                                    String currentStoredName = positionEntry.child("gym_name").getValue(String.class);
+                                                                    if (currentStoredName != null && currentStoredName.equals(Gym_Owner_Main.ProfileContents[3])) {
+                                                                        positionEntry.getRef().child("gym_name").setValue(GYMNAME);
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError error) {
+                                                    // Handle error here
+                                                }
+                                            });
                                     progressDialog.dismiss();
                                     redirectActivity(Profile_Main_Gym_Owner.this, Gym_Owner_Main.class);
                                 }
@@ -280,9 +347,6 @@ public class Profile_Main_Gym_Owner extends AppCompatActivity {
                                     Log.e("TAG11", "Error updating data", e);
                                 }
                             });
-
-
-
                 }
             }
         });
