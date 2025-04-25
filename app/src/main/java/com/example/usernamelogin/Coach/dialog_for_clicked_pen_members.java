@@ -290,7 +290,7 @@ public abstract class dialog_for_clicked_pen_members extends Dialog {
         DatePickerDialog datePickerDialog = new DatePickerDialog(
                 getContext(),
                 (view, year1, month1, dayOfMonth) -> {
-                    chosen_date = dayOfMonth + "/" + (month1 + 1) + "/" + year1;
+                    chosen_date =  (month1 + 1)+ "/" + dayOfMonth+ "/" + year1;
                     showTimePickerDialog();
                 },
                 year, month, day);

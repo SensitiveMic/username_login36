@@ -35,6 +35,7 @@ public class Coach_main extends AppCompatActivity implements interface_click_pen
     LinearLayout home,  profile;
     public static String member_pushid, member_name;
     public static String activeres_member_pushid;
+    public static String selected_longclick;
     FrameLayout frameLayout;
     TabLayout tabLayout;
 
@@ -146,7 +147,6 @@ public class Coach_main extends AppCompatActivity implements interface_click_pen
                 .child(Login.key_Gym_Coach_key);
 
         ProfileContents = new String[4];
-
 
         myRefprofile.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

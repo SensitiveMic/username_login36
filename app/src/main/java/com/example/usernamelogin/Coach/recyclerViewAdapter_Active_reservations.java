@@ -23,11 +23,16 @@ public class recyclerViewAdapter_Active_reservations extends RecyclerView.Adapte
     Context context;
     ArrayList<Model_class_for_active_reservations> list;
     private FragmentManager fragmentManager;
+    interface_longclick_Adapter_ACtive_res interfaceLongclickAdapterACtiveRes;
 
-    public recyclerViewAdapter_Active_reservations(Context context, ArrayList<Model_class_for_active_reservations> list,  FragmentManager fragmentManager) {
+    public recyclerViewAdapter_Active_reservations(Context context,
+                                                   ArrayList<Model_class_for_active_reservations> list,
+                                                   FragmentManager fragmentManager
+                        ,interface_longclick_Adapter_ACtive_res interfaceLongclickAdapterACtiveRes) {
         this.context = context;
         this.list = list;
         this.fragmentManager = fragmentManager;
+        this.interfaceLongclickAdapterACtiveRes = interfaceLongclickAdapterACtiveRes;
     }
 
     public int getItemViewType(int position) {
@@ -41,7 +46,7 @@ public class recyclerViewAdapter_Active_reservations extends RecyclerView.Adapte
         View itemView;
         itemView = LayoutInflater.from(context).inflate(R.layout.item_list_pending_coach_res_accepted, parent, false);
 
-        return new MYVIEWHOLDEr(itemView);
+        return new MYVIEWHOLDEr(itemView,interfaceLongclickAdapterACtiveRes);
     }
 
     @Override
@@ -79,13 +84,28 @@ public class recyclerViewAdapter_Active_reservations extends RecyclerView.Adapte
 
         TextView Membername, Coachingdate, AgreedTime;
         Button add_custom_wrkout;
-        public MYVIEWHOLDEr(@NonNull View itemView) {
+        public MYVIEWHOLDEr(@NonNull View itemView, interface_longclick_Adapter_ACtive_res interfaceLongclickAdapterACtiveRes) {
             super(itemView);
 
             Membername = itemView.findViewById(R.id.dbmembername);
             Coachingdate = itemView.findViewById(R.id.dbdatesent);
             AgreedTime = itemView.findViewById(R.id.dbtimesent);
             add_custom_wrkout = itemView.findViewById(R.id.Add_cstm_wo_btn);
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                        int pos = getAdapterPosition();
+                        if (pos != RecyclerView.NO_POSITION) {
+                          String text = Membername.getText().toString();
+                            Coach_main.selected_longclick = text;
+
+                            interfaceLongclickAdapterACtiveRes.onitemLonclick(pos);
+                        }
+
+
+                    return true;
+                }
+            });
         }
     }
 
