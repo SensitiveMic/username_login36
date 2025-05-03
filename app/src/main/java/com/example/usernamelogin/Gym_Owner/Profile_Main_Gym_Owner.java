@@ -121,7 +121,6 @@ public class Profile_Main_Gym_Owner extends AppCompatActivity {
                 updates1.put("gym_name",    GYMNAME);
                 updates1.put("gym_descrp", GYMDESCRP);
 
-                Helper_Gym_adder user = new Helper_Gym_adder(EMAIL, PASSWORD, USERNAME);
                 Log.d("TAG6", "To run on update");
                 if(USERNAME.isEmpty() || PASSWORD.isEmpty() || EMAIL.isEmpty()) {
 
@@ -161,7 +160,7 @@ public class Profile_Main_Gym_Owner extends AppCompatActivity {
 
                                         }
                                     });
-                                    //Membership_requests
+                            /*        //Membership_requests
                                     DatabaseReference membershipreqnew = databaseprofile.getReference("Membership_Request").child(GYMNAME);
                                     MembershipRequest.addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
@@ -260,7 +259,7 @@ public class Profile_Main_Gym_Owner extends AppCompatActivity {
 
                                         }
                                     });
-                               //Non-members Non_member_Gym_res
+                                    //Non-members Non_member_Gym_res
                                     DatabaseReference replacefromnon_member = databaseprofile.getReference("Users/Non-members");
                                     replacefromnon_member.addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
@@ -291,9 +290,8 @@ public class Profile_Main_Gym_Owner extends AppCompatActivity {
 
                                         }
                                     });
-
-                                            //Users-Non-members
-                                            NonmembersOld.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    //Users-Non-members
+                                    NonmembersOld.addListenerForSingleValueEvent(new ValueEventListener() {
                                                 @Override
                                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                                     for (DataSnapshot userSnapshot : snapshot.getChildren()) {
@@ -316,7 +314,7 @@ public class Profile_Main_Gym_Owner extends AppCompatActivity {
                                                             }
                                                         }
 
-                                                        // positionstored/*/gym_name
+                                                        // positionstored//gym_name
                                                         if (userSnapshot.hasChild("positionstored")) {
                                                             DataSnapshot positionstored = userSnapshot.child("positionstored");
                                                             for (DataSnapshot positionEntry : positionstored.getChildren()) {
@@ -335,7 +333,7 @@ public class Profile_Main_Gym_Owner extends AppCompatActivity {
                                                 public void onCancelled(@NonNull DatabaseError error) {
                                                     // Handle error here
                                                 }
-                                            });
+                                            });     */
                                     progressDialog.dismiss();
                                     redirectActivity(Profile_Main_Gym_Owner.this, Gym_Owner_Main.class);
                                 }
@@ -354,28 +352,33 @@ public class Profile_Main_Gym_Owner extends AppCompatActivity {
     }
     @SuppressLint("CutPasteId")
     public void profileContents(){
-        ments = new TextView[5];
+        ments = new TextView[7];
         ments[0] = findViewById(R.id.editTextGym_Owner_Username);
         ments[1] = findViewById(R.id.editTextGym_Owner_EmailAddress);
         ments[2] = findViewById(R.id.editTextGym_Owner_Password);
         ments[3] = findViewById(R.id.editTextGym_name);
         ments[4] = findViewById(R.id.editTextGym_Decrp);
+        ments[5] = findViewById(R.id.editTextGym_Owner_FirstName);
+        ments[6] = findViewById(R.id.editTextGym_Owner_lastName);
+
         ments[0].setText(Gym_Owner_Main.ProfileContents[0]);
         ments[1].setText(Gym_Owner_Main.ProfileContents[1]);
         ments[2].setText(Gym_Owner_Main.ProfileContents[2]);
         ments[3].setText(Gym_Owner_Main.ProfileContents[3]); // GYM NAME
         ments[4].setText(Gym_Owner_Main.ProfileContents[4]);
+        ments[5].setText(Gym_Owner_Main.ProfileContents[5]);
+        ments[6].setText(Gym_Owner_Main.ProfileContents[6]);
         //Profile chg
         chg = new EditText[5];
         chg[0] = findViewById(R.id.editTextGym_Owner_Username1);
         chg[1] = findViewById(R.id.editTextGym_Owner_EmailAddress1);
         chg[2] = findViewById(R.id.editTextGym_Owner_Password1);
-        chg[3] = findViewById(R.id.editTextGym_name1);
+
         chg[4] = findViewById(R.id.editTextGym_Decrp1);
         chg[0].setText(Gym_Owner_Main.ProfileContents[0]);
         chg[1].setText(Gym_Owner_Main.ProfileContents[1]);
         chg[2].setText(Gym_Owner_Main.ProfileContents[2]);
-        chg[3].setText(Gym_Owner_Main.ProfileContents[3]);
+
         chg[4].setText(Gym_Owner_Main.ProfileContents[4]);
     }
     public static void openchg(DrawerLayout drawerLayout){

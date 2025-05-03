@@ -6,13 +6,15 @@ public class Users_Update1 {
     String email;
     Integer membership_status;
     String Mobile;
+    String Fullname;
 
-    public Users_Update1(String username, String password, String email, Integer membership_status, String mobile) {
+    public Users_Update1(String username, String password, String email, Integer membership_status, String mobile, String fullname) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.membership_status = membership_status;
         Mobile = mobile;
+        this.Fullname = fullname;
     }
 
     public String getMobile() {
@@ -54,5 +56,13 @@ public class Users_Update1 {
 
     public void setMembership_status(Integer membership_statsu) {
         this.membership_status = membership_statsu;
+    }
+
+    public String getFullname() {
+        return Fullname;
+    }
+
+    public void setFullname(String fullname) {
+        Fullname = fullname;
     }
 }

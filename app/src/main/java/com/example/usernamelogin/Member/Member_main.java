@@ -148,11 +148,12 @@ public class Member_main extends AppCompatActivity {
         checkname.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ProfileContents = new String[4];
+                ProfileContents = new String[5];
                 ProfileContents[0] = dataSnapshot.child(pushkey).child("username").getValue(String.class);
                 ProfileContents[1] = dataSnapshot.child(pushkey).child("email").getValue(String.class);
                 ProfileContents[2] = dataSnapshot.child(pushkey).child("password").getValue(String.class);
                 ProfileContents[3] = dataSnapshot.child(pushkey).child("mobile").getValue(String.class);
+                ProfileContents[4] = dataSnapshot.child(pushkey).child("fullname").getValue(String.class);
 
                 // Update UI elements using the provided context and TextViews
 

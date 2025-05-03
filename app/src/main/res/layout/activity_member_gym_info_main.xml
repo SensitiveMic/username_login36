@@ -8,21 +8,19 @@
     android:layout_height="match_parent"
     android:backgroundTint="#018685"
     android:backgroundTintMode="src_in"
+    android:fitsSystemWindows="true"
     tools:context=".Member.Gym_Info.Member_Gym_info_main">
 
-    <!-- Main content -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+       >
 
-        <!-- Toolbar -->
         <include
             layout="@layout/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-
-        <!-- Gym Info Section -->
         <LinearLayout
             android:id="@+id/linearLayout3"
             android:layout_width="0dp"
@@ -32,12 +30,11 @@
             android:padding="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.31">
+            app:layout_constraintVertical_bias="0.231">
 
-            <!-- Row: Gym Name -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -65,7 +62,6 @@
                     android:textSize="16sp" />
             </LinearLayout>
 
-            <!-- Row: Description -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -93,7 +89,6 @@
                     android:textSize="16sp" />
             </LinearLayout>
 
-            <!-- Row: Contact -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -121,7 +116,7 @@
                     android:textSize="16sp" />
             </LinearLayout>
 
-            <!-- Row: Opening Hours -->
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -149,7 +144,6 @@
                     android:textSize="16sp" />
             </LinearLayout>
 
-            <!-- Row: Closing Hours -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -177,9 +171,6 @@
                     android:textSize="16sp" />
             </LinearLayout>
         </LinearLayout>
-
-
-        <!-- Button -->
 
         <LinearLayout
             android:id="@+id/linearLayout4"
@@ -287,16 +278,16 @@
             android:id="@+id/button_forUpdates"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="41dp"
             android:text="Update Membership Package"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
-            app:layout_constraintVertical_bias="0.546" />
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
+            app:layout_constraintVertical_bias="0.0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- Navigation Drawer -->
     <RelativeLayout
         android:layout_width="300dp"
         android:layout_height="match_parent"

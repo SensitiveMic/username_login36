@@ -293,7 +293,7 @@ public class NonMemberUSER extends AppCompatActivity {
         checkname.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ProfileContents = new String[4];
+                ProfileContents = new String[5];
                 ProfileContents[0] = dataSnapshot.child(pushkey).child("username").getValue(String.class);
                 Log.d("TAG35","username " + ProfileContents[0]);
                 ProfileContents[1] = dataSnapshot.child(pushkey).child("email").getValue(String.class);
@@ -302,6 +302,8 @@ public class NonMemberUSER extends AppCompatActivity {
                 Log.d("TAG35","password " + ProfileContents[2]);
                 ProfileContents[3] = dataSnapshot.child(pushkey).child("mobile").getValue(String.class);
                 Log.d("TAG35","mobile " + ProfileContents[3]);
+                ProfileContents[4] = dataSnapshot.child(pushkey).child("fullname").getValue(String.class);
+                Log.d("TAG35","mobile " + ProfileContents[4]);
                 // Update UI elements using the provided context and TextViews
 
                 if (usernamebar != null && username_nav != null) {

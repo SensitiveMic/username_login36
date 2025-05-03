@@ -101,10 +101,12 @@ public class Gym_Owner_Main extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                ProfileContents = new String[5];
+                ProfileContents = new String[7];
                 ProfileContents[0] = dataSnapshot.child(pushkey).child("gym_owner_username").getValue(String.class);
                 ProfileContents[1] = dataSnapshot.child(pushkey).child("gym_owner_email").getValue(String.class);
                 ProfileContents[2] = dataSnapshot.child(pushkey).child("gym_owner_password").getValue(String.class);
+                ProfileContents[5] = dataSnapshot.child(pushkey).child("gym_owner_firstname").getValue(String.class );
+                ProfileContents[6] = dataSnapshot.child(pushkey).child("gym_owner_lastname").getValue(String.class);
 
                 databaseReferenceNon1.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override

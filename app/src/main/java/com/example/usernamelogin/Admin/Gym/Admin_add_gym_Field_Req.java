@@ -30,7 +30,7 @@ public class Admin_add_gym_Field_Req extends AppCompatActivity {
     ImageView menu;
     LinearLayout home, reservations, add_gym;
     Button add_gym_entity;
-    EditText Gym_name, Gym_descp, Gym_owner_name, Gym_owneremail,Gym_owner_password,gym_contact_number;
+    EditText Gym_name, Gym_descp, Gym_owner_name, Gym_owneremail,Gym_owner_password,gym_contact_number, firstname,lastname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +43,6 @@ public class Admin_add_gym_Field_Req extends AppCompatActivity {
         reservations = findViewById(R.id.Reservations_navdrawer);
         add_gym = findViewById(R.id.add_gym_navdrawer);
 
-
         //for adding gym entity
         Gym_name = findViewById(R.id.editTextGym_Name);
         Gym_descp = findViewById(R.id.editTextGym_Decrp);
@@ -52,6 +51,8 @@ public class Admin_add_gym_Field_Req extends AppCompatActivity {
         Gym_owner_password = findViewById(R.id.editTextGym_Owner_Password);
         add_gym_entity = findViewById(R.id.button_add_gym_entity);
         gym_contact_number= findViewById(R.id.editTextGym_Contact_number);
+        firstname = findViewById(R.id.editTextGym_Owner_firstname);
+        lastname = findViewById(R.id.editTextGym_Owner_Lastname);
 
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,6 +93,8 @@ public class Admin_add_gym_Field_Req extends AppCompatActivity {
                 String Gym_owner1_password= Gym_owner_password.getText().toString();
                 String Gym_owneremail1 = Gym_owneremail.getText().toString();
                 String Gym_contactnumber = gym_contact_number.getText().toString();
+                String gym_own_firstname = firstname.getText().toString();
+                String gym_own_lastname = lastname.getText().toString();
 
                 if(Gym_name1.isEmpty() || Gym_descp1.isEmpty() ||Gym_owner1_name.isEmpty() || Gym_owner1_password.isEmpty() || Gym_owneremail1.isEmpty() || Gym_contactnumber.isEmpty()) {
 
@@ -104,12 +107,12 @@ public class Admin_add_gym_Field_Req extends AppCompatActivity {
                     addedmyRef = myRef.push(); //parent
                     String userId = addedmyRef.getKey();
 
-                    Helper_Gym_adder user = new Helper_Gym_adder(Gym_owneremail1, Gym_owner1_password, Gym_owner1_name);
+                    Helper_Gym_adder user = new Helper_Gym_adder(Gym_owneremail1, Gym_owner1_password, Gym_owner1_name,gym_own_firstname,gym_own_lastname );
                     addedmyRef.setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             myRef4Gym[0] = myRef.child(userId).child("Gym").push();
-                            Admin_helper2 user2 = new Admin_helper2(Gym_name1, Gym_descp1,null,Gym_contactnumber );
+                            Admin_helper2 user2 = new Admin_helper2(Gym_name1, Gym_descp1,null,Gym_contactnumber);
                             myRef4Gym[0].setValue(user2);
 
                             redirectActivity(Admin_add_gym_Field_Req.this, Admin_add_gym.class);

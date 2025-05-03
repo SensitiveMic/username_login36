@@ -269,15 +269,17 @@ public class Member_Profile extends AppCompatActivity {
         });
     }
     public void profileContents(){
-        ments = new TextView[4];
+        ments = new TextView[5];
         ments[0] = findViewById(R.id.textView8);
         ments[1] = findViewById(R.id.textView9);
         ments[2] = findViewById(R.id.textView10);
         ments[3] = findViewById(R.id.mobile_numberrr);
+        ments[4] = findViewById(R.id.textView8_1);
         ments[0].setText(Member_main.ProfileContents[0]);
         ments[1].setText(Member_main.ProfileContents[1]);
         ments[2].setText(Member_main.ProfileContents[2]);
         ments[3].setText(Member_main.ProfileContents[3]);
+        ments[4].setText(Member_main.ProfileContents[4]);
         //Profile chg
         chg = new EditText[4];
         chg[0] = findViewById(R.id.editTextUsername_chg);

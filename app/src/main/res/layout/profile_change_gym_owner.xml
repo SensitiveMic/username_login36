@@ -18,123 +18,99 @@
         android:padding="16dp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-
-
     </LinearLayout>
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/textView7"
-            android:layout_width="131dp"
-            android:layout_height="28dp"
-            android:text="Gym Entity: "
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.039"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.186" />
 
-        <EditText
-            android:id="@+id/editTextGym_name1"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Gym_Name"
-            android:inputType="text"
+            android:background="@drawable/gym_info_bg"
+            android:orientation="vertical"
+            android:padding="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.054"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.243" />
+            app:layout_constraintVertical_bias="0.204">
 
-        <EditText
-            android:id="@+id/editTextGym_Decrp1"
-            android:layout_width="388dp"
-            android:layout_height="73dp"
-            android:layout_margin="8dp"
-            android:background="@null"
-            android:gravity="top|start"
-            android:hint="Enter Description of the Gym"
-            android:inputType="textMultiLine|textCapSentences"
-            android:maxLines="15"
-            android:minLines="4"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.478"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.337" />
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="131dp"
+                android:layout_height="28dp"
+                android:text="Gym Descrp: "
+                android:textColor="@color/black" />
 
-        <Button
-            android:id="@+id/button_chg"
-            android:layout_width="178dp"
-            android:layout_height="50dp"
-            android:text="Confirm change"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.848" />
+            <EditText
+                android:id="@+id/editTextGym_Decrp1"
+                android:layout_width="388dp"
+                android:layout_height="73dp"
+                android:layout_margin="8dp"
+                android:background="@null"
+                android:gravity="top|start"
+                android:hint="Enter Description of the Gym"
+                android:inputType="textMultiLine|textCapSentences"
+                android:maxLines="15"
+                android:minLines="4"
+                android:textColor="@color/black" />
 
-        <EditText
-            android:id="@+id/editTextGym_Owner_Username1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="6dp"
-            android:ems="10"
-            android:hint="Gym_Owner Username"
-            android:inputType="text"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.054"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.529" />
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="133dp"
+                android:layout_height="30dp"
+                android:text="Gym Owner Account: "
+                android:textColor="@color/black" />
 
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="133dp"
-            android:layout_height="30dp"
-            android:text="Gym Owner Account: "
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.039"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.447" />
 
-        <EditText
-            android:id="@+id/editTextGym_Owner_Password1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Password"
-            android:inputType="textVisiblePassword"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.054"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.617" />
+            <EditText
+                android:id="@+id/editTextGym_Owner_Username1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_marginBottom="6dp"
+                android:ems="10"
+                android:hint="Gym_Owner Username"
+                android:inputType="text"
+                android:textColor="@color/black" />
 
-        <EditText
-            android:id="@+id/editTextGym_Owner_EmailAddress1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Email"
-            android:inputType="textEmailAddress"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.054"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.701" />
+            <EditText
+                android:id="@+id/editTextGym_Owner_Password1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:ems="10"
+                android:hint="Password"
+                android:inputType="textVisiblePassword"
+                android:textColor="@color/black" />
+
+            <EditText
+                android:id="@+id/editTextGym_Owner_EmailAddress1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:ems="10"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                android:textColor="@color/black" />
+
+
+            <Button
+                android:id="@+id/button_chg"
+                android:layout_width="178dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="40dp"
+                android:text="Confirm change" />
+
+
+        </LinearLayout>
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

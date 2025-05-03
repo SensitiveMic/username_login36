@@ -93,7 +93,7 @@ public class Member_Gym_info_main extends AppCompatActivity {
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                recreate();
+                redirectActivity(Member_Gym_info_main.this, Member_main.class);
             }
         });
         reservations.setOnClickListener(new View.OnClickListener() {

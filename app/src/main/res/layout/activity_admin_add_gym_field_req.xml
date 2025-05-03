@@ -36,7 +36,7 @@
                     android:layout_height="wrap_content"
                     android:text="Gym Entity: " />
 
-                <EditText
+             <EditText
                     android:id="@+id/editTextGym_Decrp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -57,12 +57,13 @@
                     android:inputType="text"
                     android:textColor="@color/black" />
 
-                <EditText
+              <EditText
                     android:padding="15dp"
                     android:id="@+id/editTextGym_Contact_number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Gym Contact Number"
+                    android:maxLength="11"
                     android:inputType="phone"
                     android:textColor="@color/black" />
 
@@ -76,12 +77,39 @@
 
                 <EditText
                     android:padding="15dp"
+                    android:id="@+id/editTextGym_Owner_firstname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="First Name"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/black" />
+
+                <EditText
+                    android:padding="15dp"
+                    android:id="@+id/editTextGym_Owner_Lastname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Last Name"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/black" />
+
+                <EditText
+                    android:padding="15dp"
                     android:id="@+id/editTextGym_Owner_EmailAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Email"
                     android:inputType="textEmailAddress"
                     android:textColor="@color/black" />
+             <!--   <EditText
+                    android:padding="15dp"
+                    android:id="@+id/editTextGym_Owner_Mobile_num"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Mobile Number"
+                    android:inputType="phone"
+                    android:maxLength="11"
+                    android:textColor="@color/black" />  -->
 
                 <EditText
                     android:padding="15dp"

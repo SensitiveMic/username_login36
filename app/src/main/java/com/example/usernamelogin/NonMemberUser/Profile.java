@@ -88,7 +88,6 @@ public class Profile extends AppCompatActivity {
 
         Button button_chg = findViewById(R.id.button_chg);
 
-
         CheckBox showPasswordCheckBox = findViewById(R.id.showPasswordCheckBox);
         CheckBox showPasswordCheckBoxProfile = findViewById(R.id.showPasswordCheckBoxProfile);
         // Set an OnCheckedChangeListener to the CheckBox
@@ -365,15 +364,17 @@ public class Profile extends AppCompatActivity {
     }
 
     public void profileContents(){
-        ments = new TextView[4];
+        ments = new TextView[5];
         ments[0] = findViewById(R.id.textView8); // username
         ments[1] = findViewById(R.id.textView9); // email
         ments[2] = findViewById(R.id.textView10);  //passwird
         ments[3] = findViewById(R.id.mobile_numberrr); //mobile number
+        ments[4] = findViewById(R.id.textiview_full); // fullname
         ments[0].setText(NonMemberUSER.ProfileContents[0]);
         ments[1].setText(NonMemberUSER.ProfileContents[1]);
         ments[2].setText(NonMemberUSER.ProfileContents[2]);
         ments[3].setText(NonMemberUSER.ProfileContents[3]);
+        ments[4].setText(NonMemberUSER.ProfileContents[4]);
         //Profile chg
         chg = new EditText[4];
         chg[0] = findViewById(R.id.editTextUsername_chg);
