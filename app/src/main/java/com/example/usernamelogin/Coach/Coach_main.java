@@ -146,7 +146,7 @@ public class Coach_main extends AppCompatActivity implements interface_click_pen
                 .child("Coach")
                 .child(Login.key_Gym_Coach_key);
 
-        ProfileContents = new String[4];
+        ProfileContents = new String[5];
 
         myRefprofile.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -156,6 +156,7 @@ public class Coach_main extends AppCompatActivity implements interface_click_pen
                 ProfileContents[1] = dataSnapshot.child("email").getValue(String.class);
                 ProfileContents[2] = dataSnapshot.child("password").getValue(String.class);
                 ProfileContents[3] = dataSnapshot.child("mobile_number").getValue(String.class);
+                ProfileContents[4] = dataSnapshot.child("fullname").getValue(String.class);
             }
 
             @Override

@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.example.usernamelogin.Admin.Admin_main;
+import com.example.usernamelogin.Admin.Userslist.gymanditsmembers.UsersList_Admin_main;
 import com.example.usernamelogin.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -59,7 +60,7 @@ public class Admin_add_gym extends AppCompatActivity implements Admin_Gym_Recycl
         reservations.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                recreate();
+                redirectActivity(Admin_add_gym.this, UsersList_Admin_main.class);
             }
         });
         add_gym.setOnClickListener(new View.OnClickListener() {

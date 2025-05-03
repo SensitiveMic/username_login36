@@ -55,15 +55,17 @@ public class Coach_Profile_Main extends AppCompatActivity {
         changeprof_i = findViewById(R.id.changeP_I);
         button_frchg = findViewById(R.id.button_chg);
 
-        ments = new TextView[4];
+        ments = new TextView[5];
         ments[0] = findViewById(R.id.textView8_coach);
         ments[1] = findViewById(R.id.textView9_coach);
         ments[2] = findViewById(R.id.textView10_coach);
         ments[3] = findViewById(R.id.mobile_numberforcoach);
+        ments[4] = findViewById(R.id.textView8_coach_fullname);
         ments[0].setText(Coach_main.ProfileContents[0]);
         ments[1].setText(Coach_main.ProfileContents[1]);
         ments[2].setText(Coach_main.ProfileContents[2]);
         ments[3].setText(Coach_main.ProfileContents[3]);
+        ments[4].setText(Coach_main.ProfileContents[4]);
 
         chg = new EditText[4];
         chg[0] = findViewById(R.id.editTextUsername_chg);

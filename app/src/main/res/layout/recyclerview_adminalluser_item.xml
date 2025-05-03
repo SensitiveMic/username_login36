@@ -6,21 +6,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardElevation="8dp"
     app:cardCornerRadius="15dp"
-    android:layout_margin="16dp"
+    android:padding="10dp"
     app:cardUseCompatPadding="true"
     app:cardPreventCornerOverlap="false"
     android:id="@id/adminalluserList">
 
     <LinearLayout
         android:id="@+id/nonmember"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
+
         android:orientation="vertical">
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:padding="5dp"
             android:orientation="horizontal">
 
             <TextView
@@ -39,27 +41,21 @@
 
         </LinearLayout>
 
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/gymowner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:orientation="vertical">
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
+            android:padding="5dp"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Username :"
+                android:text="Fullname :"
                 android:textSize="26sp"
+                android:padding="5dp"
                 android:textStyle="bold"/>
             <TextView
-                android:id="@+id/dbusernamegymowner"
+                android:id="@+id/dbfullname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="  username"
@@ -68,7 +64,9 @@
 
         </LinearLayout>
 
+
     </LinearLayout>
+
 
 
 </androidx.cardview.widget.CardView>

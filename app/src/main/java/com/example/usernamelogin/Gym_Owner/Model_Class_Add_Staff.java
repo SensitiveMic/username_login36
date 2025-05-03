@@ -5,12 +5,14 @@ public class Model_Class_Add_Staff {
     String password;
     String email;
     String mobile_number;
+    String fullname;
 
-    public Model_Class_Add_Staff(String username, String password, String email, String mobile_number) {
+    public Model_Class_Add_Staff(String username, String password, String email, String mobile_number, String fullname) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.mobile_number = mobile_number;
+        this.fullname = fullname;
     }
 
     public String getUsername() {
@@ -43,5 +45,13 @@ public class Model_Class_Add_Staff {
 
     public void setMobile_number(String mobile_number) {
         this.mobile_number = mobile_number;
+    }
+
+    public String getFullname() {
+        return fullname;
+    }
+
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 }

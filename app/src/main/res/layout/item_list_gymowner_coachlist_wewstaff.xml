@@ -29,15 +29,48 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:orientation="vertical">
-            <TextView
-                android:id="@+id/Employee_Name"
-                android:layout_width="match_parent"
-                android:layout_height="32dp"
-                android:gravity="top|start"
-                android:textColor="@android:color/black"
-                android:textSize="20sp"
-                android:text="*Employee name "
-                />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="32dp"
+                    android:gravity="top|start"
+                    android:textColor="@android:color/black"
+                    android:textSize="15sp"
+                    android:text="Username : "/>
+                <TextView
+                    android:id="@+id/Employee_Name"
+                    android:layout_width="match_parent"
+                    android:layout_height="32dp"
+                    android:gravity="top|start"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp"
+                    android:text="*Employee name "
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="32dp"
+                    android:gravity="top|start"
+                    android:textColor="@android:color/black"
+                    android:textSize="15sp"
+                    android:text="Fullname : "/>
+                <TextView
+                    android:id="@+id/Employee_fullname"
+                    android:layout_width="match_parent"
+                    android:layout_height="32dp"
+                    android:gravity="top|start"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp"
+                    android:text="*Full name"/>
+            </LinearLayout>
             <TextView
                 android:id="@+id/roleoftheemployee"
                 android:layout_width="wrap_content"

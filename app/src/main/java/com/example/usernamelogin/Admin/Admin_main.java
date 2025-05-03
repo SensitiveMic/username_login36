@@ -30,7 +30,7 @@ public class Admin_main extends AppCompatActivity implements RecyclerViewInterfa
 
     DrawerLayout drawerLayout;
     ImageView menu;
-    LinearLayout home, userslist, add_gym, nonmember, gymowner;
+    LinearLayout home, userslist, add_gym, nonmember;
     DatabaseReference db ,db1 ;
     RecyclerView recyclerView;
     Adapter_recyclerview_Adminusers_all myadapter;
@@ -48,7 +48,7 @@ public class Admin_main extends AppCompatActivity implements RecyclerViewInterfa
         userslist = findViewById(R.id.Reservations_navdrawer);
         add_gym = findViewById(R.id.add_gym_navdrawer);
         nonmember = findViewById(R.id.nonmember);
-        gymowner = findViewById(R.id.gymowner);
+
 
         dbusername1 = findViewById(R.id.dbusername);
 
@@ -78,7 +78,7 @@ public class Admin_main extends AppCompatActivity implements RecyclerViewInterfa
         });
 
 
-        refresh_res_list();
+       // refresh_res_list();
     }
     public static void openNavbar(DrawerLayout drawerLayout){
         drawerLayout.openDrawer(GravityCompat.START);

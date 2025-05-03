@@ -17,8 +17,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class Gym_Owner_gymmanagement_add_coach extends AppCompatActivity {
-    String USERNAME, PASSWORD, EMAIL,MOBILENUMBER;
-    EditText username, password, email,mobilenumber;
+    String USERNAME, PASSWORD, EMAIL,MOBILENUMBER, FULLNAME;
+    EditText username, password, email,mobilenumber, fullname;
     FirebaseDatabase database ;
     DatabaseReference myRef ;
     DatabaseReference addedmyRef ;
@@ -27,6 +27,7 @@ public class Gym_Owner_gymmanagement_add_coach extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gym_owner_gymmanagement_add_coach);
         Button regbutton = findViewById(R.id.regbutton);
+        fullname = findViewById(R.id.editText_coach_fullname);
         username = findViewById(R.id.editTextTextUsername);
         password = findViewById(R.id.editTextTextPassword);
         email = findViewById(R.id.editTextTextEmailAddress);
@@ -35,12 +36,13 @@ public class Gym_Owner_gymmanagement_add_coach extends AppCompatActivity {
         regbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                FULLNAME = fullname.getText().toString();
                 USERNAME = username.getText().toString();
                 PASSWORD = password.getText().toString();
                 EMAIL = email.getText().toString();
                 MOBILENUMBER = mobilenumber.getText().toString();
 
-                if(USERNAME.isEmpty() || PASSWORD.isEmpty() || EMAIL.isEmpty()|| MOBILENUMBER.isEmpty()) {
+                if(USERNAME.isEmpty() || PASSWORD.isEmpty() || EMAIL.isEmpty()|| MOBILENUMBER.isEmpty()|| FULLNAME.isEmpty()) {
 
                     Toast.makeText(Gym_Owner_gymmanagement_add_coach.this,"Enter Texts in the Empty Fields",Toast.LENGTH_SHORT).show();
                 }
@@ -49,7 +51,7 @@ public class Gym_Owner_gymmanagement_add_coach extends AppCompatActivity {
                     myRef = database.getReference("Users/Gym_Owner").child(Login.key_GymOwner).child("Gym")
                             .child(Gym_Owner_Main.key2).child("Coach");
                     addedmyRef = myRef.push();
-                    Model_Class_Add_Staff user = new Model_Class_Add_Staff(USERNAME, PASSWORD, EMAIL, MOBILENUMBER);
+                    Model_Class_Add_Staff user = new Model_Class_Add_Staff(USERNAME, PASSWORD, EMAIL, MOBILENUMBER,FULLNAME);
                     addedmyRef.setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {

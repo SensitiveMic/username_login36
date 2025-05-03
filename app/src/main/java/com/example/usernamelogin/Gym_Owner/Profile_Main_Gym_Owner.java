@@ -39,7 +39,6 @@ public class Profile_Main_Gym_Owner extends AppCompatActivity {
     LinearLayout home, Gym_management, profile;
     private TextView[] ments;
     private EditText[] chg;
-    String USERNAME, PASSWORD, EMAIL;
     Button changeprof_i, button_chg;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +104,7 @@ public class Profile_Main_Gym_Owner extends AppCompatActivity {
                 DatabaseReference ReservationsOld = databaseprofile.getReference("Reservations/Accepted").child(Gym_Owner_Main.ProfileContents[3]);
                 DatabaseReference ReservationsOld_pending_req = databaseprofile.getReference("Reservations/Pending_Requests").child(Gym_Owner_Main.ProfileContents[3]);
                 DatabaseReference NonmembersOld = databaseprofile.getReference("Users/Non-members");
+
                 // Create a HashMap to hold the updates you want to make
                 String USERNAME = chg[0].getText().toString();
                 String EMAIL    = chg[1].getText().toString();
@@ -150,7 +150,6 @@ public class Profile_Main_Gym_Owner extends AppCompatActivity {
                                                         gympackage.removeValue();
                                                     }
                                                 });
-
 
                                             }
                                         }

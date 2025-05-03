@@ -32,7 +32,7 @@ import java.util.Objects;
 public class Login extends AppCompatActivity {
 
     public static String key,key_Admin, key_GymOwner;
-    public static String key_gym_Staff_key, key_Gym_Staff_username, key_Gym_Staff_mobile_number, key_Gym_Staff_email, key_Gym_Staff_password ;
+    public static String key_gym_Staff_key, key_Gym_Staff_username, key_Gym_Staff_mobile_number, key_Gym_Staff_email, key_Gym_Staff_password ,key_Gym_staff_fullname ;
     public static String key_Gym_Coach_key, key_Gym_Coach_mobile_number,key_Gym_Coach_username,key_Gym_Coach_email,key_Gym_Coach_password;
     public static String key_Gym_Staff1 = null;
     public static String key_Gym_Staff2 = null;
@@ -305,6 +305,7 @@ public class Login extends AppCompatActivity {
                                         Log.d("TAG53", "5th key :" + key_gym_Staff_key);
                                         Log.e("TAG53", key_gym_Staff_key);
 
+                                        key_Gym_staff_fullname = insidegymkey.child("fullname").getValue(String.class);
                                         key_Gym_Staff_password = insidegymkey.child("password").getValue(String.class);
                                         key_Gym_Staff_email = insidegymkey.child("email").getValue(String.class);
                                         key_Gym_Staff_mobile_number = insidegymkey.child("mobile_number").getValue(String.class);

@@ -34,18 +34,18 @@ public class Adapter_recyclerview_Adminusers_all extends RecyclerView.Adapter<Ad
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         users_all fromusers = list.get(position);
         holder.username.setText(fromusers.getUsername());
-        holder.gym_owner_username.setText(fromusers.getGym_owner_username());
+        holder.fullname.setText(fromusers.getFullname());
     }
     @Override
     public int getItemCount() {
         return list.size();
     }
     public static class MyViewHolder extends RecyclerView.ViewHolder{
-        TextView username,gym_owner_username;
+        TextView username,fullname;
         public MyViewHolder(@NonNull View itemView, RecyclerViewInterface recycleViewInterface) {
             super(itemView);
                 username = itemView.findViewById(R.id.dbusername);
-            gym_owner_username = itemView.findViewById(R.id.dbusernamegymowner);
+                fullname = itemView.findViewById(R.id.dbfullname);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

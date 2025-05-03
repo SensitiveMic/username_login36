@@ -23,7 +23,7 @@ import com.google.android.material.tabs.TabLayout;
 public class UsersList_Admin_main extends AppCompatActivity {
     DrawerLayout drawerLayout;
     ImageView menu;
-    LinearLayout home, userslist, add_gym, nonmember, gymowner;
+    LinearLayout home, userslist, add_gym, nonmember;
     FrameLayout frameLayout;
     TabLayout tabLayout;
 
@@ -38,7 +38,7 @@ public class UsersList_Admin_main extends AppCompatActivity {
         userslist = findViewById(R.id.Reservations_navdrawer);
         add_gym = findViewById(R.id.add_gym_navdrawer);
         nonmember = findViewById(R.id.nonmember);
-        gymowner = findViewById(R.id.gymowner);
+
 
         frameLayout = (FrameLayout) findViewById(R.id.framelayout21);
         tabLayout = (TabLayout) findViewById(R.id.tablayout2);
