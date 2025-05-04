@@ -10,9 +10,10 @@
     android:backgroundTintMode="src_in"
     tools:context=".Staff.Memberslist.Staff_mem_list_main">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:orientation="vertical"
         android:id="@+id/buttons"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -42,14 +43,15 @@
         <FrameLayout
             android:id="@+id/framelayout1"
             android:layout_width="411dp"
-            android:layout_height="609dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tablayout" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="300dp"

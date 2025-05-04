@@ -36,6 +36,7 @@ public class Adapter_frag_members_list extends RecyclerView.Adapter<Adapter_frag
         holder.membername.setText(reslist.getUsername());
         holder.start_date.setText(reslist.getStart_date());
         holder.end_date.setText(reslist.getExpiration_date());
+        holder.remaining_days.setText(reslist.getRemainind_days());
     }
 
     @Override
@@ -45,14 +46,14 @@ public class Adapter_frag_members_list extends RecyclerView.Adapter<Adapter_frag
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView membername, start_date,end_date;
+        TextView membername, start_date,end_date,remaining_days;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             membername = itemView.findViewById(R.id.tvMemberName);
             start_date = itemView.findViewById(R.id.tvStartDate);
             end_date = itemView.findViewById(R.id.tvExpirationDate);
-
+            remaining_days = itemView.findViewById(R.id.remaining_date);
         }
     }
 

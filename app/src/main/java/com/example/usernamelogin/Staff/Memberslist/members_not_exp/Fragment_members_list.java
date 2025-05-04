@@ -19,7 +19,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -108,7 +112,7 @@ public class Fragment_members_list extends Fragment {
 
                             Model_class_get_members_details res1 =
                                     new Model_class_get_members_details(username, expirationDate, startDate);
-
+                            res1.setRemainind_days(remainingdays(expirationDate));
                             list.add(res1);
                         }
                     }
@@ -122,8 +126,24 @@ public class Fragment_members_list extends Fragment {
             }
         });
 
+    }
+    private String remainingdays( String exp_date){
+        String remaining_Days = "";
+        SimpleDateFormat sdf = new SimpleDateFormat("MM dd yy");
 
+        try {
+            Date start = new Date();
+            Date expiration = sdf.parse(exp_date);
 
+            long diffInMillis = expiration.getTime() - start.getTime();
+            long daysLeft = TimeUnit.MILLISECONDS.toDays(diffInMillis);
+
+            remaining_Days = String.valueOf(daysLeft);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return remaining_Days;
     }
 
 }

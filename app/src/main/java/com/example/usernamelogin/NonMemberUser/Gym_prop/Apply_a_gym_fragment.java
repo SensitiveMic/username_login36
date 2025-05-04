@@ -97,9 +97,6 @@ public class Apply_a_gym_fragment extends Fragment implements interface_gym_list
         View view = inflater.inflate(R.layout.fragment_apply_a_gym_fragment, container, false);
 
 
-
-
-
         if (getActivity() instanceof Gym_Properties_Main) {
             switcheroo = (Gym_Properties_Main) getActivity();
         } else {

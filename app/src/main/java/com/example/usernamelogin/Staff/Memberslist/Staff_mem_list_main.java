@@ -73,14 +73,14 @@ public class Staff_mem_list_main extends AppCompatActivity {
                         }
                         break;
 
-                    case 1:
+                 /*  case 1:
                         tagtea34 = "Staff_check_exp";
                         Please = getSupportFragmentManager().findFragmentByTag(tagtea34);
 
                         if (Please == null) {
                             Please = new Fragment_expired_members();
                         }
-                        break;
+                        break;     */
                 }
 
                 // Replace the fragment and add it to the back stack with a tag
@@ -106,8 +106,8 @@ public class Staff_mem_list_main extends AppCompatActivity {
         TabLayout.Tab tab1 = kasibagTab.newTab().setText("Current Members");
         kasibagTab.addTab(tab1);
 
-        TabLayout.Tab tab2 = kasibagTab.newTab().setText("Expired Members");
-        kasibagTab.addTab(tab2);
+     /*   TabLayout.Tab tab2 = kasibagTab.newTab().setText("Expired Members");
+        kasibagTab.addTab(tab2); */
 
 
         menu.setOnClickListener(new View.OnClickListener() {

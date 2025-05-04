@@ -68,7 +68,7 @@
                     android:layout_height="wrap_content"
 
                     android:textSize="16sp"
-                    android:text="Duration(days): " />
+                    android:text="Membership Duration(days): " />
                 <TextView
                     android:id="@+id/pckg_dur"
                     android:layout_width="wrap_content"

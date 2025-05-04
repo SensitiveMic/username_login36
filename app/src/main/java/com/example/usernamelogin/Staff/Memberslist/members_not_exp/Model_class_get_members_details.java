@@ -3,6 +3,7 @@ package com.example.usernamelogin.Staff.Memberslist.members_not_exp;
 public class Model_class_get_members_details {
     String GymName,expiration_date,start_date;
     String username;
+    String remainind_days;
 
     public Model_class_get_members_details() {
     }
@@ -27,5 +28,13 @@ public class Model_class_get_members_details {
 
     public String getStart_date() {
         return start_date;
+    }
+
+    public String getRemainind_days() {
+        return remainind_days;
+    }
+
+    public void setRemainind_days(String remainind_days) {
+        this.remainind_days = remainind_days;
     }
 }
