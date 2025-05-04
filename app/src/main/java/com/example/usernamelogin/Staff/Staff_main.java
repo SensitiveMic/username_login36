@@ -1,5 +1,6 @@
 package com.example.usernamelogin.Staff;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -16,6 +17,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.example.usernamelogin.R;
@@ -23,8 +25,19 @@ import com.example.usernamelogin.RegisterandLogin.Login;
 import com.example.usernamelogin.Staff.Gym_Management.Gym_management_main;
 import com.example.usernamelogin.Staff.Membership_req_management.Membership_requests_main;
 import com.example.usernamelogin.Staff.Memberslist.Staff_mem_list_main;
+import com.example.usernamelogin.Staff.Memberslist.members_not_exp.Model_class_get_members_details;
 import com.example.usernamelogin.Staff.Profile_Staff.Staff_Profile_Main;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class Staff_main extends AppCompatActivity{
     DrawerLayout drawerLayout;
@@ -109,7 +122,6 @@ public class Staff_main extends AppCompatActivity{
         tabLayout1wew.addTab(tab2);
 
 
-
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -143,6 +155,7 @@ public class Staff_main extends AppCompatActivity{
 
           //---- this method changes membership based on expiration---
       // Membership_requests_main.checkMembershipExpirations();
+        expiredmembersremoval();
     }
 
     public static void openNavbar(DrawerLayout drawerLayout) {
@@ -190,5 +203,61 @@ public class Staff_main extends AppCompatActivity{
                 findViewById(R.id.username_nav));
     }
 
+    private void expiredmembersremoval(){
+
+        DatabaseReference checkmembers = FirebaseDatabase.getInstance().getReference("Users/Non-members");
+        checkmembers.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for(DataSnapshot snapshot1: snapshot.getChildren()){
+
+                  String gymName = snapshot1.child("GymName").getValue(String.class);
+
+                    if (gymName != null && gymName.equals(Login.key_Gym_)){
+                        DataSnapshot membershipSnapshot = snapshot1.child("membership");
+                        String username = snapshot1.child("username").getValue(String.class);
+                        if (membershipSnapshot.exists()) {
+                            String expirationDate = snapshot1.child("membership").child("expiration_date").getValue(String.class);
+                            if (expirationDate != null && isDateExpired(expirationDate)) {
+
+                                snapshot1.getRef().child("membership").removeValue();
+                                snapshot1.getRef().child("GymName").removeValue();
+                                snapshot1.getRef().child("positionstored").removeValue();
+                                snapshot1.getRef().child("Coach_Reservation").removeValue();
+
+                                // Set membership_status to 0
+                                snapshot1.getRef().child("membership_status").setValue(0);
+
+                                Log.d("TAGEXPIRED_REMOVED", "user_unmembered: " +username);
+
+                            }
+
+                        }
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+    public static boolean isDateExpired(String dateString) {
+        SimpleDateFormat sdf = new SimpleDateFormat("MM dd yy", Locale.getDefault());
+        sdf.setLenient(false);
+
+        try {
+            Date inputDate = sdf.parse(dateString);
+            Date currentDate = new Date();
+            return inputDate.before(currentDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
 }
