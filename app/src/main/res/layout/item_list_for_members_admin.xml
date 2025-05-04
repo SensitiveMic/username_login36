@@ -11,31 +11,61 @@
 
     <LinearLayout
         android:id="@+id/nonmember"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:padding="10dp"
         android:orientation="vertical">
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/dbmembername_memberlist"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="username"
-                android:textSize="20sp"
-                android:textStyle="bold"/>
-            <TextView
+                android:orientation="horizontal">
+                <TextView
 
-                android:layout_width="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Username : "
+                    android:textSize="15sp"
+                    />
+
+                <TextView
+                    android:id="@+id/dbmembername_memberlist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="username"
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="username"
-                android:textSize="15sp"
-                />
+                android:orientation="horizontal">
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Fullname : "
+                    android:textSize="15sp"
+                    />
+
+                <TextView
+                    android:id="@+id/dbmembername_memberlist_fullname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="username"
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+
 
         </LinearLayout>
 

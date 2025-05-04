@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -40,7 +42,6 @@ public abstract class Dialog_for_members extends Dialog {
         gym_employees.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
 
                 Dialog_for_staffandcoach lisdialog = new Dialog_for_staffandcoach(context, new givetoroots() {
                     @Override
@@ -77,6 +78,10 @@ public abstract class Dialog_for_members extends Dialog {
                 };
 
                 lisdialog.show();
+                Window window = lisdialog.getWindow();
+                if (window != null) {
+                    window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                }
             }
         });
 
@@ -102,6 +107,10 @@ public abstract class Dialog_for_members extends Dialog {
 
               };
               listdialog.show();
+                Window window = listdialog.getWindow();
+                if (window != null) {
+                    window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                }
             }
 
         });

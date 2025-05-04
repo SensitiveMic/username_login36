@@ -37,6 +37,7 @@ public class Adapter_for_memberslistreal extends RecyclerView.Adapter<Adapter_fo
     public void onBindViewHolder(@NonNull Adapter_for_memberslistreal.MyViewHolder holder, int position) {
         helper_class_for_memberslist fromusers1 = list.get(position);
         holder.memberusername.setText(fromusers1.getUsername());
+        holder.fullname.setText(fromusers1.getFullname());
     }
 
     @Override
@@ -45,11 +46,13 @@ public class Adapter_for_memberslistreal extends RecyclerView.Adapter<Adapter_fo
     }
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
-        TextView memberusername;
+        TextView memberusername,fullname;
 
         public MyViewHolder(@NonNull View itemView,itemclickinterface itemclickinterface ) {
             super(itemView);
             memberusername = itemView.findViewById(R.id.dbmembername_memberlist);
+            fullname = itemView.findViewById(R.id.dbmembername_memberlist_fullname);
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

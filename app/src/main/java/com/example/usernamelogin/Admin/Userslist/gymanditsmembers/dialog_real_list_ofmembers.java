@@ -36,7 +36,6 @@ public abstract class dialog_real_list_ofmembers extends Dialog implements itemc
 
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState != null ? savedInstanceState : new Bundle());
@@ -46,7 +45,6 @@ public abstract class dialog_real_list_ofmembers extends Dialog implements itemc
         setCancelable(true);
 
         setUpRecyclerView(view);
-
 
     }
     private void setUpRecyclerView(View view) {

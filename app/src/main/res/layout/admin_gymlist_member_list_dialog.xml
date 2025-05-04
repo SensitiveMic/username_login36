@@ -10,13 +10,13 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         app:cardCornerRadius="10dp"
         app:cardElevation="10dp"
         app:cardUseCompatPadding="true">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="vertical"
@@ -52,7 +52,8 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/memberlistIDondialog"
                 android:layout_width="match_parent"
-                android:layout_height="469dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 tools:listitem="@layout/item_list_for_members_admin"/>
 
 

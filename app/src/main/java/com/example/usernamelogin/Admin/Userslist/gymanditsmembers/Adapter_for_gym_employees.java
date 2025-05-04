@@ -40,6 +40,7 @@ public class Adapter_for_gym_employees extends RecyclerView.Adapter<Adapter_for_
     public void onBindViewHolder(@NonNull Adapter_for_gym_employees.MyViewHolder holder, int position) {
         Model_class_Coach_list fromusers = list.get(position);
         holder.employeename.setText(fromusers.getUsername());
+        holder.fullname.setText(fromusers.getFullname());
         if (arrayReceiver != null) {
             holder.setArray(arrayReceiver);
         }
@@ -60,15 +61,15 @@ public class Adapter_for_gym_employees extends RecyclerView.Adapter<Adapter_for_
         }
     }
 
-
     public static class MyViewHolder extends RecyclerView.ViewHolder{
-        TextView employeename;
+        TextView employeename, fullname;
         String[] arrayreceiver1;
         String[] updatedarray;
 
         public MyViewHolder(@NonNull View itemView,givetoroots itemclicker ) {
             super(itemView);
-            employeename = itemView.findViewById(R.id.Employee_Name);
+            employeename = itemView.findViewById(R.id.Employee_userName);
+            fullname = itemView.findViewById(R.id.Employee_fullname);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

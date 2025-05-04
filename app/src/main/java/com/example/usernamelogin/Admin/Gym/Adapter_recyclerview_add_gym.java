@@ -55,12 +55,18 @@ public class Adapter_recyclerview_add_gym extends RecyclerView.Adapter<Adapter_r
                     Log.d("TAG002", key1);
                     // Access the "Gym" node
                     DataSnapshot gymSnapshot = gk.child("Gym");
+                    String firstname = gk.child("gym_owner_firstname").getValue(String.class);
+                    String lastname = gk.child("gym_owner_lastname").getValue(String.class);
+                    String fullname = firstname + " " + lastname;
+                    holder.fullname.setText(fullname);
                     // Iterate over the children of the "Gym" node
                     for (DataSnapshot gymChildSnapshot : gymSnapshot.getChildren()) {
                         // Access the "gym_name" under the push ID
                         String gymName = gymChildSnapshot.child("gym_name").getValue(String.class);
+
                         // Set gym name to the TextView
                         holder.gym_name.setText(gymName);
+
                         Log.d("TAG001", gymName);
                         // Break the loop as we only need to process one gym name
                         break;
@@ -83,14 +89,15 @@ public class Adapter_recyclerview_add_gym extends RecyclerView.Adapter<Adapter_r
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
-        TextView gym_owner_username1,gym_name;
+        TextView gym_owner_username1,gym_name, fullname;
 
 
         public MyViewHolder(@NonNull View itemView, Admin_Gym_RecyclerViewInterface recyclerViewInterface) {
             super(itemView);
 
-            gym_owner_username1 = itemView.findViewById(R.id.dbgymownername);
+            gym_owner_username1 = itemView.findViewById(R.id.dbgymowner_username);
             gym_name = itemView.findViewById(R.id.dbgymname);
+            fullname = itemView.findViewById(R.id.dbgymowner_fullname);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

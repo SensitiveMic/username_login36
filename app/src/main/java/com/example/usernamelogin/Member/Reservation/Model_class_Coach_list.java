@@ -2,6 +2,7 @@ package com.example.usernamelogin.Member.Reservation;
 
 public class Model_class_Coach_list {
     String username;
+    String fullname;
     public Model_class_Coach_list(){
 
     }
@@ -15,5 +16,9 @@ public class Model_class_Coach_list {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getFullname() {
+        return fullname;
     }
 }
