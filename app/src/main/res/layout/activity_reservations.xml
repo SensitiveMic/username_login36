@@ -7,23 +7,23 @@
     android:layout_height="match_parent"
     android:backgroundTint="#018685"
     android:id="@+id/home_layout"
+    android:fitsSystemWindows="true"
     android:backgroundTintMode="src_in"
     tools:context=".NonMemberUser.Reservations.Reservations">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="139dp"
+
+    <LinearLayout
         android:id="@+id/buttons"
-        >
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <include
             android:id="@+id/include5"
             layout="@layout/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tablayout"
@@ -34,23 +34,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/include5"
             app:tabIndicatorColor="@color/white"
-            app:tabSelectedTextColor="@color/white"/>
+            app:tabSelectedTextColor="@color/white" />
 
 
         <FrameLayout
             android:id="@+id/framelayout1"
             android:layout_width="match_parent"
-            android:layout_height="707dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.156"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tablayout"
-            app:layout_constraintVertical_bias="0.0" />
+            android:layout_height="0dp"
+            android:layout_weight="1"
+          />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="300dp"

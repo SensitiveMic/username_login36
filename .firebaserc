@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "gym-bookinga01"
-  }
+    "default": "gym-bookinga01",
+    "realone": "gym-bookinga01"
+  },
+  "targets": {},
+  "etags": {}
 }

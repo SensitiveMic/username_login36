@@ -66,6 +66,39 @@
                     android:maxLength="11"
                     android:inputType="phone"
                     android:textColor="@color/black" />
+                <Button
+                    android:id="@+id/addOCtimebutton"
+                    android:text="Opening/Closing time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/editTextGym_Opening_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Opening time"
+                    android:inputType="phone"
+                    android:maxLength="11"
+                    android:padding="15dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:padding="15dp"
+                    android:id="@+id/editTextGym_Closing_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Opening time"
+                    android:layout_weight="1"
+                    android:maxLength="11"
+                    android:inputType="phone"
+                    android:textColor="@color/black" />
+            </LinearLayout>
 
 
 

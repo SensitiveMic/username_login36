@@ -15,15 +15,10 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/gymlistrecycler"
         android:layout_width="match_parent"
-        android:layout_height="562dp" />
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
 
 
-    <ImageView
-        android:id="@+id/add_gym_circle"
-        android:layout_width="73dp"
-        android:layout_height="65dp"
-        android:layout_gravity="center"
-        android:src="@drawable/add_circle" />
 </LinearLayout>
 
 

@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.usernamelogin.Admin.Admin_main;
 import com.example.usernamelogin.Admin.Gym.Admin_add_gym;
+import com.example.usernamelogin.Admin.Userslist.Archived_gyms.Admin_archived_gyms_fragment;
 import com.example.usernamelogin.Admin.Userslist.nonmembers.nonmember_list_admin_fragment;
 import com.example.usernamelogin.R;
 import com.google.android.material.tabs.TabLayout;
@@ -26,6 +27,7 @@ public class UsersList_Admin_main extends AppCompatActivity {
     LinearLayout home, userslist, add_gym, nonmember;
     FrameLayout frameLayout;
     TabLayout tabLayout;
+    public static String gym_owner_KEY;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +72,14 @@ public class UsersList_Admin_main extends AppCompatActivity {
 
                         if (fragment == null) {
                             fragment = new nonmember_list_admin_fragment();
+                        }
+                        break;
+
+                    case 2:
+                        tag = "archived_gyms";
+                        fragment = getSupportFragmentManager().findFragmentByTag(tag);
+                        if (fragment == null){
+                            fragment = new Admin_archived_gyms_fragment();
                         }
                         break;
 

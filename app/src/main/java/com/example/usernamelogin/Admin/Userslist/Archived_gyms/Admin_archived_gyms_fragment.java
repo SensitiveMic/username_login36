@@ -1,6 +1,5 @@
-package com.example.usernamelogin.Admin.Userslist.gymanditsmembers;
+package com.example.usernamelogin.Admin.Userslist.Archived_gyms;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,15 +14,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.usernamelogin.Admin.Gym.Adapter_recyclerview_add_gym;
-import com.example.usernamelogin.Admin.Gym.Admin_add_gym;
-import com.example.usernamelogin.Admin.Gym.Admin_add_gym_Field_Req;
 import com.example.usernamelogin.Admin.Gym.Admin_gym_longclikc_interface;
 import com.example.usernamelogin.Admin.Gym.add_gym_recyclerviewAdapter_helper;
 import com.example.usernamelogin.Admin.RecyclerViewInterface;
+import com.example.usernamelogin.Admin.Userslist.gymanditsmembers.UsersList_Admin_main;
 import com.example.usernamelogin.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -35,11 +32,11 @@ import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link gym_list_admin_fragment#newInstance} factory method to
+ * Use the {@link Admin_archived_gyms_fragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class gym_list_admin_fragment extends Fragment implements RecyclerViewInterface, Admin_gym_longclikc_interface {
-    /*implements Admin_Gym_RecyclerViewInterface */
+public class Admin_archived_gyms_fragment extends Fragment implements Admin_gym_longclikc_interface {
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -49,7 +46,7 @@ public class gym_list_admin_fragment extends Fragment implements RecyclerViewInt
     private String mParam1;
     private String mParam2;
 
-    public gym_list_admin_fragment() {
+    public Admin_archived_gyms_fragment() {
         // Required empty public constructor
     }
 
@@ -59,11 +56,11 @@ public class gym_list_admin_fragment extends Fragment implements RecyclerViewInt
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment gym_list_admin_fragment.
+     * @return A new instance of fragment Admin_archived_gyms_fragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static gym_list_admin_fragment newInstance(String param1, String param2) {
-        gym_list_admin_fragment fragment = new gym_list_admin_fragment();
+    public static Admin_archived_gyms_fragment newInstance(String param1, String param2) {
+        Admin_archived_gyms_fragment fragment = new Admin_archived_gyms_fragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -79,16 +76,12 @@ public class gym_list_admin_fragment extends Fragment implements RecyclerViewInt
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-
     private View view;
-    DatabaseReference db ;
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_gym_list_admin_fragment, container, false);
+        view = inflater.inflate(R.layout.fragment_admin_archived_gyms_fragment, container, false);
 
         refresh_list_gym();
 
@@ -102,9 +95,9 @@ public class gym_list_admin_fragment extends Fragment implements RecyclerViewInt
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         ArrayList<add_gym_recyclerviewAdapter_helper> list = new ArrayList<>();
-        db = FirebaseDatabase.getInstance().getReference("/Users/Gym_Owner");
+       DatabaseReference db = FirebaseDatabase.getInstance().getReference("Archived_Gym");
 
-        myadapter1 = new Adapter_recyclerview_add_gym(getContext(),list,this::onItemClick,this::onitemlongclick);
+        myadapter1 = new Adapter_recyclerview_add_gym(getContext(),list,null,this::onitemlongclick);
         recyclerView.setAdapter(myadapter1);
 
         db.addValueEventListener(new ValueEventListener() {
@@ -124,30 +117,9 @@ public class gym_list_admin_fragment extends Fragment implements RecyclerViewInt
         });
     }
 
-    public static void redirectActivity(Activity activity, Class secondActivity){
-        Intent intent = new Intent(activity, secondActivity);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        activity.startActivity(intent);
-        activity.finish();
-    }
-
-
-
-    @Override
-    public void onItemClick(int position) {
-        Dialog_for_members listDialog = new Dialog_for_members(getActivity()) {
-
-            protected void onCreate(Bundle savedInstanceState) {
-                super.onCreate(savedInstanceState);
-            }
-        };
-        listDialog.show();
-
-      //  redirectActivity(getActivity(), Admin_Update_Gym_Info.class);
-    }
-
     @Override
     public void onitemlongclick(int position) {
+        Log.d("TAG_COPY_SUCCESS", "TRIGERRED ");
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         builder.setTitle("Archive Gym")
                 .setMessage("Are you sure you want to archive this gym?")
@@ -155,7 +127,7 @@ public class gym_list_admin_fragment extends Fragment implements RecyclerViewInt
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // Archive logic here
-                        archivegym_proceed();
+                        unarchivegym_proceed();
 
 
                         Toast.makeText(requireContext(), "Gym archived successfully.", Toast.LENGTH_SHORT).show();
@@ -170,12 +142,12 @@ public class gym_list_admin_fragment extends Fragment implements RecyclerViewInt
 
         AlertDialog dialog = builder.create();
         dialog.show();
-
     }
-    private void archivegym_proceed(){
-        DatabaseReference whichgym = FirebaseDatabase.getInstance().getReference("Users/Gym_Owner")
+
+    private void unarchivegym_proceed(){
+        DatabaseReference whichgym = FirebaseDatabase.getInstance().getReference("Archived_Gym")
                 .child(UsersList_Admin_main.gym_owner_KEY);
-        DatabaseReference targetRef = FirebaseDatabase.getInstance().getReference("Archived_Gym").child(UsersList_Admin_main.gym_owner_KEY);
+        DatabaseReference targetRef = FirebaseDatabase.getInstance().getReference("Users/Gym_Owner").child(UsersList_Admin_main.gym_owner_KEY);
         whichgym.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -183,23 +155,23 @@ public class gym_list_admin_fragment extends Fragment implements RecyclerViewInt
                     // Copy entire subtree to target
                     targetRef.setValue(snapshot.getValue())
                             .addOnSuccessListener(aVoid -> {
-                                Log.d("COPY_SUCCESS", "Data copied successfully");
+                                Log.d("TAG_COPY_SUCCESS", "Data copied successfully");
                                 whichgym.removeValue().addOnSuccessListener(tVoid -> {
-                                            Log.d("COPY_SUCCESS", "Deleted");
+                                            Log.d("TAG_COPY_SUCCESS", "Deleted");
                                             Intent intent = new Intent(requireContext(), UsersList_Admin_main.class);
                                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                             startActivity(intent);
                                         })
                                         .addOnFailureListener(e -> {
-                                            Log.e("COPY_SUCCESS", "Failed to remove: " + e.getMessage());
+                                            Log.e("TAG_COPY_SUCCESS", "Failed to remove: " + e.getMessage());
                                         });
 
                             })
                             .addOnFailureListener(e -> {
-                                Log.e("COPY_FAILURE", "Failed to copy: " + e.getMessage());
+                                Log.e("TAG_FAILURE", "Failed to copy: " + e.getMessage());
                             });
                 } else {
-                    Log.d("COPY_FAILURE", "Source data does not exist");
+                    Log.d("TAG_FAILURE", "Source data does not exist");
                 }
             }
 

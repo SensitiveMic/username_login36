@@ -69,8 +69,6 @@ public class Graph_main extends AppCompatActivity {
         lineChart.setScaleXEnabled(true);  // Enable horizontal scaling (zooming)
         lineChart.setScaleYEnabled(false);
 
-
-
         // Handle item selection
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -206,7 +204,7 @@ public class Graph_main extends AppCompatActivity {
                 return new SimpleDateFormat("MMM d, h:mm a", Locale.getDefault()).format(new Date(dateInMillis));
             }
         });
-        xAxis.setGranularity(60 * 60 * 1000f);
+        xAxis.setGranularity(12 * 60 * 60 * 1000f); // 12 hours
 
         // Set axis range
         xAxis.setAxisMinimum(firstDate);

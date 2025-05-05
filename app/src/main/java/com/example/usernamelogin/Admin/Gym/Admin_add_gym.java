@@ -1,6 +1,7 @@
 package com.example.usernamelogin.Admin.Gym;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -8,11 +9,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.usernamelogin.Admin.Admin_main;
 import com.example.usernamelogin.Admin.Userslist.gymanditsmembers.UsersList_Admin_main;
@@ -105,7 +109,7 @@ public class Admin_add_gym extends AppCompatActivity implements Admin_Gym_Recycl
         ArrayList<add_gym_recyclerviewAdapter_helper> list = new ArrayList<>();
         db = FirebaseDatabase.getInstance().getReference("/Users/Gym_Owner");
 
-        myadapter1 = new Adapter_recyclerview_add_gym(this,list,this);
+        myadapter1 = new Adapter_recyclerview_add_gym(this,list,this,null);
         recyclerView.setAdapter(myadapter1);
         db.addValueEventListener(new ValueEventListener() {
             @Override
@@ -128,4 +132,7 @@ public class Admin_add_gym extends AppCompatActivity implements Admin_Gym_Recycl
     public void onItemClick(int position) {
         redirectActivity(Admin_add_gym.this, Admin_Update_Gym_Info.class);
     }
+
+
+
 }

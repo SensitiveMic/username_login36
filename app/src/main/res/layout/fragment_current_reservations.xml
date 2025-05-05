@@ -5,66 +5,48 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".NonMemberUser.Reservations.fragment_current_reservations_Fragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:alpha="0.5"
-            android:text="Reservations"
-            android:textSize="36dp"
-
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.589" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="32dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/userList"
-            android:layout_width="412dp"
-            android:layout_height="572dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.114"
             tools:listitem="">
-
 
         </androidx.recyclerview.widget.RecyclerView>
 
-        <ImageView
-            android:id="@+id/refresh"
-            android:layout_width="72dp"
-            android:layout_height="65dp"
-            android:layout_marginBottom="88dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.115"
-            app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/refresh" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="50dp">
+            <ImageView
+                android:id="@+id/refresh"
+                android:layout_width="72dp"
+                android:layout_height="76dp"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/refresh" />
 
-        <ImageView
-            android:id="@+id/add_res"
-            android:layout_width="97dp"
-            android:layout_height="76dp"
-            android:layout_marginBottom="76dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.917"
-            app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/add_circle" />
+            <ImageView
+                android:id="@+id/add_res"
+                android:layout_width="97dp"
+                android:layout_height="76dp"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/add_circle" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+
+
+    </LinearLayout>
 
 
 </FrameLayout>

@@ -35,7 +35,7 @@
         android:id="@+id/donetrialbuttonwew"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:text="Done" />
 
 
 </LinearLayout>
