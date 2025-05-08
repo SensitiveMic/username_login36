@@ -2,6 +2,7 @@ package com.example.usernamelogin.NonMemberUser.Reservations;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,13 +23,14 @@ import com.example.usernamelogin.NonMemberUser.NonMemberUSER;
 import com.example.usernamelogin.NonMemberUser.Profile;
 import com.example.usernamelogin.R;
 
+import com.example.usernamelogin.RegisterandLogin.Login;
 import com.example.usernamelogin.workout_program.workouts.User_workouts;
 import com.google.android.material.tabs.TabLayout;
 
 public class Reservations extends AppCompatActivity{
     DrawerLayout drawerLayout;
     ImageView menu;
-    LinearLayout home, reservations, profile,gym_membership,workout;
+    LinearLayout home, reservations, profile,gym_membership,workout,logoput;
     FrameLayout frameLayout123;
     TabLayout tabLayout;
     private TextView[] textViews;
@@ -56,6 +58,7 @@ public class Reservations extends AppCompatActivity{
         profile = findViewById(R.id.Profile_navdrawer);
         gym_membership = findViewById(R.id.Gym_navdrawer);
         workout = findViewById(R.id.member_workout);
+        logoput = findViewById(R.id.logout_Button_U);
 
         frameLayout123 =  findViewById(R.id.framelayout1);
         tabLayout =  findViewById(R.id.tablayout);
@@ -108,8 +111,6 @@ public class Reservations extends AppCompatActivity{
             }
         });
 
-
-
         TabLayout.Tab tab1 = tabLayout.newTab().setText("Reservations");
         tabLayout.addTab(tab1);
 
@@ -119,8 +120,6 @@ public class Reservations extends AppCompatActivity{
         View customTabView = LayoutInflater.from(this).inflate(R.layout.custom_tab_unpaid_reservations, null);
         tab1.setCustomView(customTabView);
         badge = customTabView.findViewById(R.id.notificationBadge);
-
-
 
         Log.d("TAG77", "THISIS notif =" + notificationCount);
 
@@ -165,6 +164,10 @@ public class Reservations extends AppCompatActivity{
 
             }
         });
+        logoput.setOnClickListener(v ->{
+            logout_prc(Reservations.this, Login.class);
+
+        });
 
         textViews = new TextView[7];
         textViews[0] = findViewById(R.id.day1);
@@ -176,6 +179,18 @@ public class Reservations extends AppCompatActivity{
         textViews[6] = findViewById(R.id.day7);
 
 
+    }
+    private void logout_prc(Activity activity, Class secondActivity){
+
+        SharedPreferences sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
+
+        Intent intent = new Intent(activity, secondActivity);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
 
 

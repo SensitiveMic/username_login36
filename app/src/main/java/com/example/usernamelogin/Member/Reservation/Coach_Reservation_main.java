@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -39,20 +40,22 @@ import java.util.Objects;
 public class Coach_Reservation_main extends AppCompatActivity implements interface_coach_list_res_mem {
     DrawerLayout drawerLayout;
     ImageView menu;
-    LinearLayout home, reservations, profile, gym_membership, currentreservations;
+    LinearLayout home, reservations, profile, gym_membership, currentreservations,logoput;
 
     public static String[] ProfileContents;
     RecyclerView recyclerView;
     Adapter_Gym_coach_list_res myAdapter;
     public static String picked_coach;
     public static String key_Gym_Coach1, key_Gym_Coach3;
-
+    TextView gymName_nav;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coach_reservation_main);
 
         someMethod();
+        gymName_nav = findViewById(R.id.textView_gym_name);
+        gymName_nav.setText(Login.member_gym_name);
 
         drawerLayout = findViewById(R.id.home_layout);
         menu = findViewById(R.id.nav_menu);
@@ -61,6 +64,7 @@ public class Coach_Reservation_main extends AppCompatActivity implements interfa
         profile = findViewById(R.id.Profile_navdrawer);
         gym_membership = findViewById(R.id.Gym_navdrawer);
         currentreservations = findViewById(R.id.current_res_coach);
+        logoput = findViewById(R.id.logout_Button_U);
 
         coachlistformem();
         menu.setOnClickListener(new View.OnClickListener() {
@@ -99,7 +103,23 @@ public class Coach_Reservation_main extends AppCompatActivity implements interfa
                 redirectActivity(Coach_Reservation_main.this, Current_Coach_Res_Main.class);
             }
         });
+        logoput.setOnClickListener(v ->{
+            logout_prc(Coach_Reservation_main.this, Login.class);
 
+        });
+
+    }
+    private void logout_prc(Activity activity, Class secondActivity){
+
+        SharedPreferences sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
+
+        Intent intent = new Intent(activity, secondActivity);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
     public void usertoolbarname(Context context, TextView usernamebar, TextView username_nav) {
         DatabaseReference databaseReferenceNon = FirebaseDatabase.getInstance()
@@ -188,7 +208,7 @@ public class Coach_Reservation_main extends AppCompatActivity implements interfa
                             Log.d("TAG162", "3rd key :" +  key_Gym_Coach3);
                             String gymnameofcoach = underGymchild.child("gym_name").getValue(String.class);
 
-                            if (Objects.equals(gymnameofcoach, Member_main.Current_GYM)) {
+                            if (Objects.equals(gymnameofcoach, Login.member_gym_name)) {
 
                                 Log.d("TAG162", "This is member current Gym: " +  gymnameofcoach);
 
@@ -217,7 +237,7 @@ public class Coach_Reservation_main extends AppCompatActivity implements interfa
                                 break outerLoop;
                             } else {
                                 Log.d("TAG162", "This is not the member current Gym: " +  gymnameofcoach);
-                                Log.d("TAG162", "This is my Gym: " + Member_main.Current_GYM);
+                                Log.d("TAG162", "This is my Gym: " + Login.member_gym_name);
                             }
                         }
                     }

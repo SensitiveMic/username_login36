@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -37,7 +38,7 @@ import com.google.firebase.database.ValueEventListener;
 public class Gym_Properties_Main extends AppCompatActivity {
     DrawerLayout drawerLayout;
     ImageView menu;
-    LinearLayout home, reservations, profile, gym_membership, workout;
+    LinearLayout home, reservations, profile, gym_membership, workout,logoput;
     public static String[] ProfileContents;
     public static String[] Gym_package_selected;
     FrameLayout frameLayout;
@@ -61,7 +62,7 @@ public class Gym_Properties_Main extends AppCompatActivity {
         profile = findViewById(R.id.Profile_navdrawer);
         gym_membership = findViewById(R.id.Gym_navdrawer);
         workout = findViewById(R.id.member_workout);
-
+        logoput = findViewById(R.id.logout_Button_U);
         frameLayout = (FrameLayout) findViewById(R.id.framelayout1);
         tabLayout = (TabLayout) findViewById(R.id.tablayout);
 
@@ -163,8 +164,24 @@ public class Gym_Properties_Main extends AppCompatActivity {
                 redirectActivity(Gym_Properties_Main.this, User_workouts.class);
             }
         });
+        logoput.setOnClickListener(v ->{
+            logout_prc(Gym_Properties_Main.this, Login.class);
+
+        });
 
         callApprecview();
+    }
+    private void logout_prc(Activity activity, Class secondActivity){
+
+        SharedPreferences sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
+
+        Intent intent = new Intent(activity, secondActivity);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
     public void callApprecview() {
 

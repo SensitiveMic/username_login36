@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -41,10 +42,11 @@ public class Current_Coach_Res_Main extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
     ImageView menu;
-    LinearLayout home, reservations, profile, gym_membership, currentreservations;
+    LinearLayout home, reservations, profile, gym_membership, currentreservations,logoput;
     public static String[] ProfileContents;
     FrameLayout frameLayout;
     TabLayout tabLayout;
+    TextView gymName_nav;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +56,8 @@ public class Current_Coach_Res_Main extends AppCompatActivity {
 
         frameLayout = (FrameLayout) findViewById(R.id.framelayout2);
         tabLayout = (TabLayout) findViewById(R.id.tablayout2);
-
+        gymName_nav = findViewById(R.id.textView_gym_name);
+        gymName_nav.setText(Login.member_gym_name);
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.framelayout2, new Fragment_Current_Reservations())
@@ -108,8 +111,6 @@ public class Current_Coach_Res_Main extends AppCompatActivity {
             }
         });
 
-
-
         drawerLayout = findViewById(R.id.home_layout);
         menu = findViewById(R.id.nav_menu);
         home = findViewById(R.id.Home_navdrawer);
@@ -117,6 +118,7 @@ public class Current_Coach_Res_Main extends AppCompatActivity {
         profile = findViewById(R.id.Profile_navdrawer);
         gym_membership = findViewById(R.id.Gym_navdrawer);
         currentreservations = findViewById(R.id.current_res_coach);
+        logoput = findViewById(R.id.logout_Button_U);
 
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -148,6 +150,10 @@ public class Current_Coach_Res_Main extends AppCompatActivity {
                 redirectActivity(Current_Coach_Res_Main.this, Member_Gym_info_main.class);
             }
         });
+        logoput.setOnClickListener(v ->{
+            logout_prc(Current_Coach_Res_Main.this, Login.class);
+
+        });
         currentreservations.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -156,8 +162,20 @@ public class Current_Coach_Res_Main extends AppCompatActivity {
         });
 
 
-
     }
+    private void logout_prc(Activity activity, Class secondActivity){
+
+        SharedPreferences sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
+
+        Intent intent = new Intent(activity, secondActivity);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
+
     public void usertoolbarname(Context context, TextView usernamebar, TextView username_nav) {
         DatabaseReference databaseReferenceNon = FirebaseDatabase.getInstance()
                 .getReference("Users").child("Non-members");

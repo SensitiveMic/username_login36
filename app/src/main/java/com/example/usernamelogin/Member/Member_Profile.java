@@ -8,6 +8,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -48,14 +49,14 @@ public class Member_Profile extends AppCompatActivity {
     String USERNAME, PASSWORD, EMAIL, MOBILENUMBER;
     DrawerLayout drawerLayout;
     ImageView menu;
-    LinearLayout home, reservations, profile, gym_membership,currentreservations;
+    LinearLayout home, reservations, profile, gym_membership,currentreservations,logoput;
     Button changeprof_i;
     private TextView[] ments;
     private EditText[] chg;
     private
     FirebaseDatabase databaseprofile ;
     DatabaseReference myRefprofile ;
-    String myGYM;
+    TextView gymName_nav;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,15 +64,16 @@ public class Member_Profile extends AppCompatActivity {
         setContentView(R.layout.activity_member_profile);
 
         // set toolbar and navbar name to users username
-        TextView textView2 = findViewById(R.id.textView2);
+
         TextView username_nav = findViewById(R.id.username_nav);
         if (Member_main.ProfileContents != null && Member_main.ProfileContents.length >= 4) {
-            textView2.setText(Member_main.ProfileContents[0]);
+
             username_nav.setText(Member_main.ProfileContents[0]);
             // and so on...
         } else {
             Toast.makeText(this, "Profile data not loaded", Toast.LENGTH_SHORT).show();
         }
+
 
         // Whole layout
         drawerLayout = findViewById(R.id.home_layout);
@@ -82,6 +84,7 @@ public class Member_Profile extends AppCompatActivity {
         changeprof_i = findViewById(R.id.changeP_I);
         gym_membership = findViewById(R.id.Gym_navdrawer);
         currentreservations = findViewById(R.id.current_res_coach);
+        logoput = findViewById(R.id.logout_Button_U);
 
         profileContents();
 
@@ -89,7 +92,8 @@ public class Member_Profile extends AppCompatActivity {
 
         chg[2].setText(Member_main.ProfileContents[2]);
         Button button_chg = findViewById(R.id.button_chg);
-
+        gymName_nav = findViewById(R.id.textView_gym_name);
+        gymName_nav.setText(Login.member_gym_name);
 
         CheckBox showPasswordCheckBox = findViewById(R.id.showPasswordCheckBox);
         CheckBox showPasswordCheckBoxProfile = findViewById(R.id.showPasswordCheckBoxProfile);
@@ -167,6 +171,10 @@ public class Member_Profile extends AppCompatActivity {
             public void onClick(View v) {
                 redirectActivity(Member_Profile.this, Current_Coach_Res_Main.class);
             }
+        });
+        logoput.setOnClickListener(v ->{
+            logout_prc(Member_Profile.this, Login.class);
+
         });
         button_chg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -267,6 +275,18 @@ public class Member_Profile extends AppCompatActivity {
                 }
             }
         });
+    }
+    private void logout_prc(Activity activity, Class secondActivity){
+
+        SharedPreferences sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
+
+        Intent intent = new Intent(activity, secondActivity);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
     public void profileContents(){
         ments = new TextView[5];

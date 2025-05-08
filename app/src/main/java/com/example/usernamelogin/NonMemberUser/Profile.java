@@ -7,6 +7,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -47,7 +48,7 @@ public class Profile extends AppCompatActivity {
     String USERNAME, PASSWORD, EMAIL,MOBILENUMBER;
     DrawerLayout drawerLayout;
     ImageView menu;
-    LinearLayout home, reservations, profile, gym_membership,workout;
+    LinearLayout home, reservations, profile, gym_membership,workout,logoput;
     Button changeprof_i;
     private TextView[] ments;
     private EditText[] chg;
@@ -71,6 +72,8 @@ public class Profile extends AppCompatActivity {
             username_nav.setText(Member_main.ProfileContents[0]);
             // and so on...
         } else {
+            username_nav.setText("");
+            textView2.setText("");
             Toast.makeText(this, "Profile data not loaded", Toast.LENGTH_SHORT).show();
         }
 
@@ -83,6 +86,7 @@ public class Profile extends AppCompatActivity {
         changeprof_i = findViewById(R.id.changeP_I);
         gym_membership = findViewById(R.id.Gym_navdrawer);
         workout = findViewById(R.id.member_workout);
+        logoput = findViewById(R.id.logout_Button_U);
 
         profileContents();
 
@@ -158,6 +162,10 @@ public class Profile extends AppCompatActivity {
             public void onClick(View v) {
                 redirectActivity(Profile.this, User_workouts.class);
             }
+        });
+        logoput.setOnClickListener(v ->{
+            logout_prc(Profile.this, Login.class);
+
         });
         button_chg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -362,7 +370,18 @@ public class Profile extends AppCompatActivity {
             }
         });
     }
+    private void logout_prc(Activity activity, Class secondActivity){
 
+        SharedPreferences sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
+
+        Intent intent = new Intent(activity, secondActivity);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
     public void profileContents(){
         ments = new TextView[5];
         ments[0] = findViewById(R.id.textView8); // username

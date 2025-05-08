@@ -41,7 +41,7 @@ public class Login extends AppCompatActivity {
     public static String key_Gym_Coach1 = null;
     public static String key_Gym_Coach2 = null;
     public static String key_Gym_Coach3 = null;
-    public static String key_Gym_;
+    public static String key_Gym_,member_gym_name;
     String USERNAME, PASSWORD;
     FirebaseDatabase databaseLogin;
     DatabaseReference myRefLogin;
@@ -62,10 +62,10 @@ public class Login extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
         boolean isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false);
         String username = sharedPreferences.getString("username", null);
-        int account_type = sharedPreferences.getInt("Acc_type",-1);
-
+     int account_type = sharedPreferences.getInt("Acc_type",-1);
+    // account_type = -1;
         if (isLoggedIn && username != null ) {
-        switch (account_type){
+       switch (account_type){
             case 0:
                String key_Admin_1 = sharedPreferences.getString("key_Admin_1", null);
                 key_Admin = key_Admin_1;
@@ -112,6 +112,7 @@ public class Login extends AppCompatActivity {
                 startActivity(intent2);
                 finish();
                 break;
+
             case 3:
                 String gym_key1_c = sharedPreferences.getString("gym_key1", null);
                 String gym_key2_c = sharedPreferences.getString("gym_key2", null);
@@ -139,6 +140,28 @@ public class Login extends AppCompatActivity {
                 finish();
 
                 break;
+            case 4:
+
+                String member_key = sharedPreferences.getString("member_key", null);
+                String Gym_Name = sharedPreferences.getString("member_gym_name", null);
+                key = member_key;
+                member_gym_name = Gym_Name;
+                Intent intent4 = new Intent(Login.this, Member_main.class);
+                intent4.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent4);
+                finish();
+                break;
+
+            case 5:
+                String nonmember_key = sharedPreferences.getString("non_member_key", null);
+                key = nonmember_key;
+                Log.d("AUTLOG_NONMEM", "onCreate: "+key);
+                Intent intent5 = new Intent(Login.this, NonMemberUSER.class);
+                intent5.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent5);
+                finish();
+                break;
+
         }
 
         }
@@ -187,14 +210,28 @@ public class Login extends AppCompatActivity {
                         Log.e( "TAG",key);
                         // to add the password from the database to a string
                         Integer mem_status = snapshot.child(key).child("membership_status").getValue(Integer.class);
+                        String user_username = snapshot.child(key).child("username").getValue(String.class);
                         if(mem_status == 0){
+
                             String PasswordfromDB = snapshot.child(key).child("password").getValue(String.class);
                             Log.e( "TAG2","This is password from db: " +PasswordfromDB);
                             Log.e("wee2", "onDataChange: minecraft! ");
                             if(Objects.equals(PasswordfromDB, PASSWORD)){
                                 progressBar.setVisibility(View.GONE);
-                               Member_main.Current_GYM = snapshot.child(key).child("GymName").getValue(String.class);
-                                Log.d( "CONFIRMTAG_wew","This is password from db: " + Member_main.Current_GYM);
+                                String membergym_name= snapshot.child(key).child("GymName").getValue(String.class);
+                                member_gym_name = membergym_name;
+
+                                SharedPreferences sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putBoolean("isLoggedIn", true);
+                                editor.putString("username", user_username);
+                                editor.putInt("Acc_type",4);
+                                // below will be keys or user details
+                                editor.putString("member_key", key);
+                                editor.putString("member_gym_name",membergym_name);
+
+                                editor.apply();
+
                                 Intent intent = new Intent(Login.this, Member_main.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);
@@ -215,6 +252,18 @@ public class Login extends AppCompatActivity {
                             Log.e("wee2", "onDataChange: minecraft! ");
                             if(Objects.equals(PasswordfromDB, PASSWORD)){
                                 progressBar.setVisibility(View.GONE);
+
+                                SharedPreferences sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putBoolean("isLoggedIn", true);
+                                editor.putString("username", user_username);
+                                editor.putInt("Acc_type",5);
+                                // below will be keys or user details
+                                editor.putString("non_member_key", key);
+
+                                editor.apply();
+
+
                                 Intent intent = new Intent(Login.this, NonMemberUSER.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);

@@ -97,8 +97,6 @@ public class Coach_main extends AppCompatActivity implements interface_click_pen
         profile = findViewById(R.id.Profile_navdrawer);
         logoput = findViewById(R.id.logout_Button_U);
 
-
-
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

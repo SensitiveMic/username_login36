@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -50,7 +51,7 @@ import java.util.HashMap;
 
 public class Member_Gym_info_main extends AppCompatActivity {
     DrawerLayout drawerLayout;
-    LinearLayout home, reservations, profile, gym_membership, currentreservations, workout;
+    LinearLayout home, reservations, profile, gym_membership, currentreservations, workout,logoput;
     ImageView menu;
     Button uppdate_mem;
     TextView Gym_name, Gym_descrip, Gym_cntct, Gym_open, Gym_cls, pckge_start, pckge_end, pckge_name;
@@ -81,6 +82,7 @@ public class Member_Gym_info_main extends AppCompatActivity {
         pckge_start = findViewById(R.id.Start_Date);
         pckge_end = findViewById(R.id.End_Date);
         pckge_name = findViewById(R.id.this_pkg_name);
+        logoput = findViewById(R.id.logout_Button_U);
 
         uppdate_mem = findViewById(R.id.button_forUpdates);
 
@@ -119,6 +121,10 @@ public class Member_Gym_info_main extends AppCompatActivity {
             public void onClick(View v) {
                 redirectActivity(Member_Gym_info_main.this, Current_Coach_Res_Main.class);
             }
+        });
+        logoput.setOnClickListener(v ->{
+            logout_prc(Member_Gym_info_main.this, Login.class);
+
         });
         workout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -174,6 +180,18 @@ public class Member_Gym_info_main extends AppCompatActivity {
 
      populate_gym_info_textviews();
 
+    }
+    private void logout_prc(Activity activity, Class secondActivity){
+
+        SharedPreferences sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
+
+        Intent intent = new Intent(activity, secondActivity);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
     private void displaypackages(){
         AlertDialog.Builder makingsaure = new AlertDialog.Builder(Member_Gym_info_main.this);

@@ -8,6 +8,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -22,6 +23,7 @@ import com.example.usernamelogin.Member.Reservation.Coach_Reservation_main;
 import com.example.usernamelogin.Member.Reservation.Current_Coach_Res.Current_Coach_Res_Main;
 import com.example.usernamelogin.Member.Reservation.Current_Coach_Res.Modelclass_for_current_member_res_accepted;
 import com.example.usernamelogin.NonMemberUser.Gym_prop.Gym_Properties_Main;
+import com.example.usernamelogin.NonMemberUser.NonMemberUSER;
 import com.example.usernamelogin.NonMemberUser.Profile;
 import com.example.usernamelogin.R;
 import com.example.usernamelogin.RegisterandLogin.Login;
@@ -57,19 +59,18 @@ import kotlin.Triple;
 public class Member_main extends AppCompatActivity {
     DrawerLayout drawerLayout;
     ImageView menu;
-    LinearLayout home, reservations, profile, gym_membership, currentreservations, workout;
+    LinearLayout home, reservations, profile, gym_membership, currentreservations, workout,logoput;
     public static String[] ProfileContents;
-    public static String Current_GYM;
-    String pushkey;
-    Query checkname;
-    String time1,date1,Coach_name;
+    TextView gymName_nav;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_member_main);
-
-        someMethod();
+     //  logout_prc(Member_main.this, Login.class);
+       someMethod();
+       gymName_nav = findViewById(R.id.textView_gym_name);
+       gymName_nav.setText(Login.member_gym_name);
 
         drawerLayout = findViewById(R.id.home_layout);
         menu = findViewById(R.id.nav_menu);
@@ -79,6 +80,7 @@ public class Member_main extends AppCompatActivity {
         gym_membership = findViewById(R.id.Gym_navdrawer);
         currentreservations = findViewById(R.id.current_res_coach);
         workout = findViewById(R.id.member_workout);
+        logoput = findViewById(R.id.logout_Button_U);
 
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,6 +118,10 @@ public class Member_main extends AppCompatActivity {
                 redirectActivity(Member_main.this, Current_Coach_Res_Main.class);
             }
         });
+        logoput.setOnClickListener(v ->{
+            logout_prc(Member_main.this, Login.class);
+
+        });
         workout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,12 +136,18 @@ public class Member_main extends AppCompatActivity {
             }
         });
 
-        DatabaseReference gotomemberscurrentres = FirebaseDatabase.getInstance()
-                .getReference("Users").child("Non-members").child(Login.key)
-                .child("Coach_Reservation").child("Current_Accepted_Res");
+    }
+    private void logout_prc(Activity activity, Class secondActivity){
 
-      //  expired_coach_res_check();
+        SharedPreferences sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
 
+        Intent intent = new Intent(activity, secondActivity);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
 
     public void usertoolbarname(Context context, TextView usernamebar, TextView username_nav) {
@@ -193,75 +205,6 @@ public class Member_main extends AppCompatActivity {
         super.onPause();
         closeNavbar(drawerLayout);
     }
-    private void expired_coach_res_check(){
-
-        DatabaseReference gotomemberscurrentres = FirebaseDatabase.getInstance()
-                .getReference("Users").child("Non-members").child(Login.key)
-                .child("Coach_Reservation").child("Current_Accepted_Res");
-
-        gotomemberscurrentres.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    for(DataSnapshot gk: snapshot.getChildren()){
-
-                        Modelclass_for_current_member_res_accepted item = gk.getValue(Modelclass_for_current_member_res_accepted.class);
-                        String thiskey = gk.getKey();
-                        date1 = item.getGym_meet_date().toString();
-                        time1 = item.getGym_meet_time().toString();
-                        Coach_name = item.getCoach_name().toString();
-
-                        if (logcompletedreservations(date1, time1)) {
-                            Log.d("TAG EXPCHECK", "EXPIRED " );
-                            DatabaseReference gotomemberscurrentres1 = FirebaseDatabase.getInstance()
-                                    .getReference("Users").child("Non-members").child(Login.key)
-                                    .child("Coach_Reservation").child("Completed_res_logs").push();
-
-                            gotomemberscurrentres1.setValue(item);
-                            DatabaseReference removal = gotomemberscurrentres.child(thiskey);
-
-                            removal.removeValue();
-
-                        } else {
-
-                            Log.d("TAG EXPCHECK", "notexpired " );
-                        }
-
-                    }
-
-                }
-                else{
-                    Log.d("TAG EXPCHECK", "NO ACTIVE RESERVATIONS " );
-
-                    Toast.makeText(Member_main.this, "No data found for this user", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-    }
-    private static boolean logcompletedreservations(String dateString, String timeString){
-
-        // Define the formatters for date and time
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("M/d/yyyy");
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("H:mm");
-
-        // Parse the date and time strings
-        LocalDateTime dateTime = LocalDateTime.parse(dateString + " " + timeString,
-                DateTimeFormatter.ofPattern("M/d/yyyy H:mm"));
-
-        // Get the current date and time
-        LocalDateTime now = LocalDateTime.now();
-
-        // Compare the parsed date and time with the current date and time
-        return now.isAfter(dateTime);
-
-    }
-
 
 
 }

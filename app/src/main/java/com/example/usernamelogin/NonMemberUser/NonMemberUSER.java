@@ -30,6 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.content.Intent;
 
+import com.example.usernamelogin.Coach.Coach_main;
 import com.example.usernamelogin.Member.Member_main;
 import com.example.usernamelogin.NonMemberUser.Gym_prop.Gym_Properties_Main;
 import com.example.usernamelogin.R;
@@ -50,7 +51,7 @@ public class NonMemberUSER extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
     ImageView menu;
-    LinearLayout home, reservations, profile, gym_membership,workout;
+    LinearLayout home, reservations, profile, gym_membership,workout,logoput;
     public static String[] ProfileContents;
     private static final int REQUEST_CODE_OPEN_DIRECTORY = 123;
     private static final int REQUEST_CODE_OPEN_DIRECTORY_2 = 1001;
@@ -62,7 +63,7 @@ public class NonMemberUSER extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_non_member_user);
-
+      //  logout_prc(NonMemberUSER.this, Login.class);
         someMethod();
 
         drawerLayout = findViewById(R.id.home_layout);
@@ -72,6 +73,7 @@ public class NonMemberUSER extends AppCompatActivity {
         profile = findViewById(R.id.Profile_navdrawer);
         gym_membership = findViewById(R.id.Gym_navdrawer);
         workout = findViewById(R.id.member_workout);
+        logoput = findViewById(R.id.logout_Button_U);
 
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,6 +104,10 @@ public class NonMemberUSER extends AppCompatActivity {
             public void onClick(View v) {
                 redirectActivity(NonMemberUSER.this, Gym_Properties_Main.class);
             }
+        });
+        logoput.setOnClickListener(v ->{
+            logout_prc(NonMemberUSER.this, Login.class);
+
         });
         workout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,6 +143,18 @@ public class NonMemberUSER extends AppCompatActivity {
                 }
         );
         checkIfJsonExistsOrLaunchPicker();
+    }
+    private void logout_prc(Activity activity, Class secondActivity){
+
+        SharedPreferences sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
+
+        Intent intent = new Intent(activity, secondActivity);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
     private void showFolderSelectionDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -196,8 +214,6 @@ public class NonMemberUSER extends AppCompatActivity {
                 Intent.FLAG_GRANT_PREFIX_URI_PERMISSION);
         directoryPickerLauncher.launch(intent);
     }
-
-
     private void saveDirectoryUri(Uri uri) {
         Log.d("TAG_URI", "saveDirectoryUri called with: " + uri.toString());
         getSharedPreferences("prefs", MODE_PRIVATE)
