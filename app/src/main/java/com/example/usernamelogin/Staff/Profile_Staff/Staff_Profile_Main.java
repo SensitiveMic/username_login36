@@ -7,6 +7,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -44,21 +45,29 @@ public class Staff_Profile_Main extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
     ImageView menu;
-    LinearLayout home, Gym_management, profile,member_lists;
+    LinearLayout home, Gym_management, profile,member_lists, logoput;
     Button changeprof_i, button_frchg;
     private EditText[] chg;
     private TextView[] ments;
+    TextView username_nav,gym_nav;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_staff_profile_main);
 
+        //Navdrawer toolbar
+        username_nav = findViewById(R.id.username_nav);
+        gym_nav = findViewById(R.id.textView);
+        username_nav.setText(Login.key_Gym_Coach_username);
+        gym_nav.setText(Login.key_Gym_);
+
         drawerLayout = findViewById(R.id.home_layout);
         menu = findViewById(R.id.nav_menu);
         home = findViewById(R.id.Home_navdrawer);
         profile = findViewById(R.id.Profile_navdrawer);
         member_lists = findViewById(R.id.Gym_manage_members);
+        logoput = findViewById(R.id.logout_Button_U);
 
         changeprof_i = findViewById(R.id.changeP_I);
         button_frchg = findViewById(R.id.button_chg);
@@ -232,8 +241,23 @@ public class Staff_Profile_Main extends AppCompatActivity {
                 redirectActivity(Staff_Profile_Main.this, Staff_mem_list_main.class);
             }
         });
-    }
+        logoput.setOnClickListener(v ->{
+            logout_prc(Staff_Profile_Main.this, Login.class);
 
+        });
+    }
+    private void logout_prc(Activity activity, Class secondActivity){
+
+        SharedPreferences sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
+
+        Intent intent = new Intent(activity, secondActivity);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
     public static void openNavbar(DrawerLayout drawerLayout) {
         drawerLayout.openDrawer(GravityCompat.START);
     }

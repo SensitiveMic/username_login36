@@ -5,9 +5,6 @@ public class Model_class_get_members_details {
     String username;
     String remainind_days;
 
-    public Model_class_get_members_details() {
-    }
-
     public Model_class_get_members_details(String username, String expiration_date, String start_date) {
         this.username = username;
         this.expiration_date = expiration_date;

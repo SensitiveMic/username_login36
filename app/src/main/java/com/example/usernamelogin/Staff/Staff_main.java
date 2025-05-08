@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.example.usernamelogin.Gym_Owner.Gym_Owner_Main;
 import com.example.usernamelogin.R;
 import com.example.usernamelogin.RegisterandLogin.Login;
 import com.example.usernamelogin.Staff.Gym_Management.Gym_management_main;
@@ -42,7 +44,7 @@ import java.util.Locale;
 public class Staff_main extends AppCompatActivity{
     DrawerLayout drawerLayout;
     ImageView menu;
-    LinearLayout home, reservations, profile,member_lists;
+    LinearLayout home, reservations, profile,member_lists, logoput;
 
     public static String[] ProfileContents;
     FrameLayout frameLayoutttt;
@@ -60,6 +62,7 @@ public class Staff_main extends AppCompatActivity{
         reservations = findViewById(R.id.Gym_manage_navdrawer);
         profile = findViewById(R.id.Profile_navdrawer);
         member_lists = findViewById(R.id.Gym_manage_members);
+        logoput = findViewById(R.id.logout_Button_U);
 
         frameLayoutttt = findViewById(R.id.framelayout1);
         tabLayout1wew = findViewById(R.id.tablayout);
@@ -152,12 +155,27 @@ public class Staff_main extends AppCompatActivity{
                 redirectActivity(Staff_main.this, Staff_mem_list_main.class);
             }
         });
+        logoput.setOnClickListener(v ->{
+            logout_prc(Staff_main.this, Login.class);
+
+        });
 
           //---- this method changes membership based on expiration---
       // Membership_requests_main.checkMembershipExpirations();
         expiredmembersremoval();
     }
+    private void logout_prc(Activity activity, Class secondActivity){
 
+        SharedPreferences sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
+
+        Intent intent = new Intent(activity, secondActivity);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
     public static void openNavbar(DrawerLayout drawerLayout) {
         drawerLayout.openDrawer(GravityCompat.START);
     }
@@ -181,12 +199,13 @@ public class Staff_main extends AppCompatActivity{
         closeNavbar(drawerLayout);
     }
 
-    public void usertoolbarname(Context context, TextView usernamebar, TextView username_nav) {
-                                    ProfileContents = new String[4];
+    public void usertoolbarname(Context context, TextView usernamebar, TextView username_nav, TextView gymnav) {
+                                    ProfileContents = new String[5];
                                     ProfileContents[0] = Login.key_Gym_Staff_username;
                                     ProfileContents[1] = Login.key_Gym_Staff_email;
                                     ProfileContents[2] = Login.key_Gym_Staff_password;
                                     ProfileContents[3] = Login.key_Gym_Staff_mobile_number;
+                                    ProfileContents[4] = Login.key_Gym_;
                                     Log.d("TAG6", "username :" + ProfileContents[0]);
                                     Log.d("TAG6", "email :" + ProfileContents[1]);
                                     Log.d("TAG6", "password :" + ProfileContents[2]);
@@ -195,12 +214,14 @@ public class Staff_main extends AppCompatActivity{
                 // Update UI elements using the provided context and TextViews
                 usernamebar.setText(ProfileContents[0]);
                 username_nav.setText(ProfileContents[0]);
+                gymnav.setText(ProfileContents[4]);
     }
     public void someMethod() {
         // Call usertoolbarname() with appropriate arguments
         usertoolbarname(getApplicationContext(),
                 findViewById(R.id.textView2),
-                findViewById(R.id.username_nav));
+                findViewById(R.id.username_nav),
+                findViewById(R.id.textView));
     }
 
     private void expiredmembersremoval(){

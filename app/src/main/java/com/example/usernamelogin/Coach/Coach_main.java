@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,6 +23,7 @@ import com.example.usernamelogin.Coach.Profile.Coach_Profile_Main;
 import com.example.usernamelogin.Coach.Snd_wrkout.sent_workouts.Fragment_sent_workouts;
 import com.example.usernamelogin.R;
 import com.example.usernamelogin.RegisterandLogin.Login;
+import com.example.usernamelogin.Staff.Staff_main;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -32,7 +34,7 @@ import com.google.firebase.database.ValueEventListener;
 public class Coach_main extends AppCompatActivity implements interface_click_pendingresfrm_gym_members {
     DrawerLayout drawerLayout;
     ImageView menu;
-    LinearLayout home,  profile;
+    LinearLayout home,  profile, logoput;
     public static String member_pushid, member_name;
     public static String activeres_member_pushid;
     public static String selected_longclick;
@@ -44,6 +46,7 @@ public class Coach_main extends AppCompatActivity implements interface_click_pen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coach_main);
+    //  logout_prc(Coach_main.this, Login.class);
         someMethod();
 
         frameLayout = (FrameLayout) findViewById(R.id.framelayout3);
@@ -92,6 +95,9 @@ public class Coach_main extends AppCompatActivity implements interface_click_pen
         menu = findViewById(R.id.nav_menu);
         home = findViewById(R.id.Home_navdrawer);
         profile = findViewById(R.id.Profile_navdrawer);
+        logoput = findViewById(R.id.logout_Button_U);
+
+
 
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,9 +117,24 @@ public class Coach_main extends AppCompatActivity implements interface_click_pen
                 redirectActivity(Coach_main.this, Coach_Profile_Main.class);
             }
         });
+        logoput.setOnClickListener(v ->{
+            logout_prc(Coach_main.this, Login.class);
+
+        });
 
     }
+    private void logout_prc(Activity activity, Class secondActivity){
 
+        SharedPreferences sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
+
+        Intent intent = new Intent(activity, secondActivity);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
     public static void openNavbar(DrawerLayout drawerLayout) {
         drawerLayout.openDrawer(GravityCompat.START);
     }
@@ -137,47 +158,32 @@ public class Coach_main extends AppCompatActivity implements interface_click_pen
         closeNavbar(drawerLayout);
     }
 
-    public void usertoolbarname(Context context, TextView usernamebar, TextView username_nav) {
+    public void usertoolbarname(Context context, TextView usernamebar, TextView username_nav, TextView Gymname) {
 
-        DatabaseReference myRefprofile = FirebaseDatabase.getInstance().getReference("Users/Gym_Owner")
-                .child(Login.key_Gym_Coach1)
-                .child(Login.key_Gym_Coach2)
-                .child(Login.key_Gym_Coach3)
-                .child("Coach")
-                .child(Login.key_Gym_Coach_key);
+                ProfileContents = new String[5];
+                ProfileContents[0] = Login.key_Gym_Coach_username;
+                ProfileContents[1] = Login.key_Gym_Coach_email;
+                ProfileContents[2] = Login.key_Gym_Coach_password;
+                ProfileContents[3] = Login.key_Gym_Coach_mobile_number;
+                ProfileContents[4] = Login.key_Gym_Coach_fullname;
 
-        ProfileContents = new String[5];
-
-        myRefprofile.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                ProfileContents[0] = dataSnapshot.child("username").getValue(String.class);
-                ProfileContents[1] = dataSnapshot.child("email").getValue(String.class);
-                ProfileContents[2] = dataSnapshot.child("password").getValue(String.class);
-                ProfileContents[3] = dataSnapshot.child("mobile_number").getValue(String.class);
-                ProfileContents[4] = dataSnapshot.child("fullname").getValue(String.class);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
 
         Log.d("TAG6", "username :" + ProfileContents[0]);
         Log.d("TAG6", "email :" + ProfileContents[1]);
         Log.d("TAG6", "password :" + ProfileContents[2]);
         Log.d("TAG6", "mobilenumber :" + ProfileContents[3]);
+
         // Update UI elements using the provided context and TextViews
         usernamebar.setText(ProfileContents[0]);
         username_nav.setText(ProfileContents[0]);
+        Gymname.setText(Login.key_Gym_);
     }
     public void someMethod() {
         // Call usertoolbarname() with appropriate arguments
         usertoolbarname(getApplicationContext(),
-                findViewById(R.id.textView2),
-                findViewById(R.id.username_nav));
+                findViewById(R.id.Username_toolbar),
+                findViewById(R.id.username_navbar),
+                findViewById(R.id.textView_GYM_Name));
     }
 
 

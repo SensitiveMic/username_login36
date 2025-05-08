@@ -11,6 +11,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -40,15 +42,24 @@ import java.util.ArrayList;
 public class Gym_management_main extends AppCompatActivity implements interface_Adapter_Gym_packages  {
     DrawerLayout drawerLayout;
     ImageView menu, gotoaddgym;
-    LinearLayout home, Gym_management, profile,member_lists;
+    LinearLayout home, Gym_management, profile,member_lists, logoput;
     RecyclerView recyclerView;
     Button changedescrp, changeOCtime;
     public static String selected_pkg_pk;
     String db_descrip;
+    TextView nav_username,nav_gym,toolbar_username;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gym_management_main);
+
+        //navbar toolbar textVIews
+        nav_username = findViewById(R.id.textView2);
+        nav_gym = findViewById(R.id.textView);
+        toolbar_username = findViewById(R.id.username_nav);
+        nav_username.setText(Staff_main.ProfileContents[0]);
+        toolbar_username.setText(Staff_main.ProfileContents[0]);
+        nav_gym.setText(Staff_main.ProfileContents[4]);
 
         drawerLayout = findViewById(R.id.home_layout);
         menu = findViewById(R.id.nav_menu);
@@ -56,6 +67,7 @@ public class Gym_management_main extends AppCompatActivity implements interface_
         Gym_management = findViewById(R.id.Gym_manage_navdrawer);
         profile = findViewById(R.id.Profile_navdrawer);
         member_lists = findViewById(R.id.Gym_manage_members);
+        logoput = findViewById(R.id.logout_Button_U);
 
         gotoaddgym = findViewById(R.id.Add_Gym_Package_button);
         changedescrp = findViewById(R.id.change_descrp_button);
@@ -117,7 +129,23 @@ public class Gym_management_main extends AppCompatActivity implements interface_
                 redirectActivity(Gym_management_main.this, Gym_package_Creation.class);
             }
         });
+        logoput.setOnClickListener(v ->{
+            logout_prc(Gym_management_main.this, Login.class);
 
+        });
+
+    }
+    private void logout_prc(Activity activity, Class secondActivity){
+
+        SharedPreferences sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
+
+        Intent intent = new Intent(activity, secondActivity);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
     private void showDescriptionDialog() {
         // Inflate custom layout with EditText

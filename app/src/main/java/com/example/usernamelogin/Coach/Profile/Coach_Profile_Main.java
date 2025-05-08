@@ -43,10 +43,17 @@ public class Coach_Profile_Main extends AppCompatActivity {
     Button changeprof_i, button_frchg;
     private EditText[] chg;
     private TextView[] ments;
+    TextView username_nav, Gymname_nav;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coach_profile_main);
+
+        //Navbar textviews
+        username_nav = findViewById(R.id.username_navbar);
+        Gymname_nav = findViewById(R.id.textView_GYM_Name);
+        username_nav.setText(Coach_main.ProfileContents[0]);
+        Gymname_nav.setText(Login.key_Gym_);
 
         drawerLayout = findViewById(R.id.home_layout);
         menu = findViewById(R.id.nav_menu);

@@ -11,12 +11,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
 import androidx.core.view.GravityCompat;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -26,7 +22,6 @@ import com.example.usernamelogin.NonMemberUser.NonMemberUSER;
 import com.example.usernamelogin.NonMemberUser.Profile;
 import com.example.usernamelogin.R;
 
-import com.example.usernamelogin.Staff.Memberslist.members_not_exp.Fragment_members_list;
 import com.example.usernamelogin.workout_program.workouts.User_workouts;
 import com.google.android.material.tabs.TabLayout;
 
