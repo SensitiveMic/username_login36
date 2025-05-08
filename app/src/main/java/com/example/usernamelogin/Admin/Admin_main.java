@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import com.example.usernamelogin.Admin.Gym.Admin_add_gym;
 import com.example.usernamelogin.Admin.Userslist.gymanditsmembers.UsersList_Admin_main;
 import com.example.usernamelogin.R;
+import com.example.usernamelogin.RegisterandLogin.Login;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,11 +32,12 @@ public class Admin_main extends AppCompatActivity implements RecyclerViewInterfa
 
     DrawerLayout drawerLayout;
     ImageView menu;
-    LinearLayout home, userslist, add_gym, nonmember;
+    LinearLayout home, userslist, add_gym, nonmember,logoput;
     DatabaseReference db ,db1 ;
     RecyclerView recyclerView;
     Adapter_recyclerview_Adminusers_all myadapter;
     TextView dbusername1;
+    TextView navbar_Username;
     public static String non_member_username;
 
 
@@ -48,7 +51,8 @@ public class Admin_main extends AppCompatActivity implements RecyclerViewInterfa
         userslist = findViewById(R.id.Reservations_navdrawer);
         add_gym = findViewById(R.id.add_gym_navdrawer);
         nonmember = findViewById(R.id.nonmember);
-
+        logoput = findViewById(R.id.logout_Button_U);
+        navbar_Username = findViewById(R.id.username_nav);
 
         dbusername1 = findViewById(R.id.dbusername);
 
@@ -76,10 +80,26 @@ public class Admin_main extends AppCompatActivity implements RecyclerViewInterfa
                 redirectActivity(Admin_main.this, Admin_add_gym.class);
             }
         });
+        logoput.setOnClickListener(v ->{
+            logout_prc(Admin_main.this, Login.class);
 
+        });
 
-       // refresh_res_list();
     }
+    private void logout_prc(Activity activity, Class secondActivity){
+
+        SharedPreferences sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
+
+        Intent intent = new Intent(activity, secondActivity);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+
+    }
+
     public static void openNavbar(DrawerLayout drawerLayout){
         drawerLayout.openDrawer(GravityCompat.START);
     }

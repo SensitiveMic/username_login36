@@ -8,6 +8,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.app.Activity;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +24,7 @@ import com.example.usernamelogin.Admin.Admin_helper2;
 import com.example.usernamelogin.Admin.Admin_main;
 import com.example.usernamelogin.Admin.Userslist.gymanditsmembers.UsersList_Admin_main;
 import com.example.usernamelogin.R;
+import com.example.usernamelogin.RegisterandLogin.Login;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
@@ -34,7 +36,7 @@ public class Admin_add_gym_Field_Req extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
     ImageView menu;
-    LinearLayout home, reservations, add_gym;
+    LinearLayout home, reservations, add_gym,logoput;
     Button add_gym_entity;
     Button add_opening_closing;
     EditText Gym_name, Gym_descp, Gym_owner_name, Gym_owneremail,Gym_owner_password,gym_contact_number, firstname,lastname;
@@ -50,6 +52,7 @@ public class Admin_add_gym_Field_Req extends AppCompatActivity {
         home = findViewById(R.id.Home_navdrawer);
         reservations = findViewById(R.id.Reservations_navdrawer);
         add_gym = findViewById(R.id.add_gym_navdrawer);
+        logoput = findViewById(R.id.logout_Button_U);
 
         //for adding gym entity
         Gym_name = findViewById(R.id.editTextGym_Name);
@@ -145,7 +148,23 @@ public class Admin_add_gym_Field_Req extends AppCompatActivity {
                 }
             }
         });
+        logoput.setOnClickListener(v ->{
+            logout_prc(Admin_add_gym_Field_Req.this, Login.class);
 
+        });
+
+    }
+    private void logout_prc(Activity activity, Class secondActivity){
+
+        SharedPreferences sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
+
+        Intent intent = new Intent(activity, secondActivity);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
 
     }
     public static void openNavbar(DrawerLayout drawerLayout){

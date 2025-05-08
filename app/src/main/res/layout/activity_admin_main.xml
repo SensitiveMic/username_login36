@@ -23,7 +23,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <include
-                layout="@layout/toolbar_emptyname"
+                layout="@layout/toolbar_admin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 

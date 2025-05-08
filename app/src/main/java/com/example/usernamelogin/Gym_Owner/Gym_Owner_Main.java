@@ -10,6 +10,7 @@ import android.app.Activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import android.util.Log;
@@ -19,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
+import com.example.usernamelogin.Admin.Admin_main;
 import com.example.usernamelogin.Gym_Owner.employeelist.employeelists_main;
 import com.example.usernamelogin.R;
 
@@ -35,7 +37,7 @@ public class Gym_Owner_Main extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
     ImageView menu;
-    LinearLayout home, Gym_management, profile ,gymemployyes;
+    LinearLayout home, Gym_management, profile ,gymemployyes, logoput;
     public static String[] ProfileContents;
     String pushkey;
     public static String key1,key2;
@@ -52,6 +54,7 @@ public class Gym_Owner_Main extends AppCompatActivity {
         Gym_management = findViewById(R.id.Gym_manage_navdrawer);
         profile = findViewById(R.id.Profile_navdrawer);
         gymemployyes = findViewById(R.id.GYymemployyelist);
+        logoput = findViewById(R.id.logout_Button_U);
 
         someMethod();
         menu.setOnClickListener(new View.OnClickListener() {
@@ -84,10 +87,28 @@ public class Gym_Owner_Main extends AppCompatActivity {
                 redirectActivity(Gym_Owner_Main.this, employeelists_main.class);
             }
         });
+        logoput.setOnClickListener(v ->{
+            logout_prc(Gym_Owner_Main.this, Login.class);
+
+        });
+
+    }
+    private void logout_prc(Activity activity, Class secondActivity){
+
+        SharedPreferences sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
+
+        Intent intent = new Intent(activity, secondActivity);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
 
     }
 
-   public void usertoolbarname(Context context, TextView usernamebar, TextView username_nav) {
+   public void usertoolbarname(Context context, TextView usernamebar, TextView username_nav
+   ,TextView navbar_gym) {
         DatabaseReference databaseReferenceNon = FirebaseDatabase.getInstance()
                                                     .getReference("Users")
                                                     .child("Gym_Owner");
@@ -140,6 +161,7 @@ public class Gym_Owner_Main extends AppCompatActivity {
                 // Update UI elements using the provided context and TextViews
                 usernamebar.setText(ProfileContents[0]);
                 username_nav.setText(ProfileContents[0]);
+                navbar_gym.setText(ProfileContents[3]);
 
             }
 
@@ -155,7 +177,8 @@ public class Gym_Owner_Main extends AppCompatActivity {
         // Call usertoolbarname() with appropriate arguments
         usertoolbarname(getApplicationContext(),
                 findViewById(R.id.textView2),
-                findViewById(R.id.username_nav));
+                findViewById(R.id.username_nav),
+                findViewById(R.id.Gym_name_navdrawer));
     }
 
     public static void openNavbar(DrawerLayout drawerLayout) {

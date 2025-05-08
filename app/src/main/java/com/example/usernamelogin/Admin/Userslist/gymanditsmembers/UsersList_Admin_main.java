@@ -2,6 +2,7 @@ package com.example.usernamelogin.Admin.Userslist.gymanditsmembers;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -19,12 +20,13 @@ import com.example.usernamelogin.Admin.Gym.Admin_add_gym;
 import com.example.usernamelogin.Admin.Userslist.Archived_gyms.Admin_archived_gyms_fragment;
 import com.example.usernamelogin.Admin.Userslist.nonmembers.nonmember_list_admin_fragment;
 import com.example.usernamelogin.R;
+import com.example.usernamelogin.RegisterandLogin.Login;
 import com.google.android.material.tabs.TabLayout;
 
 public class UsersList_Admin_main extends AppCompatActivity {
     DrawerLayout drawerLayout;
     ImageView menu;
-    LinearLayout home, userslist, add_gym, nonmember;
+    LinearLayout home, userslist, add_gym, nonmember,logoput;
     FrameLayout frameLayout;
     TabLayout tabLayout;
     public static String gym_owner_KEY;
@@ -40,6 +42,7 @@ public class UsersList_Admin_main extends AppCompatActivity {
         userslist = findViewById(R.id.Reservations_navdrawer);
         add_gym = findViewById(R.id.add_gym_navdrawer);
         nonmember = findViewById(R.id.nonmember);
+        logoput = findViewById(R.id.logout_Button_U);
 
 
         frameLayout = (FrameLayout) findViewById(R.id.framelayout21);
@@ -128,6 +131,23 @@ public class UsersList_Admin_main extends AppCompatActivity {
                 redirectActivity(UsersList_Admin_main.this, Admin_add_gym.class);
             }
         });
+        logoput.setOnClickListener(v ->{
+            logout_prc(UsersList_Admin_main.this, Login.class);
+        });
+
+
+    }
+    private void logout_prc(Activity activity, Class secondActivity){
+
+        SharedPreferences sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
+
+        Intent intent = new Intent(activity, secondActivity);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
 
     }
     public static void openNavbar(DrawerLayout drawerLayout){

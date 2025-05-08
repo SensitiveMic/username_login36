@@ -3,33 +3,26 @@ package com.example.usernamelogin.Gym_Owner.employeelist;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
 import androidx.core.view.GravityCompat;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.usernamelogin.Admin.Gym.Admin_add_gym;
-import com.example.usernamelogin.Gym_Owner.Gym_Owner_Gym_Management;
 import com.example.usernamelogin.Gym_Owner.Gym_Owner_Main;
 import com.example.usernamelogin.Gym_Owner.Gym_Owner_gymmanagement_add_staff;
 import com.example.usernamelogin.Gym_Owner.Profile_Main_Gym_Owner;
-import com.example.usernamelogin.Member.Reservation.Model_class_Coach_list;
 import com.example.usernamelogin.R;
 import com.example.usernamelogin.RegisterandLogin.Login;
 import com.google.firebase.database.DataSnapshot;
@@ -43,16 +36,12 @@ import java.util.ArrayList;
 
 public class employeelists_main extends AppCompatActivity implements toeditcoachandstaff,interface_Adapter_employee_list {
     RecyclerView employeeslist;
-    private Button button_chg;
     DrawerLayout drawerLayout;
-    private String[] ProfileContents;
     ImageView menu;
-    LinearLayout home, Gym_management, profile ,gymemployyes;
-    String pushkey;
-    String key1,key2;
+    LinearLayout home, Gym_management, profile ,gymemployyes,logoput;
     Adapter_employee_list_fromgymowner adapter;
     public static String employeeclicked,Gym_id;
-
+    TextView usernametoolbar,username_nav,navbar_gym ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +54,9 @@ public class employeelists_main extends AppCompatActivity implements toeditcoach
         Gym_management = findViewById(R.id.Gym_manage_navdrawer);
         profile = findViewById(R.id.Profile_navdrawer);
         gymemployyes = findViewById(R.id.GYymemployyelist);
+        logoput = findViewById(R.id.logout_Button_U);
 
-        someMethod();
+        nav_tool_textviews();
 
         checkUSER();
 
@@ -94,9 +84,25 @@ public class employeelists_main extends AppCompatActivity implements toeditcoach
                 redirectActivity(employeelists_main.this, Profile_Main_Gym_Owner.class);
             }
         });
+        logoput.setOnClickListener(v ->{
+            logout_prc(employeelists_main.this, Login.class);
+
+        });
 
     }
+    private void logout_prc(Activity activity, Class secondActivity){
 
+        SharedPreferences sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
+
+        Intent intent = new Intent(activity, secondActivity);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+
+    }
     public void checkUSER() {
 
         employeeslist = findViewById(R.id.employeelists);
@@ -171,54 +177,16 @@ public class employeelists_main extends AppCompatActivity implements toeditcoach
         });
     }
 
-    public void someMethod() {
-        // Call usertoolbarname() with appropriate arguments
-        usertoolbarname(getApplicationContext(),
-                findViewById(R.id.textView2),
-                findViewById(R.id.username_nav));
+    public void nav_tool_textviews() {
+        usernametoolbar = findViewById(R.id.textView2);
+        username_nav = findViewById(R.id.username_nav);
+        navbar_gym  = findViewById(R.id.Gym_name_navdrawer);
+
+        usernametoolbar.setText(Gym_Owner_Main.ProfileContents[0]);
+        username_nav.setText(Gym_Owner_Main.ProfileContents[0]);
+        navbar_gym.setText(Gym_Owner_Main.ProfileContents[3]);
     }
 
-    public void usertoolbarname(Context context, TextView usernamebar, TextView username_nav) {
-        DatabaseReference databaseReferenceNon = FirebaseDatabase.getInstance()
-                .getReference("Users")
-                .child("Gym_Owner");
-        Query checkname = databaseReferenceNon.orderByChild("gym_owner_username");
-        pushkey = Login.key_GymOwner;
-        Log.d("TAG3", pushkey);
-
-        checkname.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ProfileContents = new String[5];
-                ProfileContents[0] = dataSnapshot.child(pushkey).child("gym_owner_username").getValue(String.class);
-                ProfileContents[1] = dataSnapshot.child(pushkey).child("email").getValue(String.class);
-                ProfileContents[2] = dataSnapshot.child(pushkey).child("password").getValue(String.class);
-                for (DataSnapshot gk : dataSnapshot.getChildren()) {
-                    key1 = gk.getKey();
-                    DataSnapshot gymSnapshot = gk.child("Gym");
-                    for (DataSnapshot gymChildSnapshot : gymSnapshot.getChildren()) {
-                        key2 = gymChildSnapshot.getKey();
-
-                        ProfileContents[3] = gymSnapshot.child(key2).child("gym_name").getValue(String.class);
-                        ProfileContents[4] = gymSnapshot.child(key2).child("gym_descrp").getValue(String.class);
-                        // Break the loop as we only need to process one gym name
-                        break;
-                    }
-                }
-                // Update UI elements using the provided context and TextViews
-                usernamebar.setText(ProfileContents[0]);
-                username_nav.setText(ProfileContents[0]);
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e("MainActivity_wrkt_prgrm", "Failed to read value.", databaseError.toException());
-            }
-        });
-
-
-    }
 
     public static void openNavbar(DrawerLayout drawerLayout) {
         drawerLayout.openDrawer(GravityCompat.START);

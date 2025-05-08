@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -55,9 +56,39 @@ public class Login extends AppCompatActivity {
         setContentView(binding2.getRoot());
 
         progressBar = findViewById(R.id.progressBar);
-
-
         Button buttonlogin = findViewById(R.id.buttonLogin);
+
+
+        SharedPreferences sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
+        boolean isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false);
+        String username = sharedPreferences.getString("username", null);
+        int account_type = sharedPreferences.getInt("Acc_type",-1);
+
+        if (isLoggedIn && username != null ) {
+        switch (account_type){
+            case 0:
+               String key_Admin_1 = sharedPreferences.getString("key_Admin_1", null);
+                key_Admin = key_Admin_1;
+                Log.d("check_LOGIN_sharedPref", "LOGIN CLICKED! " + key_Admin);
+                Intent intent = new Intent(Login.this, Admin_main.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
+
+                break;
+            case 1:
+                String key_Gym_owner_1 = sharedPreferences.getString("key_Gym_owner_1", null);
+                key_GymOwner = key_Gym_owner_1;
+                Log.d("check_LOGIN_sharedPref", "LOGIN CLICKED! " + key_GymOwner);
+                Intent intent1 = new Intent(Login.this, Gym_Owner_Main.class);
+                intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent1);
+                finish();
+
+                break;
+        }
+
+        }
 
         binding2.button3.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -187,6 +218,15 @@ public class Login extends AppCompatActivity {
                         Log.e("wee2", "onDataChange: minecraft! ");
                         if(Objects.equals(PasswordfromDB, PASSWORD)){
                             progressBar.setVisibility(View.GONE);
+
+                            SharedPreferences sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putBoolean("isLoggedIn", true);
+                            editor.putString("username", USERNAME);
+                            editor.putString("key_Admin_1",key_Admin);
+                            editor.putInt("Acc_type",0);
+                            editor.apply();
+
                             Intent intent = new Intent(Login.this, Admin_main.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
@@ -239,6 +279,15 @@ public class Login extends AppCompatActivity {
                         Log.e("TAG5", "Going to minecraft ");
                         if(Objects.equals(PasswordfromDB, PASSWORD)){
                             progressBar.setVisibility(View.GONE);
+
+                            SharedPreferences sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putBoolean("isLoggedIn", true);
+                            editor.putString("username", USERNAME);
+                            editor.putString("key_Gym_owner_1",key_GymOwner);
+                            editor.putInt("Acc_type",1);
+                            editor.apply();
+
                             Intent intent = new Intent(Login.this, Gym_Owner_Main.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);

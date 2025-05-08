@@ -9,6 +9,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -36,7 +37,7 @@ import java.util.Map;
 public class Profile_Main_Gym_Owner extends AppCompatActivity {
     DrawerLayout drawerLayout;
     ImageView menu;
-    LinearLayout home, Gym_management, profile;
+    LinearLayout home, Gym_management, profile, logoput;
     private TextView[] ments;
     private EditText[] chg;
     Button changeprof_i, button_chg;
@@ -48,8 +49,10 @@ public class Profile_Main_Gym_Owner extends AppCompatActivity {
         // set toolbar and navbar name to users username
         TextView textView2 = findViewById(R.id.textView2);
         TextView username_nav = findViewById(R.id.username_nav);
+        TextView navbar_gym = findViewById(R.id.Gym_name_navdrawer);
         textView2.setText(Gym_Owner_Main.ProfileContents[0]);
         username_nav.setText(Gym_Owner_Main.ProfileContents[0]);
+        navbar_gym.setText(Gym_Owner_Main.ProfileContents[3]);
 
         drawerLayout = findViewById(R.id.home_layout);
         menu = findViewById(R.id.nav_menu);
@@ -58,6 +61,7 @@ public class Profile_Main_Gym_Owner extends AppCompatActivity {
         profile = findViewById(R.id.Profile_navdrawer);
         changeprof_i = findViewById(R.id.changeP_I);
         button_chg = findViewById(R.id.button_chg);
+        logoput = findViewById(R.id.logout_Button_U);
 
         profileContents();
 
@@ -90,6 +94,9 @@ public class Profile_Main_Gym_Owner extends AppCompatActivity {
             public void onClick(View v) {
                 recreate();
             }
+        });
+        logoput.setOnClickListener(v ->{
+            logout_prc(Profile_Main_Gym_Owner.this, Login.class);
         });
         button_chg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -347,6 +354,19 @@ public class Profile_Main_Gym_Owner extends AppCompatActivity {
                 }
             }
         });
+
+    }
+    private void logout_prc(Activity activity, Class secondActivity){
+
+        SharedPreferences sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
+
+        Intent intent = new Intent(activity, secondActivity);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
 
     }
     @SuppressLint("CutPasteId")
