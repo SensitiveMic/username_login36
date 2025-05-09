@@ -9,8 +9,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.usernamelogin.Admin.Gym.Adapter_recyclerview_add_gym;
-import com.example.usernamelogin.Admin.Gym.add_gym_recyclerviewAdapter_helper;
 import com.example.usernamelogin.R;
 
 import java.util.ArrayList;

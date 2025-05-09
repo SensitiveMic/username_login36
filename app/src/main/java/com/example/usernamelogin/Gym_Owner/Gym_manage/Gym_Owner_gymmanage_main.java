@@ -67,7 +67,7 @@ public class Gym_Owner_gymmanage_main extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_gym_owner_gymmanage_main);
-       toolbarnavbar();
+        toolbarnavbar();
 
         drawerLayout = findViewById(R.id.activity_gym_owner_gymmanage_main);
         menu = findViewById(R.id.nav_menu);
