@@ -55,8 +55,8 @@ public abstract class dialog_real_list_ofmembers extends Dialog implements itemc
         recyclerviewformember.setLayoutManager(new LinearLayoutManager(context));
 
         DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("Users/Non-members");
-        Query findgymname = myRef.orderByChild("GymName").equalTo(Admin_add_gym.gymownersgymname);
-        Log.d("TAGadminmem", "setUpRecyclerView: "+ Admin_add_gym.gymownersgymname);
+        Query findgymname = myRef.orderByChild("GymName").equalTo(UsersList_Admin_main.gymownersgymname);
+        Log.d("TAGadminmem", "setUpRecyclerView: "+ UsersList_Admin_main.gymownersgymname);
 
         findgymname.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -67,7 +67,7 @@ public abstract class dialog_real_list_ofmembers extends Dialog implements itemc
                         String usernameofthemember = underGym_Owner.child("username").getValue(String.class);
                         Log.d("TAGadminmem", "name of member gym: "+ gymanemcheck);
                         Log.d("TAGadminmem", "membername from inside the undergymowner: "+ usernameofthemember);
-                        if(Objects.equals(gymanemcheck, Admin_add_gym.gymownersgymname)) {
+                        if(Objects.equals(gymanemcheck, UsersList_Admin_main.gymownersgymname)) {
                             Log.d("TAGadminmem", "Addingto list Started ");
                             helper_class_for_memberslist res_list2 = underGym_Owner.getValue(helper_class_for_memberslist.class);
                             //res_list2.setUsername(usernameofthemember);

@@ -84,7 +84,7 @@
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/add_gym_entity"
             android:drawablePadding="8dp"
-            android:text="ADD GYM ENTITY" />
+            android:text="ADD GYM OWNER ACCOUNT" />
 
     </LinearLayout>
 

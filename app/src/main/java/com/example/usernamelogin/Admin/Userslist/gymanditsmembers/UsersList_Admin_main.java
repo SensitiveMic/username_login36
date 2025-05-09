@@ -29,7 +29,8 @@ public class UsersList_Admin_main extends AppCompatActivity {
     LinearLayout home, userslist, add_gym, nonmember,logoput;
     FrameLayout frameLayout;
     TabLayout tabLayout;
-    public static String gym_owner_KEY;
+    public static String gyym_owners_usernmae,gym_owner_KEY,gymownersgymname ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +44,6 @@ public class UsersList_Admin_main extends AppCompatActivity {
         add_gym = findViewById(R.id.add_gym_navdrawer);
         nonmember = findViewById(R.id.nonmember);
         logoput = findViewById(R.id.logout_Button_U);
-
 
         frameLayout = (FrameLayout) findViewById(R.id.framelayout21);
         tabLayout = (TabLayout) findViewById(R.id.tablayout2);

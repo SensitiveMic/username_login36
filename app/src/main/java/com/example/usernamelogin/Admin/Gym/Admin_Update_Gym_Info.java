@@ -48,7 +48,7 @@ public class Admin_Update_Gym_Info extends AppCompatActivity {
         chg[2] = findViewById(R.id.editTextGym_Owner_Password);
         chg[3] = findViewById(R.id.editTextGym_name);
         chg[4] = findViewById(R.id.editTextGym_Decrp);
-        chg[0].setText(Admin_add_gym.gymownerkey);
+        chg[0].setText( UsersList_Admin_main.gyym_owners_usernmae);
 
         button_chg = findViewById(R.id.button_chg);
         goback = findViewById(R.id.go_back);
@@ -122,7 +122,7 @@ public class Admin_Update_Gym_Info extends AppCompatActivity {
         DatabaseReference myRefLogin = databaseLogin.getReference("Users");
 
         Query checkUser = myRefLogin.child("Gym_Owner").orderByChild("gym_owner_username")
-                .equalTo(Admin_add_gym.gymownerkey);
+                .equalTo(UsersList_Admin_main.gyym_owners_usernmae);
 
         checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

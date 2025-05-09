@@ -61,7 +61,7 @@ public abstract class Dialog_for_staffandcoach extends Dialog{
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
-        gymname = Admin_add_gym.gymownersgymname;
+        gymname = UsersList_Admin_main.gymownersgymname;
 
         db = FirebaseDatabase.getInstance().getReference("Users/Gym_Owner");
         initializedb();

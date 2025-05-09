@@ -132,7 +132,6 @@ public class Adapter_recyclerview_add_gym extends RecyclerView.Adapter<Adapter_r
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
-
         TextView gym_owner_username1,gym_name, fullname;
         TextView gym_owner_key;
 
@@ -152,10 +151,13 @@ public class Adapter_recyclerview_add_gym extends RecyclerView.Adapter<Adapter_r
                         if (pos != RecyclerView.NO_POSITION){
 
                             String text = gym_owner_username1.getText().toString();
-                            Admin_add_gym.gymownerkey = text;
+                            UsersList_Admin_main.gyym_owners_usernmae = text;
+
+                            String text2 = gym_owner_key.getText().toString();
+                            UsersList_Admin_main.gym_owner_KEY = text2;
 
                             String gymname = gym_name.getText().toString();
-                            Admin_add_gym.gymownersgymname = gymname;
+                            UsersList_Admin_main.gymownersgymname = gymname;
 
 
                             recyclerViewInterface.onItemClick(pos);
@@ -173,15 +175,14 @@ public class Adapter_recyclerview_add_gym extends RecyclerView.Adapter<Adapter_r
 
                         if (pos != RecyclerView.NO_POSITION){
 
-                           String gym_owner_Key = gym_owner_key.getText().toString();
-                            Log.d("checkLongclickKey", gym_owner_Key);
-                            UsersList_Admin_main.gym_owner_KEY = gym_owner_Key;
+                            String text2 = gym_owner_key.getText().toString();
+                            UsersList_Admin_main.gym_owner_KEY = text2;
 
                             String text = gym_owner_username1.getText().toString();
-                            Admin_add_gym.gymownerkey = text;
+                            UsersList_Admin_main.gyym_owners_usernmae = text;
 
                             String gymname = gym_name.getText().toString();
-                            Admin_add_gym.gymownersgymname = gymname;
+                            UsersList_Admin_main.gymownersgymname = gymname;
 
                             longclikcInterface.onitemlongclick(pos);
 
