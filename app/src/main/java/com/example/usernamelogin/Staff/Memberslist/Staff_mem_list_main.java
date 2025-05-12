@@ -140,9 +140,10 @@ public class Staff_mem_list_main extends AppCompatActivity {
                             String username = snapshot1.child("username").getValue(String.class);
                             String expirationDate = membershipSnapshot.child("expiration_date").getValue(String.class);
                             String startDate = membershipSnapshot.child("start_date").getValue(String.class);
+                            String packagename_wew = membershipSnapshot.child("package_name").getValue(String.class);
 
                             Model_class_get_members_details res1 =
-                                    new Model_class_get_members_details(username, expirationDate, startDate);
+                                    new Model_class_get_members_details(username, expirationDate, startDate,packagename_wew);
                             res1.setRemainind_days(remainingdays(expirationDate));
                             list.add(res1);
                         }

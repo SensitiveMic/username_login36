@@ -71,7 +71,7 @@
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/gym_manage"
             android:drawablePadding="8dp"
-            android:text="Gym Manage" />
+            android:text="Gym Packages" />
 
     </LinearLayout>
     <LinearLayout

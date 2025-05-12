@@ -37,6 +37,7 @@
         <TextView
             android:id="@+id/Gym_name_navdrawer"
             android:layout_width="wrap_content"
+            android:visibility="gone"
             android:layout_height="wrap_content"
             android:text="@string/nav_header_subtitle" />
 

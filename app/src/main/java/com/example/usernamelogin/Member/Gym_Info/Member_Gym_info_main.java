@@ -64,6 +64,8 @@ public class Member_Gym_info_main extends AppCompatActivity {
         setContentView(R.layout.activity_member_gym_info_main);
 
       someMethod();
+      TextView navbargymname = findViewById(R.id.textView_gym_name);
+      navbargymname.setVisibility(View.GONE);
 
         drawerLayout = findViewById(R.id.home_layout);
         menu = findViewById(R.id.nav_menu);

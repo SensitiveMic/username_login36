@@ -4,13 +4,17 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.usernamelogin.Admin.Admin_main;
 import com.example.usernamelogin.Coach.Coach_main;
@@ -48,7 +52,7 @@ public class Login extends AppCompatActivity {
     ActivityLoginBinding binding2;
     DatabaseReference findstaffaccount;
     ProgressBar progressBar;
-
+    private boolean alreadyHandledNoInternet = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,112 +62,21 @@ public class Login extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
         Button buttonlogin = findViewById(R.id.buttonLogin);
 
+        if (!isConnectedToInternet(this)) {
+            if (!alreadyHandledNoInternet) {
+                alreadyHandledNoInternet = true;
 
-        SharedPreferences sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
-        boolean isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false);
-        String username = sharedPreferences.getString("username", null);
-     int account_type = sharedPreferences.getInt("Acc_type",-1);
-    // account_type = -1;
-        if (isLoggedIn && username != null ) {
-       switch (account_type){
-            case 0:
-               String key_Admin_1 = sharedPreferences.getString("key_Admin_1", null);
-                key_Admin = key_Admin_1;
-                Log.d("check_LOGIN_sharedPref", "LOGIN CLICKED! " + key_Admin);
-                Intent intent = new Intent(Login.this, Admin_main.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                finish();
+                Toast.makeText(this, "No internet connection. Please secure an internet connection and log in manually.", Toast.LENGTH_LONG).show();
 
-                break;
-            case 1:
-                String key_Gym_owner_1 = sharedPreferences.getString("key_Gym_owner_1", null);
-                key_GymOwner = key_Gym_owner_1;
-                Log.d("check_LOGIN_sharedPref", "LOGIN CLICKED! " + key_GymOwner);
-                Intent intent1 = new Intent(Login.this, Gym_Owner_Main.class);
-                intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent1);
-                finish();
+                // Optional: Clear saved session if needed
+                SharedPreferences sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.clear();
+                editor.apply();
 
-                break;
-            case 2:
-                String gym_key1 = sharedPreferences.getString("gym_key1", null);
-                String gym_key2 = sharedPreferences.getString("gym_key2", null);
-                String gym_key3 = sharedPreferences.getString("gym_key3",null);
-                String gyme_name = sharedPreferences.getString("gym_name",null);
-                String staff_main_key = sharedPreferences.getString("Staff_main_key",null);
-                String staff_username = sharedPreferences.getString("staff_username",null);
-                String staff_fullname = sharedPreferences.getString("staff_fullname",null);
-                String staff_password = sharedPreferences.getString("staff_password",null);
-                String staff_email = sharedPreferences.getString("staff_email",null);
-                String staff_mobil = sharedPreferences.getString("staff_mobil",null);
-                key_Gym_Staff1 = gym_key1;
-                key_Gym_Staff2 = gym_key2;
-                key_Gym_Staff3 = gym_key3;
-                key_Gym_ = gyme_name;
-                key_gym_Staff_key = staff_main_key;
-                key_Gym_Staff_username = staff_username;
-                key_Gym_staff_fullname = staff_fullname;
-                key_Gym_Staff_password = staff_password;
-                key_Gym_Staff_email = staff_email;
-                key_Gym_Staff_mobile_number = staff_mobil;
-                Intent intent2 = new Intent(Login.this, Staff_main.class);
-                intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent2);
-                finish();
-                break;
-
-            case 3:
-                String gym_key1_c = sharedPreferences.getString("gym_key1", null);
-                String gym_key2_c = sharedPreferences.getString("gym_key2", null);
-                String gym_key3_c = sharedPreferences.getString("gym_key3",null);
-                String gyme_name_c = sharedPreferences.getString("gym_name",null);
-                String coach_main_key = sharedPreferences.getString("Coach_main_key",null);
-                String coach_username = sharedPreferences.getString("Coach_username",null);
-                String coach_fullname = sharedPreferences.getString("Coach_fullname",null);
-                String coach_password = sharedPreferences.getString("Coach_password",null);
-                String coach_email = sharedPreferences.getString("Coach_email",null);
-                String coach_mobil = sharedPreferences.getString("Coach_mobil",null);
-                key_Gym_Coach1 = gym_key1_c;
-                key_Gym_Coach2 = gym_key2_c;
-                key_Gym_Coach3 = gym_key3_c;
-                key_Gym_ = gyme_name_c;
-                key_Gym_Coach_key = coach_main_key;
-                key_Gym_Coach_username = coach_username;
-                key_Gym_Coach_fullname = coach_fullname;
-                key_Gym_Coach_password = coach_password;
-                key_Gym_Coach_email = coach_email;
-                key_Gym_Coach_mobile_number = coach_mobil;
-                Intent intent3 = new Intent(Login.this, Coach_main.class);
-                intent3.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent3);
-                finish();
-
-                break;
-            case 4:
-
-                String member_key = sharedPreferences.getString("member_key", null);
-                String Gym_Name = sharedPreferences.getString("member_gym_name", null);
-                key = member_key;
-                member_gym_name = Gym_Name;
-                Intent intent4 = new Intent(Login.this, Member_main.class);
-                intent4.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent4);
-                finish();
-                break;
-
-            case 5:
-                String nonmember_key = sharedPreferences.getString("non_member_key", null);
-                key = nonmember_key;
-                Log.d("AUTLOG_NONMEM", "onCreate: "+key);
-                Intent intent5 = new Intent(Login.this, NonMemberUSER.class);
-                intent5.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent5);
-                finish();
-                break;
-
-        }
-
+            }
+        } else {
+            autologin();
         }
 
         binding2.button3.setOnClickListener(new View.OnClickListener() {
@@ -185,7 +98,122 @@ public class Login extends AppCompatActivity {
             }
         });
     }
+    public boolean isConnectedToInternet(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (cm != null) {
+            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+            return activeNetwork != null && activeNetwork.isConnected();
+        }
+        return false;
+    }
+    private void autologin(){
+        SharedPreferences sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
+        boolean isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false);
+        String username = sharedPreferences.getString("username", null);
+        int account_type = sharedPreferences.getInt("Acc_type",-1);
+        // account_type = -1;
+        if (isLoggedIn && username != null ) {
+            switch (account_type){
+                case 0:
+                    String key_Admin_1 = sharedPreferences.getString("key_Admin_1", null);
+                    key_Admin = key_Admin_1;
+                    Log.d("check_LOGIN_sharedPref", "LOGIN CLICKED! " + key_Admin);
+                    Intent intent = new Intent(Login.this, Admin_main.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
 
+                    break;
+                case 1:
+                    String key_Gym_owner_1 = sharedPreferences.getString("key_Gym_owner_1", null);
+                    key_GymOwner = key_Gym_owner_1;
+                    Log.d("check_LOGIN_sharedPref", "LOGIN CLICKED! " + key_GymOwner);
+                    Intent intent1 = new Intent(Login.this, Gym_Owner_Main.class);
+                    intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent1);
+                    finish();
+
+                    break;
+                case 2:
+                    String gym_key1 = sharedPreferences.getString("gym_key1", null);
+                    String gym_key2 = sharedPreferences.getString("gym_key2", null);
+                    String gym_key3 = sharedPreferences.getString("gym_key3",null);
+                    String gyme_name = sharedPreferences.getString("gym_name",null);
+                    String staff_main_key = sharedPreferences.getString("Staff_main_key",null);
+                    String staff_username = sharedPreferences.getString("staff_username",null);
+                    String staff_fullname = sharedPreferences.getString("staff_fullname",null);
+                    String staff_password = sharedPreferences.getString("staff_password",null);
+                    String staff_email = sharedPreferences.getString("staff_email",null);
+                    String staff_mobil = sharedPreferences.getString("staff_mobil",null);
+                    key_Gym_Staff1 = gym_key1;
+                    key_Gym_Staff2 = gym_key2;
+                    key_Gym_Staff3 = gym_key3;
+                    key_Gym_ = gyme_name;
+                    key_gym_Staff_key = staff_main_key;
+                    key_Gym_Staff_username = staff_username;
+                    key_Gym_staff_fullname = staff_fullname;
+                    key_Gym_Staff_password = staff_password;
+                    key_Gym_Staff_email = staff_email;
+                    key_Gym_Staff_mobile_number = staff_mobil;
+                    Intent intent2 = new Intent(Login.this, Staff_main.class);
+                    intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent2);
+                    finish();
+                    break;
+
+                case 3:
+                    String gym_key1_c = sharedPreferences.getString("gym_key1", null);
+                    String gym_key2_c = sharedPreferences.getString("gym_key2", null);
+                    String gym_key3_c = sharedPreferences.getString("gym_key3",null);
+                    String gyme_name_c = sharedPreferences.getString("gym_name",null);
+                    String coach_main_key = sharedPreferences.getString("Coach_main_key",null);
+                    String coach_username = sharedPreferences.getString("Coach_username",null);
+                    String coach_fullname = sharedPreferences.getString("Coach_fullname",null);
+                    String coach_password = sharedPreferences.getString("Coach_password",null);
+                    String coach_email = sharedPreferences.getString("Coach_email",null);
+                    String coach_mobil = sharedPreferences.getString("Coach_mobil",null);
+                    key_Gym_Coach1 = gym_key1_c;
+                    key_Gym_Coach2 = gym_key2_c;
+                    key_Gym_Coach3 = gym_key3_c;
+                    key_Gym_ = gyme_name_c;
+                    key_Gym_Coach_key = coach_main_key;
+                    key_Gym_Coach_username = coach_username;
+                    key_Gym_Coach_fullname = coach_fullname;
+                    key_Gym_Coach_password = coach_password;
+                    key_Gym_Coach_email = coach_email;
+                    key_Gym_Coach_mobile_number = coach_mobil;
+                    Intent intent3 = new Intent(Login.this, Coach_main.class);
+                    intent3.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent3);
+                    finish();
+
+                    break;
+                case 4:
+
+                    String member_key = sharedPreferences.getString("member_key", null);
+                    String Gym_Name = sharedPreferences.getString("member_gym_name", null);
+                    key = member_key;
+                    member_gym_name = Gym_Name;
+                    Intent intent4 = new Intent(Login.this, Member_main.class);
+                    intent4.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent4);
+                    finish();
+                    break;
+
+                case 5:
+                    String nonmember_key = sharedPreferences.getString("non_member_key", null);
+                    key = nonmember_key;
+                    Log.d("AUTLOG_NONMEM", "onCreate: "+key);
+                    Intent intent5 = new Intent(Login.this, NonMemberUSER.class);
+                    intent5.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent5);
+                    finish();
+                    break;
+
+            }
+
+        }
+    }
     public void checkUSER(){
         Log.d("TAG5", "LOGIN INnside! ");
         USERNAME = binding2.editTextLoginUsername.getText().toString();

@@ -1,51 +1,30 @@
 package com.example.usernamelogin.Gym_Owner.Gym_manage;
 
 import android.app.Activity;
-import android.app.Dialog;
-import android.app.TimePickerDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.TimePicker;
-import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
 import androidx.core.view.GravityCompat;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.usernamelogin.Admin.Admin_helper2;
-import com.example.usernamelogin.Admin.Gym.Adapter_recyclerview_add_gym;
-import com.example.usernamelogin.Admin.Gym.Admin_add_gym;
-import com.example.usernamelogin.Admin.Gym.Admin_add_gym_Field_Req;
-import com.example.usernamelogin.Admin.Gym.Helper_Gym_adder;
-import com.example.usernamelogin.Admin.Gym.add_gym_recyclerviewAdapter_helper;
 import com.example.usernamelogin.Gym_Owner.Gym_Owner_Main;
 import com.example.usernamelogin.Gym_Owner.Gym_Owner_gymmanagement_add_staff;
 import com.example.usernamelogin.Gym_Owner.Profile_Main_Gym_Owner;
 import com.example.usernamelogin.Gym_Owner.employeelist.employeelists_main;
 import com.example.usernamelogin.R;
 import com.example.usernamelogin.RegisterandLogin.Login;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -53,19 +32,19 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
-public class Gym_Owner_gymmanage_main extends AppCompatActivity {
+public class Gym_Owner_gymmanage_main extends AppCompatActivity implements Interface_adapter_gyms_list_onclick {
     DrawerLayout drawerLayout;
     ImageView menu;
     LinearLayout home, Gym_management, profile ,gymemployyes,Gym_manage, logoput;
     RecyclerView recyclerView;
     ImageView addgyme_circle;
+    public static String gym_Name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
+
         setContentView(R.layout.activity_gym_owner_gymmanage_main);
         toolbarnavbar();
 
@@ -146,7 +125,7 @@ public class Gym_Owner_gymmanage_main extends AppCompatActivity {
         DatabaseReference db = FirebaseDatabase.getInstance().getReference("/Users/Gym_Owner").child(ownerkey)
                .child("Gym");
         Log.d("TAGCHECKKEY12", "Baseline: 1" );
-        Adapter_Gym_Owner_gymmanage_main myadapter1 = new Adapter_Gym_Owner_gymmanage_main(this,list);
+        Adapter_Gym_Owner_gymmanage_main myadapter1 = new Adapter_Gym_Owner_gymmanage_main(this,list, (Interface_adapter_gyms_list_onclick) this);
         Log.d("TAGCHECKKEY12", "Baseline: 2" );
         recyclerView.setAdapter(myadapter1);
         Log.d("TAGCHECKKEY12", "Baseline: 3" );
@@ -156,9 +135,11 @@ public class Gym_Owner_gymmanage_main extends AppCompatActivity {
                     list.clear();
                 Log.d("TAGCHECKKEY12", "Baseline: 4" );
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-
+                       String gymkey = dataSnapshot.getKey().toString();
                         Modelclass_gym_manage_Adapter res_list1 = dataSnapshot.getValue(Modelclass_gym_manage_Adapter.class);
+                        res_list1.setGym_key(gymkey);
                         list.add(res_list1);
+
                     }
                     myadapter1.notifyDataSetChanged();
 
@@ -213,5 +194,19 @@ public class Gym_Owner_gymmanage_main extends AppCompatActivity {
         closeNavbar(drawerLayout);
     }
 
-
+    @Override
+    public void onItemClick(int position) {
+        Log.d("TAG8080", "gymkey: " +gym_Name );
+        dialog_real_list_ofmembers listdialog = new dialog_real_list_ofmembers(this) {
+            @Override
+            protected void onCreate(Bundle savedInstanceState) {
+                super.onCreate(savedInstanceState);
+            }
+        };
+        listdialog.show();
+        Window window = listdialog.getWindow();
+        if (window != null) {
+            window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        }
+    }
 }

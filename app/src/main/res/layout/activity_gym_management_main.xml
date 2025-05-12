@@ -45,6 +45,7 @@
                 android:id="@+id/Add_Gym_Package_button"
                 android:layout_width="82dp"
                 android:layout_height="58dp"
+
                 app:srcCompat="@drawable/add_circle" />
 
         </LinearLayout>
@@ -58,6 +59,7 @@
             <Button
                 android:id="@+id/change_OC_button"
                 android:layout_width="wrap_content"
+                android:visibility="gone"
                 android:layout_height="wrap_content"
                 android:text="Opening and Closing Time"
 
@@ -76,7 +78,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Gym Descrp"
-
+                android:visibility="gone"
                 />
 
         </LinearLayout>

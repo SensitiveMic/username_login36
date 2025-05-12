@@ -89,28 +89,6 @@ public abstract class Dialog_for_members extends Dialog {
             @Override
             public void onClick(View v) {
 
-         dialog_real_list_ofmembers listdialog = new dialog_real_list_ofmembers(context,this) {
-
-             @Override
-             public void onmembersclick(int position) {
-                 Toast.makeText(context, "Item clicked at position: " + position, Toast.LENGTH_SHORT).show();
-
-                 Intent intent = new Intent(context, Admin_user_nonmember_click.class);
-                 context.startActivity(intent);
-             }
-
-             @Override
-             protected void onCreate(Bundle savedInstanceState) {
-                      super.onCreate(savedInstanceState);
-             }
-
-
-              };
-              listdialog.show();
-                Window window = listdialog.getWindow();
-                if (window != null) {
-                    window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-                }
             }
 
         });
@@ -125,10 +103,7 @@ public abstract class Dialog_for_members extends Dialog {
         });
 
     }
-    private void getcoachorstaffinfo(){
 
-
-    }
 
 
 }

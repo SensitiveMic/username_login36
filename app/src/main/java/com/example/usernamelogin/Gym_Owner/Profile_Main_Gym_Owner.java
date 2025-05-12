@@ -21,6 +21,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.usernamelogin.Admin.Gym.Helper_Gym_adder;
+import com.example.usernamelogin.Gym_Owner.Gym_manage.Gym_Owner_gymmanage_main;
+import com.example.usernamelogin.Gym_Owner.employeelist.employeelists_main;
 import com.example.usernamelogin.R;
 import com.example.usernamelogin.RegisterandLogin.Login;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -37,7 +39,7 @@ import java.util.Map;
 public class Profile_Main_Gym_Owner extends AppCompatActivity {
     DrawerLayout drawerLayout;
     ImageView menu;
-    LinearLayout home, Gym_management, profile, logoput;
+    LinearLayout home, Gym_management, profile, logoput,Gym_manage,gymemployyes;
     private TextView[] ments;
     private EditText[] chg;
     Button changeprof_i, button_chg;
@@ -49,10 +51,10 @@ public class Profile_Main_Gym_Owner extends AppCompatActivity {
         // set toolbar and navbar name to users username
         TextView textView2 = findViewById(R.id.textView2);
         TextView username_nav = findViewById(R.id.username_nav);
-        TextView navbar_gym = findViewById(R.id.Gym_name_navdrawer);
+
         textView2.setText(Gym_Owner_Main.ProfileContents[0]);
         username_nav.setText(Gym_Owner_Main.ProfileContents[0]);
-        navbar_gym.setText(Gym_Owner_Main.ProfileContents[3]);
+
 
         drawerLayout = findViewById(R.id.home_layout);
         menu = findViewById(R.id.nav_menu);
@@ -62,6 +64,8 @@ public class Profile_Main_Gym_Owner extends AppCompatActivity {
         changeprof_i = findViewById(R.id.changeP_I);
         button_chg = findViewById(R.id.button_chg);
         logoput = findViewById(R.id.logout_Button_U);
+        Gym_manage = findViewById(R.id.Gym_manage_Manage);
+        gymemployyes = findViewById(R.id.GYymemployyelist);
 
         profileContents();
 
@@ -80,7 +84,7 @@ public class Profile_Main_Gym_Owner extends AppCompatActivity {
         Gym_management.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                 redirectActivity(Profile_Main_Gym_Owner.this, Gym_Owner_Main.class);
+                 redirectActivity(Profile_Main_Gym_Owner.this, Gym_Owner_gymmanagement_add_staff.class);
             }
         });
         changeprof_i.setOnClickListener(new View.OnClickListener() {
@@ -95,8 +99,20 @@ public class Profile_Main_Gym_Owner extends AppCompatActivity {
                 recreate();
             }
         });
+        gymemployyes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                redirectActivity(Profile_Main_Gym_Owner.this, employeelists_main.class);
+            }
+        });
         logoput.setOnClickListener(v ->{
             logout_prc(Profile_Main_Gym_Owner.this, Login.class);
+        });
+        Gym_manage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                redirectActivity(Profile_Main_Gym_Owner.this, Gym_Owner_gymmanage_main.class);
+            }
         });
         button_chg.setOnClickListener(new View.OnClickListener() {
             @Override

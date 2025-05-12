@@ -122,8 +122,8 @@ public class Admin_archived_gyms_fragment extends Fragment implements Admin_gym_
         Log.d("TAG_COPY_SUCCESS", "TRIGERRED ");
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         builder.setTitle("Archive Gym")
-                .setMessage("Are you sure you want to archive this gym?")
-                .setPositiveButton("Archive", new DialogInterface.OnClickListener() {
+                .setMessage("Are you sure you want to unarchive this gym?")
+                .setPositiveButton("Unarchive", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // Archive logic here

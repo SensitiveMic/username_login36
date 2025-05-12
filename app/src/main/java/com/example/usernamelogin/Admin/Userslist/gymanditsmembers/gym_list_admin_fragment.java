@@ -135,13 +135,13 @@ public class gym_list_admin_fragment extends Fragment implements RecyclerViewInt
 
     @Override
     public void onItemClick(int position) {
-        Dialog_for_members listDialog = new Dialog_for_members(getActivity()) {
+   /*     Dialog_for_members listDialog = new Dialog_for_members(getActivity()) {
 
             protected void onCreate(Bundle savedInstanceState) {
                 super.onCreate(savedInstanceState);
             }
         };
-        listDialog.show();
+        listDialog.show();     */
 
       //  redirectActivity(getActivity(), Admin_Update_Gym_Info.class);
     }

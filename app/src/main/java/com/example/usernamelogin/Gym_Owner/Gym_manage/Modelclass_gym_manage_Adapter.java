@@ -2,6 +2,7 @@ package com.example.usernamelogin.Gym_Owner.Gym_manage;
 
 public class Modelclass_gym_manage_Adapter {
     String gym_name, gym_descrp,gym_contact_number,gym_opening,gym_closing;
+    String gym_key;
     public Modelclass_gym_manage_Adapter() {
         // Required for Firebase
     }
@@ -11,6 +12,15 @@ public class Modelclass_gym_manage_Adapter {
         this.gym_contact_number = gym_contact_number;
         this.gym_opening = gym_opening;
         this.gym_closing = gym_closing;
+
+    }
+
+    public String getGym_key() {
+        return gym_key;
+    }
+
+    public void setGym_key(String gym_key) {
+        this.gym_key = gym_key;
     }
 
     public String getGym_name() {

@@ -15,6 +15,7 @@ import android.os.Bundle;
 
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -42,6 +43,7 @@ public class Gym_Owner_Main extends AppCompatActivity {
     public static String[] ProfileContents;
     String pushkey;
     public static String key1,key2;
+    Button Employee_Button, Add_employee_button, Gym_manage_button, Profile_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +58,11 @@ public class Gym_Owner_Main extends AppCompatActivity {
         gymemployyes = findViewById(R.id.GYymemployyelist);
         logoput = findViewById(R.id.logout_Button_U);
         Gym_manage = findViewById(R.id.Gym_manage_Manage);
+
+        Employee_Button = findViewById(R.id.Employee_list_button);
+        Add_employee_button = findViewById(R.id.Add_employee_button);
+        Gym_manage_button = findViewById(R.id.Gym_Manage_Button);
+        Profile_button = findViewById(R.id.Profile_Button);
 
         someMethod();
         menu.setOnClickListener(new View.OnClickListener() {
@@ -93,6 +100,22 @@ public class Gym_Owner_Main extends AppCompatActivity {
             public void onClick(View v) {
                 redirectActivity(Gym_Owner_Main.this, Gym_Owner_gymmanage_main.class);
             }
+        });
+        Employee_Button.setOnClickListener(v ->{
+            logout_prc(Gym_Owner_Main.this, employeelists_main.class);
+
+        });
+        Add_employee_button.setOnClickListener(v ->{
+            logout_prc(Gym_Owner_Main.this, Gym_Owner_gymmanagement_add_staff.class);
+
+        });
+        Gym_manage_button.setOnClickListener(v ->{
+            logout_prc(Gym_Owner_Main.this, Gym_Owner_gymmanage_main.class);
+
+        });
+        Profile_button.setOnClickListener(v ->{
+            logout_prc(Gym_Owner_Main.this, Profile_Main_Gym_Owner.class);
+
         });
         logoput.setOnClickListener(v ->{
             logout_prc(Gym_Owner_Main.this, Login.class);

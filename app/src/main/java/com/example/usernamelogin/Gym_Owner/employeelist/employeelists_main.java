@@ -41,7 +41,7 @@ public class employeelists_main extends AppCompatActivity implements toeditcoach
     LinearLayout home, Gym_management, profile ,gymemployyes,logoput;
     Adapter_employee_list_fromgymowner adapter;
     public static String employeeclicked,Gym_id;
-    TextView usernametoolbar,username_nav,navbar_gym ;
+    TextView usernametoolbar,username_nav ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -180,11 +180,10 @@ public class employeelists_main extends AppCompatActivity implements toeditcoach
     public void nav_tool_textviews() {
         usernametoolbar = findViewById(R.id.textView2);
         username_nav = findViewById(R.id.username_nav);
-        navbar_gym  = findViewById(R.id.Gym_name_navdrawer);
 
         usernametoolbar.setText(Gym_Owner_Main.ProfileContents[0]);
         username_nav.setText(Gym_Owner_Main.ProfileContents[0]);
-        navbar_gym.setText(Gym_Owner_Main.ProfileContents[3]);
+
     }
 
 

@@ -55,7 +55,7 @@ public class Gym_Owner_gymmanagement_add_staff extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
+
         setContentView(R.layout.activity_gym_owner_gymmanagement_add_staff);
         toolbarnavbar();
 

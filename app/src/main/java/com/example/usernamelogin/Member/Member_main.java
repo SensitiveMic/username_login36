@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -62,6 +63,7 @@ public class Member_main extends AppCompatActivity {
     LinearLayout home, reservations, profile, gym_membership, currentreservations, workout,logoput;
     public static String[] ProfileContents;
     TextView gymName_nav;
+    Button Havacoach, CurentRes, Propile,Gyme,wrkwrkout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +83,12 @@ public class Member_main extends AppCompatActivity {
         currentreservations = findViewById(R.id.current_res_coach);
         workout = findViewById(R.id.member_workout);
         logoput = findViewById(R.id.logout_Button_U);
+
+        Havacoach = findViewById(R.id.Have_coach_button);
+        CurentRes = findViewById(R.id.Current_res_button);
+        Propile = findViewById(R.id.Profile_button);
+        Gyme = findViewById(R.id.Gym_button);
+        wrkwrkout = findViewById(R.id.Workout_button);
 
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,6 +124,43 @@ public class Member_main extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 redirectActivity(Member_main.this, Current_Coach_Res_Main.class);
+            }
+        });
+        Havacoach.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                redirectActivity(Member_main.this, Coach_Reservation_main.class);
+            }
+        });
+        CurentRes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                redirectActivity(Member_main.this, Current_Coach_Res_Main.class);
+            }
+        });
+        Propile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                redirectActivity(Member_main.this, Member_Profile.class);
+            }
+        });
+        Gyme.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                redirectActivity(Member_main.this, Member_Gym_info_main.class);
+            }
+        });
+        wrkwrkout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // getsent_workouttovalue();
+                Log.d("COACH_WRKT_SENT_TAG", "Coach workout Sent!");
+                int workoutId = 1;
+                Intent intent = new Intent(Member_main.this, User_workouts.class);
+                intent.putExtra("workout_id", workoutId);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                Log.d("ClickedTAG?", "TRUE");
             }
         });
         logoput.setOnClickListener(v ->{

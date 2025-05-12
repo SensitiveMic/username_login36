@@ -26,31 +26,63 @@
                 layout="@layout/toolbar_admin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
-
-
         </LinearLayout>
 
+        <Button
+            android:id="@+id/Users_list_id"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="156dp"
+            android:layout_marginEnd="32dp"
+            android:background="@drawable/rounded_button"
+            android:backgroundTint="@color/Greenish_wew"
+            android:elevation="4dp"
+            android:padding="12dp"
+            android:text="Users List"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout6" />
+
+
+        <Button
+            android:id="@+id/Add_gym_owner_ACC"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="44dp"
+            android:layout_marginEnd="32dp"
+            android:background="@drawable/rounded_button"
+            android:backgroundTint="@color/Greenish_wew"
+            android:elevation="4dp"
+            android:padding="12dp"
+            android:text="Add Gym Owner Account"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Users_list_id" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/adminalluserList"
-            android:layout_width="400dp"
-            android:layout_height="600dp"
-            android:layout_marginTop="22dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.454"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout6"
-            app:layout_constraintVertical_bias="0.0" />
+                android:id="@+id/adminalluserList"
+                android:layout_width="400dp"
+                android:layout_height="600dp"
+                android:layout_marginTop="22dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.454"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout6"
+                app:layout_constraintVertical_bias="0.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:orientation="vertical">
 
-    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="300dp"

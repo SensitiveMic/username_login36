@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -39,7 +40,7 @@ public class Admin_main extends AppCompatActivity implements RecyclerViewInterfa
     TextView dbusername1;
     TextView navbar_Username;
     public static String non_member_username;
-
+    Button userslist_buttons,addgymOwnerAcc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,8 @@ public class Admin_main extends AppCompatActivity implements RecyclerViewInterfa
         nonmember = findViewById(R.id.nonmember);
         logoput = findViewById(R.id.logout_Button_U);
         navbar_Username = findViewById(R.id.username_nav);
+        userslist_buttons = findViewById(R.id.Users_list_id);
+        addgymOwnerAcc = findViewById(R.id.Add_gym_owner_ACC);
 
         dbusername1 = findViewById(R.id.dbusername);
 
@@ -79,6 +82,12 @@ public class Admin_main extends AppCompatActivity implements RecyclerViewInterfa
             public void onClick(View v) {
                 redirectActivity(Admin_main.this, Admin_add_gym.class);
             }
+        });
+        userslist_buttons.setOnClickListener(v ->{
+            redirectActivity(Admin_main.this, UsersList_Admin_main.class);
+        });
+        addgymOwnerAcc.setOnClickListener(v ->{
+            redirectActivity(Admin_main.this, Admin_add_gym.class);
         });
         logoput.setOnClickListener(v ->{
             logout_prc(Admin_main.this, Login.class);
@@ -119,7 +128,7 @@ public class Admin_main extends AppCompatActivity implements RecyclerViewInterfa
         closeNavbar(drawerLayout);
     }
     private void refresh_res_list(){
-        recyclerView = findViewById(R.id.adminalluserList);
+      //  recyclerView = findViewById(R.id.adminalluserList);
         db = FirebaseDatabase.getInstance().getReference("/Users/Non-members");
 
         recyclerView.setHasFixedSize(true);

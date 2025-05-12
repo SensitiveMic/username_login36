@@ -4,15 +4,24 @@ import android.widget.EditText;
 
 public class Helper_Gym_adding_staff {
     String package_name, package_descrp, package_price, package_mem_duration;
-
+    long timestamp;
     public Helper_Gym_adding_staff() {
     }
 
-    public Helper_Gym_adding_staff(String package_name, String package_descrp, String package_price, String package_mem_duration) {
+    public Helper_Gym_adding_staff(String package_name, String package_descrp, String package_price, String package_mem_duration, long timestamp) {
         this.package_name = package_name;
         this.package_descrp = package_descrp;
         this.package_price = package_price;
         this.package_mem_duration = package_mem_duration;
+        this.timestamp = timestamp;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
     }
 
     public String getPackage_name() {

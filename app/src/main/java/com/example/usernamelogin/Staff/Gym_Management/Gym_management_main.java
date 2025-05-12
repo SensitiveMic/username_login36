@@ -38,6 +38,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class Gym_management_main extends AppCompatActivity implements interface_Adapter_Gym_packages  {
     DrawerLayout drawerLayout;
@@ -236,12 +238,18 @@ public class Gym_management_main extends AppCompatActivity implements interface_
         myref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                list.clear();
                 for(DataSnapshot dataSnapshot:snapshot.getChildren()){
                     Model_Class_Adapter_Gym_Packages res_list = dataSnapshot.getValue(Model_Class_Adapter_Gym_Packages.class);
 
                     res_list.setPackage_pushkey(dataSnapshot.getKey());
                     list.add(res_list);
-                }
+                } Collections.sort(list, new Comparator<Model_Class_Adapter_Gym_Packages>() {
+                    @Override
+                    public int compare(Model_Class_Adapter_Gym_Packages o1, Model_Class_Adapter_Gym_Packages o2) {
+                        return Long.compare(o2.getTimestamp(), o1.getTimestamp());
+                    }
+                });
                 adapter.notifyDataSetChanged();
             }
 

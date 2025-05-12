@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -52,7 +53,8 @@ public class Gym_package_Creation extends AppCompatActivity {
                 descrp = package_descrp.getText().toString();
                 price = package_price.getText().toString();
                 package_duration = pckage_mem_duration.getText().toString();
-
+                long timestamp = System.currentTimeMillis();
+                Log.d("checkvalTAG", "onClick: "+timestamp);
                 if(Name.isEmpty() || descrp.isEmpty() || price.isEmpty() || package_duration.isEmpty() ) {
 
                     Toast.makeText(Gym_package_Creation.this, "Enter Texts in the Empty Fields", Toast.LENGTH_SHORT).show();
@@ -60,7 +62,7 @@ public class Gym_package_Creation extends AppCompatActivity {
                 else{
                     database = FirebaseDatabase.getInstance();
                     myref = database.getReference("Gym_package").child(Login.key_Gym_).push();
-                    Helper_Gym_adding_staff fromeditText = new Helper_Gym_adding_staff(Name,descrp,price,package_duration );
+                    Helper_Gym_adding_staff fromeditText = new Helper_Gym_adding_staff(Name,descrp,price,package_duration,timestamp );
                     myref.setValue(fromeditText).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {

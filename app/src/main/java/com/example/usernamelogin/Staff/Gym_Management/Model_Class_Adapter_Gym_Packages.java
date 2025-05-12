@@ -4,9 +4,17 @@ public class Model_Class_Adapter_Gym_Packages {
     String package_name,package_descrp,package_price;
     String package_mem_duration;
     String package_pushkey;
-
+    private long timestamp;
+    public Model_Class_Adapter_Gym_Packages() {}
     public void setPackage_pushkey(String package_pushkey) {
         this.package_pushkey = package_pushkey;
+    }
+    public Model_Class_Adapter_Gym_Packages( long timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
     }
 
     public String getPackage_pushkey() {

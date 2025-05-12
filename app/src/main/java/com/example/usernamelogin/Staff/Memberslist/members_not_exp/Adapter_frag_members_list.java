@@ -37,6 +37,7 @@ public class Adapter_frag_members_list extends RecyclerView.Adapter<Adapter_frag
         holder.start_date.setText(reslist.getStart_date());
         holder.end_date.setText(reslist.getExpiration_date());
         holder.remaining_days.setText(reslist.getRemainind_days());
+        holder.packagename.setText(reslist.getPackage_name());
     }
 
     @Override
@@ -47,9 +48,10 @@ public class Adapter_frag_members_list extends RecyclerView.Adapter<Adapter_frag
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView membername, start_date,end_date,remaining_days;
-
+        TextView packagename;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
+            packagename = itemView.findViewById(R.id.package_name_from_user);
             membername = itemView.findViewById(R.id.tvMemberName);
             start_date = itemView.findViewById(R.id.tvStartDate);
             end_date = itemView.findViewById(R.id.tvExpirationDate);
