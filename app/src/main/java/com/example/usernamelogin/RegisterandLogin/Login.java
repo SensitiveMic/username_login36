@@ -68,7 +68,6 @@ public class Login extends AppCompatActivity {
 
                 Toast.makeText(this, "No internet connection. Please secure an internet connection and log in manually.", Toast.LENGTH_LONG).show();
 
-                // Optional: Clear saved session if needed
                 SharedPreferences sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.clear();

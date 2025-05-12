@@ -39,7 +39,6 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 public class Current_Coach_Res_Main extends AppCompatActivity {
-
     DrawerLayout drawerLayout;
     ImageView menu;
     LinearLayout home, reservations, profile, gym_membership, currentreservations,logoput;

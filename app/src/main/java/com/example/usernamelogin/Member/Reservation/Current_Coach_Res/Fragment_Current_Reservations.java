@@ -85,14 +85,11 @@ public class Fragment_Current_Reservations extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-
         View view = inflater.inflate(R.layout.fragment__current__reservations, container, false);
 
         current_res_recyclerv = view.findViewById(R.id.currentres_recyclerviewid);
 
         currentresfragment();
-
-
 
         return view;
     }

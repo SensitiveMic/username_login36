@@ -10,30 +10,6 @@
     android:backgroundTintMode="src_in"
     tools:context=".Gym_Owner.employeelist.employeelists_main">
 
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:alpha="0.5"
-            android:text="Gym_Owner_Main"
-            android:textSize="36dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.976" />
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="2dp"
@@ -44,12 +20,39 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/employeelists"
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tablayout223"
             android:layout_width="match_parent"
-            android:layout_height="567dp" />
+            android:layout_height="wrap_content"
+            android:background="#018685"
+            app:tabIndicatorColor="@color/white"
+            app:tabSelectedTextColor="@color/white">
 
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tab1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Employees" />
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tab2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Archived Employees"
+                tools:layout_editor_absoluteX="221dp"
+                tools:layout_editor_absoluteY="200dp" />
+
+
+        </com.google.android.material.tabs.TabLayout>
+        <FrameLayout
+            android:id="@+id/framelayout2123"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            />
     </LinearLayout>
+
 
     <RelativeLayout
         android:layout_width="300dp"

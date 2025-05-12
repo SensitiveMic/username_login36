@@ -102,19 +102,19 @@ public class Gym_Owner_Main extends AppCompatActivity {
             }
         });
         Employee_Button.setOnClickListener(v ->{
-            logout_prc(Gym_Owner_Main.this, employeelists_main.class);
+            redirectActivity(Gym_Owner_Main.this, employeelists_main.class);
 
         });
         Add_employee_button.setOnClickListener(v ->{
-            logout_prc(Gym_Owner_Main.this, Gym_Owner_gymmanagement_add_staff.class);
+            redirectActivity(Gym_Owner_Main.this, Gym_Owner_gymmanagement_add_staff.class);
 
         });
         Gym_manage_button.setOnClickListener(v ->{
-            logout_prc(Gym_Owner_Main.this, Gym_Owner_gymmanage_main.class);
+            redirectActivity(Gym_Owner_Main.this, Gym_Owner_gymmanage_main.class);
 
         });
         Profile_button.setOnClickListener(v ->{
-            logout_prc(Gym_Owner_Main.this, Profile_Main_Gym_Owner.class);
+            redirectActivity(Gym_Owner_Main.this, Profile_Main_Gym_Owner.class);
 
         });
         logoput.setOnClickListener(v ->{
