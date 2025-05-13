@@ -40,7 +40,6 @@ public class Gym_Properties_Main extends AppCompatActivity {
     ImageView menu;
     LinearLayout home, reservations, profile, gym_membership, workout,logoput;
     public static String[] ProfileContents;
-    public static String[] Gym_package_selected;
     FrameLayout frameLayout;
     TabLayout tabLayout;
     public static int storedposition = -1;

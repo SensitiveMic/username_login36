@@ -33,6 +33,7 @@ import android.content.Intent;
 import com.example.usernamelogin.Coach.Coach_main;
 import com.example.usernamelogin.Member.Member_main;
 import com.example.usernamelogin.NonMemberUser.Gym_prop.Gym_Properties_Main;
+import com.example.usernamelogin.NonMemberUser.new_gym_prop.New_Gym_Properties_Main;
 import com.example.usernamelogin.R;
 import com.example.usernamelogin.RegisterandLogin.Login;
 import com.example.usernamelogin.NonMemberUser.Reservations.Reservations;
@@ -102,7 +103,7 @@ public class NonMemberUSER extends AppCompatActivity {
         gym_membership.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                redirectActivity(NonMemberUSER.this, Gym_Properties_Main.class);
+                redirectActivity(NonMemberUSER.this, New_Gym_Properties_Main.class);
             }
         });
         logoput.setOnClickListener(v ->{
@@ -304,7 +305,7 @@ public class NonMemberUSER extends AppCompatActivity {
                                                 .getReference("Users").child("Non-members");
         Query checkname = databaseReferenceNon.orderByChild("username");
         String pushkey = Login.key;
-        Log.d("TAG3", pushkey);
+        Log.d("TAG35","pushkey: " +pushkey);
 
         checkname.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -319,7 +320,7 @@ public class NonMemberUSER extends AppCompatActivity {
                 ProfileContents[3] = dataSnapshot.child(pushkey).child("mobile").getValue(String.class);
                 Log.d("TAG35","mobile " + ProfileContents[3]);
                 ProfileContents[4] = dataSnapshot.child(pushkey).child("fullname").getValue(String.class);
-                Log.d("TAG35","mobile " + ProfileContents[4]);
+                Log.d("TAG35","fullna " + ProfileContents[4]);
                 // Update UI elements using the provided context and TextViews
 
                 if (usernamebar != null && username_nav != null) {

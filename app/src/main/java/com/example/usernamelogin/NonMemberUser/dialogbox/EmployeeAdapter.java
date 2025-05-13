@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.usernamelogin.NonMemberUser.Gym_prop.Gym_Properties_Main;
+import com.example.usernamelogin.NonMemberUser.new_gym_prop.New_Gym_Properties_Main;
 import com.example.usernamelogin.R;
 
 import java.util.ArrayList;
@@ -73,11 +74,11 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.MyView
                             String packagedes = packagedescrp.getText().toString();
                             String package_duration = package_mem__duration.getText().toString();
                            // Log.d("TAG8", "onClick: " +packageprice );
-                            Gym_Properties_Main.Gym_package_selected = new String[4];
-                            Gym_Properties_Main.Gym_package_selected[0]= packagename;
-                            Gym_Properties_Main.Gym_package_selected[1]= packageprice;
-                            Gym_Properties_Main.Gym_package_selected[2]= packagedes;
-                            Gym_Properties_Main.Gym_package_selected[3]= package_duration;
+                            New_Gym_Properties_Main.Gym_package_selected = new String[4];
+                            New_Gym_Properties_Main.Gym_package_selected[0]= packagename;
+                            New_Gym_Properties_Main.Gym_package_selected[1]= packageprice;
+                            New_Gym_Properties_Main.Gym_package_selected[2]= packagedes;
+                            New_Gym_Properties_Main.Gym_package_selected[3]= package_duration;
 
                             recycleViewInterface.onItemClick1(pos);
 

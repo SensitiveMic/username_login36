@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import com.example.usernamelogin.NonMemberUser.Model_class_membershipReq;
 import com.example.usernamelogin.NonMemberUser.NonMemberUSER;
 import com.example.usernamelogin.NonMemberUser.dialogbox.DialogList;
+import com.example.usernamelogin.NonMemberUser.new_gym_prop.New_Gym_Properties_Main;
 import com.example.usernamelogin.R;
 import com.example.usernamelogin.RegisterandLogin.Login;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -86,7 +87,6 @@ public class Apply_a_gym_fragment extends Fragment implements interface_gym_list
 
     RecyclerView gymdisplay;
     int positionfrmdb;
-    Gym_Properties_Main switcheroo ;
     public static String Gymnameformembershipreq ;
     String gymnamefromposition;
 
@@ -96,12 +96,6 @@ public class Apply_a_gym_fragment extends Fragment implements interface_gym_list
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_apply_a_gym_fragment, container, false);
 
-
-        if (getActivity() instanceof Gym_Properties_Main) {
-            switcheroo = (Gym_Properties_Main) getActivity();
-        } else {
-            Log.e("Apply_a_gym_fragment", "Error: Activity is not an instance of Gym_Properties_Main");
-        }
         gymdisplay = view.findViewById(R.id.recyclerView_gymdisplay);
 
         populate_gym_list();
@@ -179,7 +173,7 @@ public class Apply_a_gym_fragment extends Fragment implements interface_gym_list
     @Override
     public void onItemClick(int position)  {
 
-        Gym_Properties_Main.storedposition = position;
+        New_Gym_Properties_Main.storedposition = position;
         DatabaseReference storetheposition = FirebaseDatabase.getInstance().getReference("Users")
                 .child("Non-members").child(Login.key).child("positionstored");
 
@@ -319,13 +313,13 @@ public class Apply_a_gym_fragment extends Fragment implements interface_gym_list
         String Nonmember_Username = NonMemberUSER.ProfileContents[0];
         Log.d("TAG8","Username" + Nonmember_Username);
 
-        String Package_name = Gym_Properties_Main.Gym_package_selected[0];
+        String Package_name = New_Gym_Properties_Main.Gym_package_selected[0];
         Log.d("TAG8","Package_name" + Package_name);
 
-        String Package_Price = Gym_Properties_Main.Gym_package_selected[1];
+        String Package_Price = New_Gym_Properties_Main.Gym_package_selected[1];
         Log.d("TAG8","Package_Price" + Package_Price);
 
-        String Package_duration = Gym_Properties_Main.Gym_package_selected[3];
+        String Package_duration = New_Gym_Properties_Main.Gym_package_selected[3];
 
         String request_TimeandDate = createLog();
         Log.d("TAG8","Time and date" + request_TimeandDate);
@@ -350,7 +344,7 @@ public class Apply_a_gym_fragment extends Fragment implements interface_gym_list
                                 .child("Non-members").child(Login.key).child("positionstored").push();
 
                         HashMap<String, Object> storepos_gymname = new HashMap<>();
-                        storepos_gymname.put("pos",Gym_Properties_Main.storedposition);
+                        storepos_gymname.put("pos",New_Gym_Properties_Main.storedposition);
                         storepos_gymname.put("gym_name",Gymnameformembershipreq);
 
                         storetheposition.updateChildren(storepos_gymname);
@@ -367,8 +361,7 @@ public class Apply_a_gym_fragment extends Fragment implements interface_gym_list
                                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
-                                                Gym_Properties_Main switcheroo = (Gym_Properties_Main) getActivity();
-                                                switcheroo.switchfrag();
+
                                                 Log.d("TAG121", "Successful item move method launch " );
 
                                             }
