@@ -118,15 +118,6 @@ public class Gym_Properties_Main extends AppCompatActivity {
         TabLayout.Tab tab1 = tabLayout.newTab().setText("Apply Membership");
         tabLayout.addTab(tab1);
 
-        TabLayout.Tab tab2 = tabLayout.newTab().setText("Pending Gym Applications");
-        tabLayout.addTab(tab2);
-
-        View customTabView = LayoutInflater.from(this).inflate(R.layout.custom_tab_with_badge, null);
-        tab2.setCustomView(customTabView);
-
-        badge = customTabView.findViewById(R.id.notificationBadge);
-
-
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -168,7 +159,7 @@ public class Gym_Properties_Main extends AppCompatActivity {
 
         });
 
-        callApprecview();
+
     }
     private void logout_prc(Activity activity, Class secondActivity){
 
@@ -182,41 +173,8 @@ public class Gym_Properties_Main extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-    public void callApprecview() {
-
-        Fragment retrievedfrag = getSupportFragmentManager().findFragmentByTag("PendingGymApplicationsFragment");
-        if(retrievedfrag == null){
-            pendingGymApplicationsFragment = new PendingGymApplications_fragment();
-            // Optionally add it to the FragmentManager if you plan to use it later
-            getSupportFragmentManager().beginTransaction()
-                    .add(pendingGymApplicationsFragment, "PendingGymApplicationsFragment")
-                    .commit();
-            // Since the fragment is added asynchronously, you can't immediately call its methods
-            getSupportFragmentManager().executePendingTransactions(); // Ensure all transactions are completed
-        }else {
-            pendingGymApplicationsFragment = (PendingGymApplications_fragment) retrievedfrag;
-            pendingGymApplicationsFragment.refreshgym();
-        }
 
 
-    }
-
-    public void updateNotificationCount(int count) {
-        notificationCount_gym_badge = count;
-        updateNotificationBadge(notificationCount_gym_badge);
-    }
-
-    public void updateNotificationBadge(int count) {
-
-        if (count > 0) {
-            badge.setVisibility(View.VISIBLE);
-            badge.setText(String.valueOf(count));
-        } else {
-            badge.setVisibility(View.GONE);
-        }
-
-        Log.d("TAG77", "THISIS notif coun2 =" + count);
-    }
 
     public void usertoolbarname(Context context, TextView usernamebar, TextView username_nav) {
         DatabaseReference databaseReferenceNon = FirebaseDatabase.getInstance().getReference("Users").child("Non-members");
@@ -268,28 +226,6 @@ public class Gym_Properties_Main extends AppCompatActivity {
     protected void onPause(){
         super.onPause();
         closeNavbar(drawerLayout);
-    }
-    public void switchfrag(){
-
-        // Mimic a tab click to ensure the TabLayout changes accordingly
-        TabLayout.Tab tab = tabLayout.getTabAt(1); // 1 corresponds to the second tab
-        if (tab != null) {
-            tab.select(); // This will mimic the user clicking on the second tab
-        }
-
-        Fragment find= getSupportFragmentManager().findFragmentByTag("PendingGymApplicationsFragment");;
-        if(find == null){
-
-            pendingGymApplicationsFragment = new PendingGymApplications_fragment();
-            find = pendingGymApplicationsFragment; // Assign newly created fragment to 'find'
-        }
-
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.framelayout1, find, "PendingGymApplicationsFragment")
-                .addToBackStack(null)
-                .commit();
-        pendingGymApplicationsFragment = (PendingGymApplications_fragment) find;
-        pendingGymApplicationsFragment.refreshgym();
     }
 
 

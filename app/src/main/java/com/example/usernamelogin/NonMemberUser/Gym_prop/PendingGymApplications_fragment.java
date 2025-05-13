@@ -28,7 +28,7 @@ import java.util.ArrayList;
  * Use the {@link PendingGymApplications_fragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class PendingGymApplications_fragment extends Fragment implements interface_refreshes_pendinggymfragment {
+public class PendingGymApplications_fragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -121,9 +121,8 @@ public class PendingGymApplications_fragment extends Fragment implements interfa
                     }
                 }
                 adapter.notifyDataSetChanged();
-                Gym_Properties_Main notifchange = (Gym_Properties_Main) getActivity();
-                int notifcounter = adapter.getItemCount();
-                notifchange.updateNotificationCount(notifcounter);
+
+
                 Log.d("TAG76", "Data fetched successfully!");
             }
 
@@ -137,9 +136,4 @@ public class PendingGymApplications_fragment extends Fragment implements interfa
 
     }
 
-
-    @Override
-    public void refreshgym() {
-        applicationrec_view();
-    }
 }

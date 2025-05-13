@@ -100,9 +100,6 @@ public class Apply_a_gym_fragment extends Fragment implements interface_gym_list
 
         populate_gym_list();
 
-
-
-
         return view;
     }
 
