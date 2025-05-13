@@ -43,7 +43,7 @@ public class Adapter_staff_reservation extends RecyclerView.Adapter<Adapter_staf
     public void onBindViewHolder(@NonNull Adapter_staff_reservation.MyViewHolder holder, int position) {
         newHelper_reservation_staff fromusers1 = list.get(position);
         holder.user.setText(fromusers1.getUser());
-        holder.time.setText(fromusers1.getTime());
+
         holder.date.setText(fromusers1.getDate());
         holder.res_id.setText(fromusers1.getRes_id());
 
@@ -54,13 +54,12 @@ public class Adapter_staff_reservation extends RecyclerView.Adapter<Adapter_staf
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
-        TextView user,time,date;
+        TextView user,date;
         TextView res_id;
 
         public MyViewHolder(@NonNull View itemView, recyclerViewInterface_staff1 interfaceStaff1) {
             super(itemView);
             date = itemView.findViewById(R.id.dbdate);
-            time = itemView.findViewById(R.id.dbtime);
             user = itemView.findViewById(R.id.dbuser);
             res_id = itemView.findViewById(R.id.hiddenid);
             itemView.setOnClickListener(new View.OnClickListener() {

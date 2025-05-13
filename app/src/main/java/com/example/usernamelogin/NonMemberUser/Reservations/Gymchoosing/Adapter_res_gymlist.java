@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.usernamelogin.NonMemberUser.Reservations.Add_Reservations;
+import com.example.usernamelogin.NonMemberUser.Reservations.Reservations;
 import com.example.usernamelogin.R;
 
 import java.util.ArrayList;
@@ -40,9 +40,9 @@ public class Adapter_res_gymlist extends RecyclerView.Adapter<Adapter_res_gymlis
 
                         if (pos != RecyclerView.NO_POSITION){
                             String text = gym_name.getText().toString();
-                            Add_Reservations.gymnamefromresdialoggymlist = text;
+                            Reservations.gymnamefromresdialoggymlist = text;
                             String text1 = invisible_contactnumber.getText().toString();
-                            Add_Reservations.gym_contact_numberforview = text1;
+                            Reservations.gym_contact_numberforview = text1;
                             recycleViewInterface.onItemClick1(pos);
 
                         }

@@ -33,13 +33,13 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class Gym_Owner_gymmanage_main extends AppCompatActivity implements Interface_adapter_gyms_list_onclick {
+public class Gym_Owner_gymmanage_main extends AppCompatActivity implements Interface_adapter_gyms_list_onclick,Interface_adapter_gyms_list_longclick {
     DrawerLayout drawerLayout;
     ImageView menu;
     LinearLayout home, Gym_management, profile ,gymemployyes,Gym_manage, logoput;
     RecyclerView recyclerView;
     ImageView addgyme_circle;
-    public static String gym_Name;
+    public static String gym_Name,gym_key;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,15 +98,17 @@ public class Gym_Owner_gymmanage_main extends AppCompatActivity implements Inter
         addgyme_circle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Abstract_class_add_gym dialog = new Abstract_class_add_gym(Gym_Owner_gymmanage_main.this){
+            redirectActivity(Gym_Owner_gymmanage_main.this, Add_Gym_with_details.class);
+             /*  Abstract_class_add_gym dialog = new Abstract_class_add_gym(Gym_Owner_gymmanage_main.this){
 
                     protected void onCreate(Bundle savedInstanceState) {
                         super.onCreate(savedInstanceState);
                     }
 
                 };
+                dialog.setOwnerActivity(Gym_Owner_gymmanage_main.this);
                 dialog.setCancelable(true); // or false if you want to disable outside touches
-                dialog.show();
+                dialog.show();   */
             }
         });
         logoput.setOnClickListener(v ->{
@@ -125,7 +127,7 @@ public class Gym_Owner_gymmanage_main extends AppCompatActivity implements Inter
         DatabaseReference db = FirebaseDatabase.getInstance().getReference("/Users/Gym_Owner").child(ownerkey)
                .child("Gym");
         Log.d("TAGCHECKKEY12", "Baseline: 1" );
-        Adapter_Gym_Owner_gymmanage_main myadapter1 = new Adapter_Gym_Owner_gymmanage_main(this,list, (Interface_adapter_gyms_list_onclick) this);
+        Adapter_Gym_Owner_gymmanage_main myadapter1 = new Adapter_Gym_Owner_gymmanage_main(this,list, (Interface_adapter_gyms_list_onclick) this,this::onlongclick);
         Log.d("TAGCHECKKEY12", "Baseline: 2" );
         recyclerView.setAdapter(myadapter1);
         Log.d("TAGCHECKKEY12", "Baseline: 3" );
@@ -197,7 +199,8 @@ public class Gym_Owner_gymmanage_main extends AppCompatActivity implements Inter
     @Override
     public void onItemClick(int position) {
         Log.d("TAG8080", "gymkey: " +gym_Name );
-        dialog_real_list_ofmembers listdialog = new dialog_real_list_ofmembers(this) {
+
+      dialog_real_list_ofmembers listdialog = new dialog_real_list_ofmembers(this) {
             @Override
             protected void onCreate(Bundle savedInstanceState) {
                 super.onCreate(savedInstanceState);
@@ -208,5 +211,10 @@ public class Gym_Owner_gymmanage_main extends AppCompatActivity implements Inter
         if (window != null) {
             window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         }
+    }
+
+    @Override
+    public void onlongclick(int position) {
+
     }
 }

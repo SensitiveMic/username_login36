@@ -34,6 +34,7 @@ public class Reservations extends AppCompatActivity{
     FrameLayout frameLayout123;
     TabLayout tabLayout;
     private TextView[] textViews;
+    public static String gymnamefromresdialoggymlist,gym_contact_numberforview;
     public static String mobilenumberofgyminres;
     public static int notificationCount;
     TextView badge;

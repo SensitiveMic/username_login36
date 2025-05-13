@@ -10,7 +10,6 @@
     android:backgroundTintMode="src_in"
     tools:context=".Gym_Owner.Profile_Main_Gym_Owner">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -27,42 +26,6 @@
             android:orientation="vertical"
             android:background="@drawable/gym_info_bg">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="10dp">
-
-                <TextView
-                    android:id="@+id/textView7"
-                    android:textColor="@color/black"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Gym Entity: " />
-
-                <TextView
-                    android:id="@+id/editTextGym_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:textColor="@color/black"
-                    android:text="Gym_Name"
-                    android:textSize="16sp" />
-
-            </LinearLayout>
-
-
-            <TextView
-                android:id="@+id/editTextGym_Decrp"
-                android:textColor="@color/black"
-                android:layout_width="388dp"
-                android:layout_height="73dp"
-                android:layout_margin="8dp"
-                android:background="@null"
-                android:gravity="top|start"
-                android:hint="Description"
-                android:maxLines="15"
-                android:minLines="4" />
 
             <LinearLayout
                 android:layout_width="match_parent"

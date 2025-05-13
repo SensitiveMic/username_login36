@@ -1,0 +1,666 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/dialogRoot"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginVertical="10dp">
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:elevation="4dp">
+
+                <LinearLayout
+                    android:id="@+id/MONDAY_LAYOUT"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="12dp"
+                    android:gravity="center_vertical">
+
+                    <!-- Day Label -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="MON"
+                        android:layout_marginRight="10dp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black"
+                        android:gravity="center"
+                        android:padding="4dp" />
+
+                    <!-- Open/Close Times -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="4dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingVertical="6dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Opening: "
+                                android:textStyle="bold"
+                                android:textColor="@android:color/holo_green_dark"
+                                 />
+                            <TextView
+                                android:id="@+id/Mon_open"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="12:00 AM"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingVertical="4dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Closing: "
+                                android:textStyle="bold"
+                                android:textColor="@android:color/holo_red_dark"
+                                />
+                            <TextView
+                                android:id="@+id/Mon_close"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="11:59 PM"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Status Button -->
+                    <Button
+                        android:id="@+id/Open_Close_mon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Gym Close"
+                        android:textColor="@android:color/white"
+                        android:textSize="12sp"
+                        android:backgroundTint="@color/dark_red"
+                        android:layout_marginStart="6dp"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="6dp"
+                        android:layout_gravity="center" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:elevation="4dp">
+
+                <LinearLayout
+                    android:id="@+id/TUESDAY_LAYOUT"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="12dp"
+                    android:gravity="center_vertical">
+
+                    <!-- Day Label -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="TUE"
+                        android:layout_marginRight="10dp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black"
+                        android:gravity="center"
+                        android:padding="4dp" />
+
+                    <!-- Open/Close Times -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="4dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingVertical="6dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Opening: "
+                                android:textStyle="bold"
+                                android:textColor="@android:color/holo_green_dark"
+                                />
+                            <TextView
+                                android:id="@+id/Tue_open"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="12:00 AM"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingVertical="4dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Closing: "
+                                android:textStyle="bold"
+                                android:textColor="@android:color/holo_red_dark"
+                                />
+                            <TextView
+                                android:id="@+id/Tue_close"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="11:59 PM"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Status Button -->
+                    <Button
+                        android:id="@+id/Open_Close_tue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Gym Close"
+                        android:textColor="@android:color/white"
+                        android:textSize="12sp"
+                        android:backgroundTint="@color/dark_red"
+                        android:layout_marginStart="6dp"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="6dp"
+                        android:layout_gravity="center" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:elevation="4dp">
+
+                <LinearLayout
+                    android:id="@+id/WEDNESDAY_LAYOUT"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="12dp"
+                    android:gravity="center_vertical">
+
+                    <!-- Day Label -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="WED"
+                        android:layout_marginRight="10dp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black"
+                        android:gravity="center"
+                        android:padding="4dp" />
+
+                    <!-- Open/Close Times -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="4dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingVertical="6dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Opening: "
+                                android:textStyle="bold"
+                                android:textColor="@android:color/holo_green_dark"
+                                />
+                            <TextView
+                                android:id="@+id/Wed_open"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="12:00 AM"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingVertical="4dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Closing: "
+                                android:textStyle="bold"
+                                android:textColor="@android:color/holo_red_dark"
+                                />
+                            <TextView
+                                android:id="@+id/Wed_close"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="11:59 PM"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Status Button -->
+                    <Button
+                        android:id="@+id/Open_Close_wed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Gym Close"
+                        android:textColor="@android:color/white"
+                        android:textSize="12sp"
+                        android:backgroundTint="@color/dark_red"
+                        android:layout_marginStart="6dp"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="6dp"
+                        android:layout_gravity="center" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:elevation="4dp">
+
+                <LinearLayout
+                    android:id="@+id/THURSDAY_LAYOUT"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="12dp"
+                    android:gravity="center_vertical">
+
+                    <!-- Day Label -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="MON"
+                        android:layout_marginRight="10dp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black"
+                        android:gravity="center"
+                        android:padding="4dp" />
+
+                    <!-- Open/Close Times -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="4dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingVertical="6dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Opening: "
+                                android:textStyle="bold"
+                                android:textColor="@android:color/holo_green_dark"
+                                />
+                            <TextView
+                                android:id="@+id/Thu_open"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="12:00 AM"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingVertical="4dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Closing: "
+                                android:textStyle="bold"
+                                android:textColor="@android:color/holo_red_dark"
+                                />
+                            <TextView
+                                android:id="@+id/Thu_close"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="11:59 PM"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Status Button -->
+                    <Button
+                        android:id="@+id/Open_Close_thu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Gym Close"
+                        android:textColor="@android:color/white"
+                        android:textSize="12sp"
+                        android:backgroundTint="@color/dark_red"
+                        android:layout_marginStart="6dp"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="6dp"
+                        android:layout_gravity="center" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:elevation="4dp">
+
+                <LinearLayout
+                    android:id="@+id/FRIDAY_LAYOUT"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="12dp"
+                    android:gravity="center_vertical">
+
+                    <!-- Day Label -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="MON"
+                        android:layout_marginRight="10dp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black"
+                        android:gravity="center"
+                        android:padding="4dp" />
+
+                    <!-- Open/Close Times -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="4dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingVertical="6dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Opening: "
+                                android:textStyle="bold"
+                                android:textColor="@android:color/holo_green_dark"
+                                />
+                            <TextView
+                                android:id="@+id/Fri_open"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="12:00 AM"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingVertical="4dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Closing: "
+                                android:textStyle="bold"
+                                android:textColor="@android:color/holo_red_dark"
+                                />
+                            <TextView
+                                android:id="@+id/Fri_close"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="11:59 PM"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Status Button -->
+                    <Button
+                        android:id="@+id/Open_Close_fri"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Gym Close"
+                        android:textColor="@android:color/white"
+                        android:textSize="12sp"
+                        android:backgroundTint="@color/dark_red"
+                        android:layout_marginStart="6dp"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="6dp"
+                        android:layout_gravity="center" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:elevation="4dp">
+
+                <LinearLayout
+                    android:id="@+id/SATURDAY_LAYOUT"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="12dp"
+                    android:gravity="center_vertical">
+
+                    <!-- Day Label -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="MON"
+                        android:layout_marginRight="10dp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black"
+                        android:gravity="center"
+                        android:padding="4dp" />
+
+                    <!-- Open/Close Times -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="4dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingVertical="6dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Opening: "
+                                android:textStyle="bold"
+                                android:textColor="@android:color/holo_green_dark"
+                                />
+                            <TextView
+                                android:id="@+id/Sat_open"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="12:00 AM"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingVertical="4dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Closing: "
+                                android:textStyle="bold"
+                                android:textColor="@android:color/holo_red_dark"
+                                />
+                            <TextView
+                                android:id="@+id/Sat_close"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="11:59 PM"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Status Button -->
+                    <Button
+                        android:id="@+id/Open_Close_sat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Gym Close"
+                        android:textColor="@android:color/white"
+                        android:textSize="12sp"
+                        android:backgroundTint="@color/dark_red"
+                        android:layout_marginStart="6dp"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="6dp"
+                        android:layout_gravity="center" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:elevation="4dp">
+
+                <LinearLayout
+                    android:id="@+id/SUNDAY_LAYOUT"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="12dp"
+                    android:gravity="center_vertical">
+
+                    <!-- Day Label -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="MON"
+                        android:layout_marginRight="10dp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black"
+                        android:gravity="center"
+                        android:padding="4dp" />
+
+                    <!-- Open/Close Times -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="4dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingVertical="6dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Opening: "
+                                android:textStyle="bold"
+                                android:textColor="@android:color/holo_green_dark"
+                                />
+                            <TextView
+                                android:id="@+id/Sun_open"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="12:00 AM"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingVertical="4dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Closing: "
+                                android:textStyle="bold"
+                                android:textColor="@android:color/holo_red_dark"
+                                />
+                            <TextView
+                                android:id="@+id/Sun_close"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="11:59 PM"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Status Button -->
+                    <Button
+                        android:id="@+id/Open_Close_sun"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Gym Close"
+                        android:textColor="@android:color/white"
+                        android:textSize="12sp"
+                        android:backgroundTint="@color/dark_red"
+                        android:layout_marginStart="6dp"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="6dp"
+                        android:layout_gravity="center" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+
+
+    </ScrollView>
+    <Button
+        android:id="@+id/confirm_adding_sched"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Confirm"/>
+</LinearLayout>

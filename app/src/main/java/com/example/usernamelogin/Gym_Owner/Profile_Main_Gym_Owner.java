@@ -55,7 +55,6 @@ public class Profile_Main_Gym_Owner extends AppCompatActivity {
         textView2.setText(Gym_Owner_Main.ProfileContents[0]);
         username_nav.setText(Gym_Owner_Main.ProfileContents[0]);
 
-
         drawerLayout = findViewById(R.id.home_layout);
         menu = findViewById(R.id.nav_menu);
         home = findViewById(R.id.Home_navdrawer);
@@ -119,30 +118,17 @@ public class Profile_Main_Gym_Owner extends AppCompatActivity {
             public void onClick(View v) {
                 FirebaseDatabase databaseprofile = FirebaseDatabase.getInstance();
                 DatabaseReference myRefprofile = databaseprofile.getReference("Users/Gym_Owner").child(Login.key_GymOwner);
-                DatabaseReference myRefprofile1 = databaseprofile.getReference("Users/Gym_Owner").child(Login.key_GymOwner)
-                        .child("Gym").child(Gym_Owner_Main.key2);
-
-                DatabaseReference gympackage = databaseprofile.getReference("Gym_package").child(Gym_Owner_Main.ProfileContents[3]);
-                DatabaseReference MembershipRequest = databaseprofile.getReference("Membership_Request").child(Gym_Owner_Main.ProfileContents[3]);
-                DatabaseReference ReservationsOld = databaseprofile.getReference("Reservations/Accepted").child(Gym_Owner_Main.ProfileContents[3]);
-                DatabaseReference ReservationsOld_pending_req = databaseprofile.getReference("Reservations/Pending_Requests").child(Gym_Owner_Main.ProfileContents[3]);
-                DatabaseReference NonmembersOld = databaseprofile.getReference("Users/Non-members");
 
                 // Create a HashMap to hold the updates you want to make
                 String USERNAME = chg[0].getText().toString();
                 String EMAIL    = chg[1].getText().toString();
                 String PASSWORD = chg[2].getText().toString();
-                String GYMNAME = chg[3].getText().toString();
-                String GYMDESCRP = chg[4].getText().toString();
 
                 Map<String, Object> updates = new HashMap<>();
                 updates.put("gym_owner_username", USERNAME);
                 updates.put("gym_owner_email",    EMAIL);
                 updates.put("gym_owner_password", PASSWORD);
 
-                Map<String, Object> updates1 = new HashMap<>();
-                updates1.put("gym_name",    GYMNAME);
-                updates1.put("gym_descrp", GYMDESCRP);
 
                 Log.d("TAG6", "To run on update");
                 if(USERNAME.isEmpty() || PASSWORD.isEmpty() || EMAIL.isEmpty()) {
@@ -161,201 +147,7 @@ public class Profile_Main_Gym_Owner extends AppCompatActivity {
                                 public void onSuccess(Void aVoid) {
                                     // Update successfully completed
                                     Log.d("TAG10", "Data updated successfully");
-                                    myRefprofile1.updateChildren(updates1);
-                                    //GYM NAME CHANGE OF DB Gym_package
-                                    DatabaseReference gympackagenew = databaseprofile.getReference("Gym_package").child(GYMNAME);
-                                    gympackage.addListenerForSingleValueEvent(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                            if (snapshot.exists()) {
-                                                gympackagenew.setValue(snapshot.getValue(),(error, ref) ->{
-                                                    if(error == null){
-                                                        gympackage.removeValue();
-                                                    }
-                                                });
 
-                                            }
-                                        }
-
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError error) {
-
-                                        }
-                                    });
-                            /*        //Membership_requests
-                                    DatabaseReference membershipreqnew = databaseprofile.getReference("Membership_Request").child(GYMNAME);
-                                    MembershipRequest.addListenerForSingleValueEvent(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                            if (snapshot.exists()) {
-                                                // Step 1: Copy data to new key
-                                                membershipreqnew.setValue(snapshot.getValue(), (databaseError, databaseReference) -> {
-                                                    if (databaseError == null) {
-                                                        // Step 2: Delete old key
-                                                        MembershipRequest.removeValue((error, ref) -> {
-                                                            if (error == null) {
-                                                                Log.d("KEY_RENAME", "Successfully renamed Mamoin1 to YourNewKey");
-                                                            } else {
-                                                                Log.e("KEY_RENAME", "Failed to delete old key: " + error.getMessage());
-                                                            }
-                                                        });
-                                                    } else {
-                                                        Log.e("KEY_RENAME", "Failed to copy data to new key: " + databaseError.getMessage());
-                                                    }
-                                                });
-                                            } else {
-                                                Log.d("KEY_RENAME", "Mamoin1 does not exist.");
-                                            }
-                                        }
-
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError error) {
-
-                                        }
-                                    });
-                                    //Reservations
-                                    DatabaseReference Reservationsnew = databaseprofile.getReference("Reservations/Accepted").child(GYMNAME);
-                                    ReservationsOld.addListenerForSingleValueEvent(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                            if (snapshot.exists()) {
-                                                Reservationsnew.setValue(snapshot.getValue(), (databaseError, databaseReference) -> {
-                                                    if (databaseError == null) {
-                                                        ReservationsOld.removeValue((error, ref) -> {
-                                                            if (error == null) {
-                                                                Log.d("KEY_RENAME", "Successfully renamed reservation key");
-                                                            } else {
-                                                                Log.e("KEY_RENAME", "Failed to delete old reservation key: " + error.getMessage());
-                                                            }
-                                                        });
-                                                    } else {
-                                                        Log.e("KEY_RENAME", "Failed to copy reservation data: " + databaseError.getMessage());
-                                                    }
-                                                });
-                                            } else {
-                                                Log.d("KEY_RENAME", "Old reservation key does not exist.");
-                                            }
-                                        }
-
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError error) {
-
-                                        }
-                                    });
-                                    // for pending_reservations
-                                    DatabaseReference Reservationsnew_pend_req = databaseprofile.getReference("Reservations/Pending_Requests").child(GYMNAME);
-                                    ReservationsOld_pending_req.addListenerForSingleValueEvent(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                            if (snapshot.exists()) {
-
-                                                Reservationsnew_pend_req.setValue(snapshot.getValue(), (databaseError, databaseReference) -> {
-                                                    if (databaseError == null) {
-                                                        ReservationsOld_pending_req.removeValue((error, ref) -> {
-                                                            if (error == null) {
-                                                                Log.d("KEY_RENAME", "Successfully renamed reservation key");
-                                                            } else {
-                                                                Log.e("KEY_RENAME", "Failed to delete old reservation key: " + error.getMessage());
-                                                            }
-                                                        });
-                                                    } else {
-                                                        Log.e("KEY_RENAME", "Failed to copy reservation data: " + databaseError.getMessage());
-                                                    }
-                                                });
-                                                for (DataSnapshot snapshot1: snapshot.getChildren()){
-                                                    String gymname_dv = snapshot1.child("gym").getValue().toString();
-                                                    if (gymname_dv != null && gymname_dv.equals(Gym_Owner_Main.ProfileContents[3])){
-                                                        String parenkey = snapshot1.getKey().toString();
-                                                        Reservationsnew_pend_req.child(parenkey).child("gym").setValue(GYMNAME);
-                                                    }
-                                                }
-
-
-                                            } else {
-                                                Log.d("KEY_RENAME", "Old reservation key does not exist.");
-                                            }
-                                        }
-
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError error) {
-
-                                        }
-                                    });
-                                    //Non-members Non_member_Gym_res
-                                    DatabaseReference replacefromnon_member = databaseprofile.getReference("Users/Non-members");
-                                    replacefromnon_member.addListenerForSingleValueEvent(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                                                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
-                                                   String key = snapshot1.getKey().toString();
-                                                    Log.d("NON_MEMBER_RES_TAG", "Snapshot1: "+key);
-                                                   for (DataSnapshot snapshot2: snapshot1.child("Non_member_Gym_res").getChildren()){
-
-                                                       String gymname_db = snapshot2.child("gym_name").getValue(String.class);
-                                                       Log.d("NON_MEMBER_RES_TAG", "gym_name: "+gymname_db);
-                                                       if (gymname_db != null && gymname_db.equals(Gym_Owner_Main.ProfileContents[3])) {
-                                                           DatabaseReference newGymName = snapshot2.getRef().child("gym_name");
-                                                           newGymName.setValue(GYMNAME);
-                                                           Log.d("NON_MEMBER_RES_TAG", "Succesful Tap!");
-                                                       }
-                                                    }
-
-
-
-                                                }
-
-                                        }
-
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError error) {
-
-                                        }
-                                    });
-                                    //Users-Non-members
-                                    NonmembersOld.addListenerForSingleValueEvent(new ValueEventListener() {
-                                                @Override
-                                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                                    for (DataSnapshot userSnapshot : snapshot.getChildren()) {
-                                                        // Top-level GymName
-                                                        if (userSnapshot.hasChild("GymName")) {
-                                                            String currentGymName = userSnapshot.child("GymName").getValue(String.class);
-                                                            if (currentGymName != null && currentGymName.equals(Gym_Owner_Main.ProfileContents[3])) {
-                                                                userSnapshot.getRef().child("GymName").setValue(GYMNAME);
-                                                            }
-                                                        }
-
-                                                        // membership/GymName
-                                                        if (userSnapshot.hasChild("membership")) {
-                                                            DataSnapshot membership = userSnapshot.child("membership");
-                                                            if (membership.hasChild("GymName")) {
-                                                                String currentMembershipGym = membership.child("GymName").getValue(String.class);
-                                                                if (currentMembershipGym != null && currentMembershipGym.equals(Gym_Owner_Main.ProfileContents[3])) {
-                                                                    userSnapshot.getRef().child("membership").child("GymName").setValue(GYMNAME);
-                                                                }
-                                                            }
-                                                        }
-
-                                                        // positionstored//gym_name
-                                                        if (userSnapshot.hasChild("positionstored")) {
-                                                            DataSnapshot positionstored = userSnapshot.child("positionstored");
-                                                            for (DataSnapshot positionEntry : positionstored.getChildren()) {
-                                                                if (positionEntry.hasChild("gym_name")) {
-                                                                    String currentStoredName = positionEntry.child("gym_name").getValue(String.class);
-                                                                    if (currentStoredName != null && currentStoredName.equals(Gym_Owner_Main.ProfileContents[3])) {
-                                                                        positionEntry.getRef().child("gym_name").setValue(GYMNAME);
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-
-                                                @Override
-                                                public void onCancelled(@NonNull DatabaseError error) {
-                                                    // Handle error here
-                                                }
-                                            });     */
                                     progressDialog.dismiss();
                                     redirectActivity(Profile_Main_Gym_Owner.this, Gym_Owner_Main.class);
                                 }
@@ -391,16 +183,16 @@ public class Profile_Main_Gym_Owner extends AppCompatActivity {
         ments[0] = findViewById(R.id.editTextGym_Owner_Username);
         ments[1] = findViewById(R.id.editTextGym_Owner_EmailAddress);
         ments[2] = findViewById(R.id.editTextGym_Owner_Password);
-        ments[3] = findViewById(R.id.editTextGym_name);
-        ments[4] = findViewById(R.id.editTextGym_Decrp);
+     //   ments[3] = null;
+     //   ments[4] = findViewById(R.id.editTextGym_Decrp);
         ments[5] = findViewById(R.id.editTextGym_Owner_FirstName);
         ments[6] = findViewById(R.id.editTextGym_Owner_lastName);
 
         ments[0].setText(Gym_Owner_Main.ProfileContents[0]);
         ments[1].setText(Gym_Owner_Main.ProfileContents[1]);
         ments[2].setText(Gym_Owner_Main.ProfileContents[2]);
-        ments[3].setText(Gym_Owner_Main.ProfileContents[3]); // GYM NAME
-        ments[4].setText(Gym_Owner_Main.ProfileContents[4]);
+       // ments[3].setText(Gym_Owner_Main.ProfileContents[3]); // GYM NAME
+      //  ments[4].setText(Gym_Owner_Main.ProfileContents[4]);
         ments[5].setText(Gym_Owner_Main.ProfileContents[5]);
         ments[6].setText(Gym_Owner_Main.ProfileContents[6]);
         //Profile chg
@@ -408,13 +200,10 @@ public class Profile_Main_Gym_Owner extends AppCompatActivity {
         chg[0] = findViewById(R.id.editTextGym_Owner_Username1);
         chg[1] = findViewById(R.id.editTextGym_Owner_EmailAddress1);
         chg[2] = findViewById(R.id.editTextGym_Owner_Password1);
-
-        chg[4] = findViewById(R.id.editTextGym_Decrp1);
         chg[0].setText(Gym_Owner_Main.ProfileContents[0]);
         chg[1].setText(Gym_Owner_Main.ProfileContents[1]);
         chg[2].setText(Gym_Owner_Main.ProfileContents[2]);
 
-        chg[4].setText(Gym_Owner_Main.ProfileContents[4]);
     }
     public static void openchg(DrawerLayout drawerLayout){
         drawerLayout.openDrawer(GravityCompat.END);

@@ -49,7 +49,7 @@ public class Staff_mem_list_main extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
+      
         setContentView(R.layout.activity_staff_mem_list_main);
 
         //navbar toolbar textVIews

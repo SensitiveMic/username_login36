@@ -5,5 +5,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="moss">#8BC34A</color>
     <color name="forest">#2C5F2D</color>
-    <color name="lightgreen">#00FF00</color>
+    <color name="lightgreen">#097509</color>
+    <color name="dark_red">#6D0D0D</color>
 </resources>

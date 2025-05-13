@@ -34,7 +34,6 @@ ArrayList<Helper_paidreservationsfragment> list;
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Helper_paidreservationsfragment user = list.get(position);
         holder.Date.setText(user.getDate());
-        holder.Time.setText(user.getTime());
         holder.Gym.setText(user.getGym_name());
     }
 
@@ -45,12 +44,11 @@ ArrayList<Helper_paidreservationsfragment> list;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView Date, Time, Gym;
+        TextView Date, Gym;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             Date = itemView.findViewById(R.id.dbdate);
-            Time = itemView.findViewById(R.id.dbtime);
             Gym = itemView.findViewById(R.id.dbgym_named);
 
 

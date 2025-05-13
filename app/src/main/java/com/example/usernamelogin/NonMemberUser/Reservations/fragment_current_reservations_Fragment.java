@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,11 +14,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.usernamelogin.NonMemberUser.NonMemberUSER;
+import com.example.usernamelogin.NonMemberUser.Reservations.Date_picking_res.Abstract_Date_picking_res;
 import com.example.usernamelogin.NonMemberUser.Reservations.Gymchoosing.Reservation_DialogList;
 import com.example.usernamelogin.NonMemberUser.Reservations.Gymchoosing.interface_for_recyclerviewAdapter;
 import com.example.usernamelogin.R;
+import com.example.usernamelogin.RegisterandLogin.Login;
+import com.example.usernamelogin.RegisterandLogin.MainActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -171,8 +178,27 @@ public class fragment_current_reservations_Fragment extends Fragment implements 
 
             @Override
             public void onItemClick1(int position) {
-               Intent intent = new Intent(getActivity(), Add_Reservations.class);
-                startActivity(intent);
+
+                new Abstract_Date_picking_res(getActivity()) {
+                    @Override
+                    public void onDateSelected(int year, int month, int dayOfMonth) {
+                        new AlertDialog.Builder(getActivity())
+                                .setTitle("Confirm Date Selection")
+                                .setMessage("Are you sure you want to select this date?")
+                                .setPositiveButton("Yes", (dialog, which) -> {
+                                    Toast.makeText(getContext(), "Selected: " + (month + 1) + "/" + dayOfMonth + "/" + year, Toast.LENGTH_SHORT).show();
+                                    String selectedDate = String.format("%d/%d/%d", month + 1, dayOfMonth, year);
+                                    reservethis(selectedDate);
+                                    dismiss();
+                                })
+                                .setNegativeButton("Cancel", null)
+                                .show();
+                    }
+                }.show();
+
+
+             //    Intent intent = new Intent(getActivity(), Add_Reservations.class);
+             //   startActivity(intent);
 
             }
 
@@ -187,7 +213,28 @@ public class fragment_current_reservations_Fragment extends Fragment implements 
         // Show the dialog
         listDialog.show();
     }
+    private void reservethis(String selecteddate){
+       DatabaseReference GymRef = FirebaseDatabase.getInstance().getReference("Reservations").child("Pending_Requests").child(Reservations.gymnamefromresdialoggymlist);
+       DatabaseReference GymRef_ID = GymRef.push();
 
+        String userid = Login.key;     // user id
+        String Res_id =  GymRef_ID.getKey();    // gym key
+        String DatetoDB = selecteddate;   // date of reservation
+        String UsernamefromDB = NonMemberUSER.ProfileContents[0];  //user username
+        String gym_nam = Reservations.gymnamefromresdialoggymlist;    // gymname
+        String contctnum = Reservations.gym_contact_numberforview;    // gym contact numb
+        Log.d("TAG110", "contactnum: " + contctnum);
+
+        Reservationdate mser = new Reservationdate(userid, contctnum, Res_id,gym_nam,null,UsernamefromDB, DatetoDB);
+        GymRef_ID.setValue(mser).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+
+                Toast.makeText(getActivity(),"Successful",Toast.LENGTH_SHORT).show();
+                getActivity().recreate();
+            }
+        });
+    }
     @Override
     public void deletebuttonclciked() {
         refresh_res_list();

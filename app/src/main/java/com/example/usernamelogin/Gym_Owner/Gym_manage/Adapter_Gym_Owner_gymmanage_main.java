@@ -17,18 +17,20 @@ public class Adapter_Gym_Owner_gymmanage_main extends RecyclerView.Adapter<Adapt
     Context context;
     ArrayList<Modelclass_gym_manage_Adapter> list;
     Interface_adapter_gyms_list_onclick onclick;
+    Interface_adapter_gyms_list_longclick onlongclick1;
     public Adapter_Gym_Owner_gymmanage_main(Context context, ArrayList<Modelclass_gym_manage_Adapter> list
-    ,Interface_adapter_gyms_list_onclick onclick) {
+    ,Interface_adapter_gyms_list_onclick onclick,Interface_adapter_gyms_list_longclick onlongclick1) {
         this.context = context;
         this.list = list;
         this.onclick = onclick;
+        this.onlongclick1 = onlongclick1;
     }
 
     @NonNull
     @Override
     public Adapter_Gym_Owner_gymmanage_main.MYVIEWHOLDER onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
        View v = LayoutInflater.from(context).inflate(R.layout.item_gym_info, parent, false);
-        return new Adapter_Gym_Owner_gymmanage_main.MYVIEWHOLDER(v,onclick);
+        return new Adapter_Gym_Owner_gymmanage_main.MYVIEWHOLDER(v,onclick,onlongclick1);
     }
 
     @Override
@@ -49,7 +51,8 @@ public class Adapter_Gym_Owner_gymmanage_main extends RecyclerView.Adapter<Adapt
 
     public static class MYVIEWHOLDER extends RecyclerView.ViewHolder {
         TextView gym_name, gym_descrp,gym_contact_number,gym_opening,gym_closing, gymkey;
-        public MYVIEWHOLDER(@NonNull View itemView,Interface_adapter_gyms_list_onclick onclick) {
+        public MYVIEWHOLDER(@NonNull View itemView,Interface_adapter_gyms_list_onclick onclick
+        ,Interface_adapter_gyms_list_longclick onlongclick1) {
             super(itemView);
             gym_name = itemView.findViewById(R.id.tvGymName);
             gym_descrp = itemView.findViewById(R.id.tvGymDescription);
@@ -73,6 +76,25 @@ public class Adapter_Gym_Owner_gymmanage_main extends RecyclerView.Adapter<Adapt
                     }
                 }
             });
+          itemView.setOnLongClickListener(new View.OnLongClickListener() {
+              @Override
+              public boolean onLongClick(View view) {
+                  if (onlongclick1 != null){
+                      int pos = getAdapterPosition();
+
+                      if (pos != RecyclerView.NO_POSITION){
+                          String name = gym_name.getText().toString();
+                          Gym_Owner_gymmanage_main.gym_Name = name;
+                          String gym_key = gymkey.getText().toString();
+                          Gym_Owner_gymmanage_main.gym_key = gym_key;
+
+                          onlongclick1.onlongclick(pos);
+                      }
+                  }
+
+                  return true;
+              }
+          });
         }
     }
 }

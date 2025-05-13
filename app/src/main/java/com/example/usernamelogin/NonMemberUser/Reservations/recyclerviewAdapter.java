@@ -58,7 +58,6 @@ public class recyclerviewAdapter extends RecyclerView.Adapter<recyclerviewAdapte
         recycleviewReservationlist user = list.get(position);
 
         holder.Date.setText(user.getDate());
-        holder.Time.setText(user.getTime());
         holder.User.setText(user.getUser());
         holder.Gym.setText(user.getGym());
         holder.gymnum.setText(user.getGymnum());
@@ -114,7 +113,6 @@ public class recyclerviewAdapter extends RecyclerView.Adapter<recyclerviewAdapte
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView Date;
-        TextView Time;
         TextView User;
         TextView Gym;
         TextView gymnum;
@@ -123,7 +121,6 @@ public class recyclerviewAdapter extends RecyclerView.Adapter<recyclerviewAdapte
             super(itemView);
             itemImage = itemView.findViewById(R.id.trashcandelete);
             Date = itemView.findViewById(R.id.dbdate);
-            Time = itemView.findViewById(R.id.dbtime);
             User = itemView.findViewById(R.id.dbuser);
             Gym = itemView.findViewById(R.id.dbgym_named);
             gymnum = itemView.findViewById(R.id.dbgym_num);

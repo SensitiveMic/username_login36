@@ -38,7 +38,6 @@ public class Adapter_staff_reservation_accepted extends RecyclerView.Adapter<Ada
     public void onBindViewHolder(@NonNull Adapter_staff_reservation_accepted.FirstViewHolder holder, int position) {
         newHelper_reservation_staff fromusers1 = list.get(position);
         holder.user.setText(fromusers1.getUser());
-        holder.time.setText(fromusers1.getTime());
         holder.date.setText(fromusers1.getDate());
 
 
@@ -50,13 +49,12 @@ public class Adapter_staff_reservation_accepted extends RecyclerView.Adapter<Ada
     }
 
     public static class FirstViewHolder extends RecyclerView.ViewHolder {
-        TextView user, time, date;
+        TextView user, date;
 
 
         public FirstViewHolder(@NonNull View itemView) {
             super(itemView);
             date = itemView.findViewById(R.id.dbdate);
-            time = itemView.findViewById(R.id.dbtime);
             user = itemView.findViewById(R.id.dbuser);
 
         }

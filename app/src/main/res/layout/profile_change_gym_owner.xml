@@ -40,26 +40,6 @@
             app:layout_constraintVertical_bias="0.204">
 
             <TextView
-                android:id="@+id/textView7"
-                android:layout_width="131dp"
-                android:layout_height="28dp"
-                android:text="Gym Descrp: "
-                android:textColor="@color/black" />
-
-            <EditText
-                android:id="@+id/editTextGym_Decrp1"
-                android:layout_width="388dp"
-                android:layout_height="73dp"
-                android:layout_margin="8dp"
-                android:background="@null"
-                android:gravity="top|start"
-                android:hint="Enter Description of the Gym"
-                android:inputType="textMultiLine|textCapSentences"
-                android:maxLines="15"
-                android:minLines="4"
-                android:textColor="@color/black" />
-
-            <TextView
                 android:id="@+id/textView6"
                 android:layout_width="133dp"
                 android:layout_height="30dp"
