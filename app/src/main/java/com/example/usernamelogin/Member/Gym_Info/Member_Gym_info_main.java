@@ -18,10 +18,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
 import androidx.core.view.GravityCompat;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.usernamelogin.Member.Member_Profile;
@@ -31,7 +28,6 @@ import com.example.usernamelogin.Member.Reservation.Current_Coach_Res.Current_Co
 
 import com.example.usernamelogin.NonMemberUser.Gym_prop.Gym_Properties_Main;
 import com.example.usernamelogin.NonMemberUser.Model_class_membershipReq;
-import com.example.usernamelogin.NonMemberUser.dialogbox.DialogList;
 import com.example.usernamelogin.R;
 
 import com.example.usernamelogin.RegisterandLogin.Login;
@@ -42,7 +38,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;

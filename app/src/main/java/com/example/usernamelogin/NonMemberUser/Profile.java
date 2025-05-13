@@ -23,7 +23,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.usernamelogin.Admin.Admin_main;
 import com.example.usernamelogin.Member.Member_main;
 import com.example.usernamelogin.NonMemberUser.Gym_prop.Gym_Properties_Main;
 import com.example.usernamelogin.R;

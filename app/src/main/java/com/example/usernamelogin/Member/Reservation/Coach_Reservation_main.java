@@ -23,8 +23,6 @@ import com.example.usernamelogin.Member.Member_Profile;
 import com.example.usernamelogin.Member.Member_main;
 import com.example.usernamelogin.Member.Reservation.Coach_Res_Scheduler.Coach_res_form_main;
 import com.example.usernamelogin.Member.Reservation.Current_Coach_Res.Current_Coach_Res_Main;
-import com.example.usernamelogin.NonMemberUser.Gym_prop.Gym_Properties_Main;
-import com.example.usernamelogin.NonMemberUser.Profile;
 import com.example.usernamelogin.R;
 import com.example.usernamelogin.RegisterandLogin.Login;
 import com.google.firebase.database.DataSnapshot;

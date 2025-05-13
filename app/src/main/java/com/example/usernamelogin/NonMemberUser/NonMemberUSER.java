@@ -3,7 +3,6 @@ package com.example.usernamelogin.NonMemberUser;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
@@ -24,14 +23,12 @@ import android.os.Bundle;
 import android.provider.DocumentsContract;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.content.Intent;
 
-import com.example.usernamelogin.Coach.Coach_main;
-import com.example.usernamelogin.Member.Member_main;
 import com.example.usernamelogin.NonMemberUser.Gym_prop.Gym_Properties_Main;
 import com.example.usernamelogin.R;
 import com.example.usernamelogin.RegisterandLogin.Login;
@@ -57,6 +54,7 @@ public class NonMemberUSER extends AppCompatActivity {
     private static final int REQUEST_CODE_OPEN_DIRECTORY_2 = 1001;
     private Uri selectedDirectoryUri;
     private ActivityResultLauncher<Intent> directoryPickerLauncher;
+    Button Reservation_but,Profile_but,Gym_but,workout_but;
 
     @SuppressLint("WrongConstant")
     @Override
@@ -74,6 +72,11 @@ public class NonMemberUSER extends AppCompatActivity {
         gym_membership = findViewById(R.id.Gym_navdrawer);
         workout = findViewById(R.id.member_workout);
         logoput = findViewById(R.id.logout_Button_U);
+
+        Reservation_but = findViewById(R.id.Have_reservation_button);
+        Profile_but = findViewById(R.id.Profile_button_nonmem);
+        Gym_but = findViewById(R.id.Gyme_button_nonmem);
+        workout_but = findViewById(R.id.Workout_button_nonmem);
 
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,6 +106,34 @@ public class NonMemberUSER extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 redirectActivity(NonMemberUSER.this, Gym_Properties_Main.class);
+            }
+        });
+        Reservation_but.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                redirectActivity(NonMemberUSER.this, Reservations.class);
+            }
+        });
+        Profile_but.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                redirectActivity(NonMemberUSER.this, Profile.class);
+            }
+        });
+        Gym_but.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                redirectActivity(NonMemberUSER.this, Gym_Properties_Main.class);
+            }
+        });
+        workout_but.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(NonMemberUSER.this, User_workouts.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+
+                Log.d("COACH_WRKT_SENT_TAG", "Coach workout Sent!");
             }
         });
         logoput.setOnClickListener(v ->{

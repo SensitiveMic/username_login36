@@ -10,25 +10,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.usernamelogin.Member.Gym_Info.Member_Gym_info_main;
 import com.example.usernamelogin.Member.Reservation.Coach_Reservation_main;
 import com.example.usernamelogin.Member.Reservation.Current_Coach_Res.Current_Coach_Res_Main;
-import com.example.usernamelogin.Member.Reservation.Current_Coach_Res.Modelclass_for_current_member_res_accepted;
-import com.example.usernamelogin.NonMemberUser.Gym_prop.Gym_Properties_Main;
-import com.example.usernamelogin.NonMemberUser.NonMemberUSER;
-import com.example.usernamelogin.NonMemberUser.Profile;
 import com.example.usernamelogin.R;
 import com.example.usernamelogin.RegisterandLogin.Login;
-import com.example.usernamelogin.workout_program.to_edit_reps_weight.Modelclass_forexercises;
 import com.example.usernamelogin.workout_program.workouts.User_workouts;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,26 +29,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import kotlin.Triple;
 
 public class Member_main extends AppCompatActivity {
     DrawerLayout drawerLayout;

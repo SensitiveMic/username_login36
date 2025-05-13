@@ -6,7 +6,6 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -29,7 +28,6 @@ import com.example.usernamelogin.Member.Reservation.Current_Coach_Res.Current_Co
 import com.example.usernamelogin.NonMemberUser.Gym_prop.Gym_Properties_Main;
 import com.example.usernamelogin.NonMemberUser.NonMemberUSER;
 
-import com.example.usernamelogin.NonMemberUser.Reservations.Reservations;
 import com.example.usernamelogin.R;
 import com.example.usernamelogin.RegisterandLogin.Login;
 import com.example.usernamelogin.Users;

@@ -14,6 +14,9 @@
         android:theme="@style/Theme.UsernameLogin"
         tools:targetApi="31">
         <activity
+            android:name=".NonMemberUser.Gym_prop.Gym_Properties_Main"
+            android:exported="false" />
+        <activity
             android:name=".Gym_Owner.Gym_manage.Gym_Owner_gymmanage_main"
             android:exported="false" />
         <activity
