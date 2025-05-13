@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 
 import com.example.usernamelogin.R;
 import com.example.usernamelogin.RegisterandLogin.Login;
@@ -75,20 +77,47 @@ public class Employee_list_fragment extends Fragment implements  toeditcoachands
         }
     }
     Adapter_employee_list_fromgymowner adapter;
-   private RecyclerView employeeslist;
+    private RecyclerView employeeslist;
     View view;
+    private SearchView searchView;
+    private ArrayList<Model_class_staffandcoachlist> fullList = new ArrayList<>();
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-         view = inflater.inflate(R.layout.fragment_employee_list_fragment, container, false);
+        view = inflater.inflate(R.layout.fragment_employee_list_fragment, container, false);
+        searchView = view.findViewById(R.id.searchViewEmployee);
 
-      checkUSER();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                filterList(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterList(newText);
+                return true;
+            }
+        });
+        checkUSER();
 
         Log.d("TAG_EMPLOYEELIST_GYMOWNER", "Baseline 1 ");
         return view;
     }
+    private void filterList(String query) {
+        ArrayList<Model_class_staffandcoachlist> filteredList = new ArrayList<>();
+        for (Model_class_staffandcoachlist item : fullList) {
+            if (item.getUsername() != null && item.getUsername().toLowerCase().contains(query.toLowerCase())) {
+                filteredList.add(item);
+            }
+        }
+        adapter.updateList12(filteredList);  // Custom method in adapter
+    }
+
     private void checkUSER() {
 
         employeeslist = view.findViewById(R.id.employeelists);
@@ -96,6 +125,7 @@ public class Employee_list_fragment extends Fragment implements  toeditcoachands
         employeeslist.setLayoutManager(new LinearLayoutManager(getContext()));
 
         ArrayList<Model_class_staffandcoachlist> list = new ArrayList<>();
+        fullList = new ArrayList<>();
         FirebaseDatabase databaseLogin = FirebaseDatabase.getInstance();
         DatabaseReference myRefLogin = databaseLogin.getReference("Users/Gym_Owner")
                 .child(Login.key_GymOwner)
@@ -127,6 +157,7 @@ public class Employee_list_fragment extends Fragment implements  toeditcoachands
                                 String coachrole = "Coach";
                                 reslist.setRole(coachrole);
                                 list.add(reslist);
+                                fullList.add(reslist);
                                 Integer wewnum = 0;
 
                             }
@@ -138,10 +169,12 @@ public class Employee_list_fragment extends Fragment implements  toeditcoachands
                                 String coachkey = stafflists.getKey();
                                 Log.d("TAGGYMCOACH", "Staff ID : " + coachkey);
                                 Model_class_staffandcoachlist reslist = stafflists.getValue(Model_class_staffandcoachlist.class);
+
                                 Integer wewnum = 1;
 
                                 String coachrole = "Staff";
                                 reslist.setRole(coachrole);
+                                fullList.add(reslist);
                                 list.add(reslist);
 
                             }
@@ -150,8 +183,6 @@ public class Employee_list_fragment extends Fragment implements  toeditcoachands
                         else{
                             Log.d("TAGGYMCOACH", "NO COACH ");
                         }
-
-
 
                     }
                 }
@@ -191,7 +222,7 @@ public class Employee_list_fragment extends Fragment implements  toeditcoachands
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot gk : snapshot.getChildren()) {
-                   String gym_id = gk.getKey();
+                    String gym_id = gk.getKey();
                     for(DataSnapshot childrenofgk :gk.child("Coach").getChildren()) {
                         String userkey = childrenofgk.getKey();
                         String usernam = childrenofgk.child("username").getValue(String.class);

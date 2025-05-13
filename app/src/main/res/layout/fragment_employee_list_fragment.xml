@@ -3,12 +3,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Gym_Owner.employeelist.Employee_list_fragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/employeelists"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:cardElevation="4dp"
+            app:cardCornerRadius="8dp">
+
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/searchViewEmployee"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:queryHint="Search by name..."
+                android:iconifiedByDefault="false" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/employeelists"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
+    </LinearLayout>
+
+
 
 </FrameLayout>

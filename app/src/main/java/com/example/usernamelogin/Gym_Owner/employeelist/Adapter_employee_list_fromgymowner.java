@@ -23,7 +23,10 @@ public class Adapter_employee_list_fromgymowner extends RecyclerView.Adapter<Ada
     private toeditcoachandstaff itemclick;
     private interface_Adapter_employee_list holdclick;
 
-
+    public void updateList12(ArrayList<Model_class_staffandcoachlist> newList) {
+        this.list = newList;
+        notifyDataSetChanged();
+    }
     public Adapter_employee_list_fromgymowner(Context context, ArrayList<Model_class_staffandcoachlist> list
             , toeditcoachandstaff itemclick
            ,interface_Adapter_employee_list holdclick) {
