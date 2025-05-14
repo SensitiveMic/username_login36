@@ -35,14 +35,6 @@
                 android:text="Active Gyms" />
 
             <com.google.android.material.tabs.TabItem
-                android:id="@+id/tab2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Non-Member"
-                tools:layout_editor_absoluteX="221dp"
-                tools:layout_editor_absoluteY="200dp" />
-
-            <com.google.android.material.tabs.TabItem
                 android:id="@+id/tab3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

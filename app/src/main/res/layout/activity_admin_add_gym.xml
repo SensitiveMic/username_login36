@@ -99,7 +99,7 @@
                     android:id="@+id/button_add_gym_entity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Proceed to Add Gym Entity" />
+                    android:text="Proceed to Add Gym Owner Account" />
 
                 <TextView
                     android:id="@+id/textView4"

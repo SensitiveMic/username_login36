@@ -29,6 +29,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -100,13 +102,40 @@ public class Admin_archived_gyms_fragment extends Fragment implements Admin_gym_
         myadapter1 = new Adapter_recyclerview_add_gym(getContext(),list,null,this::onitemlongclick);
         recyclerView.setAdapter(myadapter1);
 
-        db.addValueEventListener(new ValueEventListener() {
+        db.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                list.clear();
                 for(DataSnapshot dataSnapshot:snapshot.getChildren()){
+                    String gymowner_key = dataSnapshot.getKey().toString();
+                    Log.d("TAGECHECKADMINGYMS", "onDataChange: " +dataSnapshot.getKey().toString());
+                    String owner_first = "";
+                    String owner_last = "";
+                    String fullname = "";
+                    String ownerusername = "";
+                    ownerusername = dataSnapshot.child("gym_owner_username").getValue().toString();
+                    if(dataSnapshot.child("gym_owner_firstname").exists()){
+                        owner_first = dataSnapshot.child("gym_owner_firstname").getValue().toString();
+                    }
+                    if(dataSnapshot.child("gym_owner_lastname").exists()){
+                        owner_last  = dataSnapshot.child("gym_owner_firstname").getValue().toString();
+                    }
 
-                    add_gym_recyclerviewAdapter_helper res_list1 = dataSnapshot.getValue(add_gym_recyclerviewAdapter_helper.class);
-                    list.add(res_list1);
+                    if(owner_first != null || owner_last != null){
+                        fullname = owner_first+ " " + owner_last;
+                    }
+
+                    for(DataSnapshot snapshot1:dataSnapshot.child("Gym").getChildren()){
+                        add_gym_recyclerviewAdapter_helper res_list1 = snapshot1.getValue(add_gym_recyclerviewAdapter_helper.class);
+                        String gymkey = snapshot1.getKey().toString();
+                        res_list1.setGym_owner_key(gymowner_key);
+                        res_list1.setGymkey(gymkey);
+                        res_list1.setFullname(fullname);
+                        res_list1.setGym_owner_username(ownerusername);
+                        list.add(res_list1);
+
+                    }
+
                 }
                 myadapter1.notifyDataSetChanged();
             }
@@ -145,40 +174,57 @@ public class Admin_archived_gyms_fragment extends Fragment implements Admin_gym_
     }
 
     private void unarchivegym_proceed(){
-        DatabaseReference whichgym = FirebaseDatabase.getInstance().getReference("Archived_Gym")
+        DatabaseReference removeREF = FirebaseDatabase.getInstance()
+                .getReference("Archived_Gym")
+                .child(UsersList_Admin_main.gym_owner_KEY)
+                .child("Gym")
+                .child(UsersList_Admin_main.gym_KEY);
+
+
+        DatabaseReference Archiveref = FirebaseDatabase.getInstance()
+                .getReference("Users/Gym_Owner")
+                .child(UsersList_Admin_main.gym_owner_KEY)
+                .child("Gym")
+                .child(UsersList_Admin_main.gym_KEY);
+
+        DatabaseReference getGymDetails = FirebaseDatabase.getInstance()
+                .getReference("Archived_Gym")
                 .child(UsersList_Admin_main.gym_owner_KEY);
-        DatabaseReference targetRef = FirebaseDatabase.getInstance().getReference("Users/Gym_Owner").child(UsersList_Admin_main.gym_owner_KEY);
-        whichgym.addListenerForSingleValueEvent(new ValueEventListener() {
+
+        getGymDetails.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    // Copy entire subtree to target
-                    targetRef.setValue(snapshot.getValue())
-                            .addOnSuccessListener(aVoid -> {
-                                Log.d("TAG_COPY_SUCCESS", "Data copied successfully");
-                                whichgym.removeValue().addOnSuccessListener(tVoid -> {
-                                            Log.d("TAG_COPY_SUCCESS", "Deleted");
-                                            Intent intent = new Intent(requireContext(), UsersList_Admin_main.class);
-                                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                            startActivity(intent);
-                                        })
-                                        .addOnFailureListener(e -> {
-                                            Log.e("TAG_COPY_SUCCESS", "Failed to remove: " + e.getMessage());
-                                        });
 
-                            })
-                            .addOnFailureListener(e -> {
-                                Log.e("TAG_FAILURE", "Failed to copy: " + e.getMessage());
-                            });
-                } else {
-                    Log.d("TAG_FAILURE", "Source data does not exist");
+                // Get the specific gym data under Gym > gym_KEY
+                DataSnapshot gymSnapshot = snapshot.child("Gym").child(UsersList_Admin_main.gym_KEY);
+
+                // Create a map to hold all data to archive
+                Map<String, Object> archivedData = new HashMap<>();
+
+                // Add gym info (all children under that gym key)
+                for (DataSnapshot child : gymSnapshot.getChildren()) {
+                    archivedData.put(child.getKey(), child.getValue());
                 }
+
+                // Now store to Archived_Gym
+                Archiveref.updateChildren(archivedData).addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        // Optionally delete original gym data
+                        removeREF.removeValue();
+
+                        Toast.makeText(getContext(), "Gym Unarchived successfully.", Toast.LENGTH_SHORT).show();
+                        refresh_list_gym();
+                    } else {
+                        Toast.makeText(getContext(), "Failed to Unarchive gym.", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Log.e("FirebaseError", error.getMessage());
             }
         });
+
     }
 }

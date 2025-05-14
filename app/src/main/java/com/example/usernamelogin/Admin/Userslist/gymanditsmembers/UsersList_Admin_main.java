@@ -29,7 +29,7 @@ public class UsersList_Admin_main extends AppCompatActivity {
     LinearLayout home, userslist, add_gym, nonmember,logoput;
     FrameLayout frameLayout;
     TabLayout tabLayout;
-    public static String gyym_owners_usernmae,gym_owner_KEY,gymownersgymname ;
+    public static String gyym_owners_usernmae,gym_owner_KEY,gymownersgymname, gym_KEY ;
 
 
     @Override
@@ -70,15 +70,6 @@ public class UsersList_Admin_main extends AppCompatActivity {
                         break;
 
                     case 1:
-                        tag = "non-members_list";
-                        fragment = getSupportFragmentManager().findFragmentByTag(tag);
-
-                        if (fragment == null) {
-                            fragment = new nonmember_list_admin_fragment();
-                        }
-                        break;
-
-                    case 2:
                         tag = "archived_gyms";
                         fragment = getSupportFragmentManager().findFragmentByTag(tag);
                         if (fragment == null){

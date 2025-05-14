@@ -25,7 +25,7 @@ import java.util.ArrayList;
 
 public class Adapter_recyclerview_add_gym extends RecyclerView.Adapter<Adapter_recyclerview_add_gym.MyViewHolder> {
     Context context;
-    ArrayList<add_gym_recyclerviewAdapter_helper> list;
+    private ArrayList<add_gym_recyclerviewAdapter_helper> list;
     private final Admin_Gym_RecyclerViewInterface recyclerViewInterface;
     private final Admin_gym_longclikc_interface longclikcInterface;
 
@@ -42,86 +42,25 @@ public class Adapter_recyclerview_add_gym extends RecyclerView.Adapter<Adapter_r
     @Override
     public Adapter_recyclerview_add_gym.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(context).inflate(R.layout.recyclerview_add_gym_item,parent,false);
-        return new Adapter_recyclerview_add_gym.MyViewHolder(v, recyclerViewInterface,longclikcInterface );
+        return new Adapter_recyclerview_add_gym.MyViewHolder(v, recyclerViewInterface,longclikcInterface);
     }
 
     @Override
     public void onBindViewHolder(@NonNull Adapter_recyclerview_add_gym.MyViewHolder holder, int position) {
         add_gym_recyclerviewAdapter_helper fromusers1 = list.get(position);
+        holder.gym_name.setText(fromusers1.getGym_name());
+        holder.fullname.setText(fromusers1.getFullname());
         holder.gym_owner_username1.setText(fromusers1.getGym_owner_username());
 
-        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child("Gym_Owner");
-        Query checkUser = userRef.orderByChild("gym_owner_username").equalTo(fromusers1.getGym_owner_username());
-        checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                for (DataSnapshot gk : snapshot.getChildren()) {
-                    String key1 = gk.getKey();
-                    holder.gym_owner_key.setText(key1);
-                    Log.d("TAG002", key1);
-                    // Access the "Gym" node
-                    DataSnapshot gymSnapshot = gk.child("Gym");
-                    String firstname = gk.child("gym_owner_firstname").getValue(String.class);
-                    String lastname = gk.child("gym_owner_lastname").getValue(String.class);
-                    String fullname = firstname + " " + lastname;
-                    holder.fullname.setText(fullname);
-                    // Iterate over the children of the "Gym" node
-                    for (DataSnapshot gymChildSnapshot : gymSnapshot.getChildren()) {
-                        // Access the "gym_name" under the push ID
-                        String gymName = gymChildSnapshot.child("gym_name").getValue(String.class);
-
-                        // Set gym name to the TextView
-                        holder.gym_name.setText(gymName);
-
-                        Log.d("TAG001", gymName);
-                        // Break the loop as we only need to process one gym name
-                        break;
-                    }
-                }
-                }else {
-                    DatabaseReference userRef2 = FirebaseDatabase.getInstance().getReference("Archived_Gym");
-                    Query checkUser2 = userRef2.orderByChild("gym_owner_username").equalTo(fromusers1.getGym_owner_username());
-                    checkUser2.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            for (DataSnapshot gk : snapshot.getChildren()) {
-                                String key1 = gk.getKey();
-                                holder.gym_owner_key.setText(key1);
-                                Log.d("TAG002", key1);
-                                // Access the "Gym" node
-                                DataSnapshot gymSnapshot = gk.child("Gym");
-                                String firstname = gk.child("gym_owner_firstname").getValue(String.class);
-                                String lastname = gk.child("gym_owner_lastname").getValue(String.class);
-                                String fullname = firstname + " " + lastname;
-                                holder.fullname.setText(fullname);
-                                // Iterate over the children of the "Gym" node
-                                for (DataSnapshot gymChildSnapshot : gymSnapshot.getChildren()) {
-                                    // Access the "gym_name" under the push ID
-                                    String gymName = gymChildSnapshot.child("gym_name").getValue(String.class);
-
-                                    // Set gym name to the TextView
-                                    holder.gym_name.setText(gymName);
-
-                                    Log.d("TAG001", gymName);
-                                    // Break the loop as we only need to process one gym name
-                                    break;
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-                }
+        holder.itemView.setOnLongClickListener(v -> {
+            if (longclikcInterface != null && position != RecyclerView.NO_POSITION) {
+                UsersList_Admin_main.gyym_owners_usernmae = fromusers1.getGym_owner_username();
+                UsersList_Admin_main.gym_owner_KEY = fromusers1.getGym_owner_key();
+                UsersList_Admin_main.gymownersgymname = fromusers1.getGym_name();
+                UsersList_Admin_main.gym_KEY = fromusers1.getGymkey(); // now we can use it!
+                longclikcInterface.onitemlongclick(position);
             }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("TAG", "Error fetching gym name: " + error.getMessage());
-            }
+            return true;
         });
 
     }
