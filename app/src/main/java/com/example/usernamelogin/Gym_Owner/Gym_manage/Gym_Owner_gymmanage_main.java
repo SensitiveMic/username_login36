@@ -116,6 +116,7 @@ public class Gym_Owner_gymmanage_main extends AppCompatActivity implements Inter
 
         });
         refresh_list_gym();
+
     }
     private void refresh_list_gym(){
         String ownerkey = Login.key_GymOwner;
@@ -215,6 +216,6 @@ public class Gym_Owner_gymmanage_main extends AppCompatActivity implements Inter
 
     @Override
     public void onlongclick(int position) {
-
+        redirectActivity(Gym_Owner_gymmanage_main.this, Modify_gym_with_details.class);
     }
 }
