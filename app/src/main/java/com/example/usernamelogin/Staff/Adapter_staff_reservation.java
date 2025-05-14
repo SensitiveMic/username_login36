@@ -43,7 +43,6 @@ public class Adapter_staff_reservation extends RecyclerView.Adapter<Adapter_staf
     public void onBindViewHolder(@NonNull Adapter_staff_reservation.MyViewHolder holder, int position) {
         newHelper_reservation_staff fromusers1 = list.get(position);
         holder.user.setText(fromusers1.getUser());
-
         holder.date.setText(fromusers1.getDate());
         holder.res_id.setText(fromusers1.getRes_id());
 

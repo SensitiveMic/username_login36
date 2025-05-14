@@ -32,7 +32,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -120,12 +124,41 @@ public class Fragment_pending extends Fragment implements recyclerViewInterface_
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        db1.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault());
+                Date today = new Date();
+                for (DataSnapshot snapshot1 : snapshot.getChildren()){
+                   String key = snapshot1.getKey().toString();
+                   String dateStr = snapshot1.child("date").getValue().toString();
+
+                    try {
+                        Date storedDate = sdf.parse(dateStr);
+
+                        if (storedDate != null && storedDate.before(today)) {
+                            // Date has passed, delete this key and its children
+                          snapshot1.getRef().removeValue();
+                        }
+
+                    } catch (ParseException e) {
+                        e.printStackTrace(); // Optional: handle or log parse error
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         wew.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                combinedList.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
 
-                    combinedList.clear();
                     newHelper_reservation_staff item = dataSnapshot.getValue(newHelper_reservation_staff.class);
                     combinedList.add(item);
 

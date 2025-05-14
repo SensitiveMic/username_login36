@@ -82,7 +82,8 @@ public abstract class Reservation_DialogList extends Dialog implements interface
 
                                 String gymcntctnumber = underGymchild.child("gym_contact_number").getValue(String.class);
 
-
+                                res_list1.setOwnerkey(key_Gym_Staff1);
+                                res_list1.setGymkey(key_Gym_Staff3);
                                 res_list1.setGym_contact_number(gymcntctnumber);
                                 list.add(res_list1);
 

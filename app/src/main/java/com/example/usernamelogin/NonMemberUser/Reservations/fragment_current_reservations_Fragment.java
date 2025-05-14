@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CalendarView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -29,9 +30,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -95,7 +98,6 @@ public class fragment_current_reservations_Fragment extends Fragment implements 
         add_res = view.findViewById(R.id.add_res);
         ref_resh = view.findViewById(R.id.refresh);
         recyclerView = view.findViewById(R.id.userList);
-
 
     refresh_res_list();
         ref_resh.setOnClickListener(new View.OnClickListener() {
@@ -177,28 +179,77 @@ public class fragment_current_reservations_Fragment extends Fragment implements 
         Reservation_DialogList listDialog = new Reservation_DialogList(getContext()) {
 
             @Override
-            public void onItemClick1(int position) {
+            public void onItemClick1(int position, String gymkey, String ownerkey) {
 
                 new Abstract_Date_picking_res(getActivity()) {
+
                     @Override
                     public void onDateSelected(int year, int month, int dayOfMonth) {
-                        new AlertDialog.Builder(getActivity())
-                                .setTitle("Confirm Date Selection")
-                                .setMessage("Are you sure you want to select this date?")
-                                .setPositiveButton("Yes", (dialog, which) -> {
-                                    Toast.makeText(getContext(), "Selected: " + (month + 1) + "/" + dayOfMonth + "/" + year, Toast.LENGTH_SHORT).show();
-                                    String selectedDate = String.format("%d/%d/%d", month + 1, dayOfMonth, year);
-                                    reservethis(selectedDate);
-                                    dismiss();
-                                })
-                                .setNegativeButton("Cancel", null)
-                                .show();
+                        Calendar today = Calendar.getInstance();
+                        today.set(Calendar.HOUR_OF_DAY, 0);
+                        today.set(Calendar.MINUTE, 0);
+                        today.set(Calendar.SECOND, 0);
+                        today.set(Calendar.MILLISECOND, 0);
+
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.set(Calendar.YEAR, year);
+                        calendar.set(Calendar.MONTH, month); // Note: 0-based (January = 0)
+                        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                        // Get day name
+                        String[] dayNames = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+                        String day = dayNames[calendar.get(Calendar.DAY_OF_WEEK) - 1];
+                        // Format selected date
+                        String selectedDate = String.format("%d/%d/%d", month + 1, dayOfMonth, year);
+
+                        Calendar selected = Calendar.getInstance();
+                        selected.set(year, month, dayOfMonth); // month is 0-based
+                        if (selected.before(today)) {
+                            Toast.makeText(getContext(), "Cannot pick a past date", Toast.LENGTH_SHORT).show();
+                        } else {
+                            DatabaseReference databaseReferenceNon = FirebaseDatabase.getInstance()
+                                    .getReference("Users")
+                                    .child("Gym_Owner").child(ownerkey).child("Gym").child(gymkey).child(day);
+                            Log.d("Selected_date_TAG", "onDateSelected: " + ownerkey + " " + gymkey + " " + day);
+                            databaseReferenceNon.child("day_active").addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if (snapshot.exists()) {
+                                        Boolean dayActive = snapshot.getValue(Boolean.class);
+                                        if (dayActive != null && dayActive == true){
+                                            new AlertDialog.Builder(getActivity())
+                                                    .setTitle("Confirm Date Selection")
+                                                    .setMessage("Are you sure you want to select this date?")
+                                                    .setPositiveButton("Yes", (dialog, which) -> {
+                                                        Toast.makeText(getContext(), "Selected: " + selectedDate + " (" + day + ")", Toast.LENGTH_SHORT).show();
+                                                        Log.d("Selected_date_TAG", "onDateSelected: " + selectedDate + " " + day);
+                                                         reservethis(selectedDate); // Your existing method
+                                                        dismiss();
+                                                    })
+                                                    .setNegativeButton("Cancel", null)
+                                                    .show();
+                                        }else {
+                                            Toast.makeText(getContext(), "Gym Closed for this Day", Toast.LENGTH_SHORT).show();
+
+                                        }
+                                    } else {
+                                        Log.d("FirebaseDayActive", "day_active not found");
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+                                    Log.e("FirebaseDayActive", "Error: " + error.getMessage());
+                                }
+                            });
+
+                        }
+
+
+
+
                     }
                 }.show();
 
-
-             //    Intent intent = new Intent(getActivity(), Add_Reservations.class);
-             //   startActivity(intent);
 
             }
 
@@ -213,6 +264,7 @@ public class fragment_current_reservations_Fragment extends Fragment implements 
         // Show the dialog
         listDialog.show();
     }
+
     private void reservethis(String selecteddate){
        DatabaseReference GymRef = FirebaseDatabase.getInstance().getReference("Reservations").child("Pending_Requests").child(Reservations.gymnamefromresdialoggymlist);
        DatabaseReference GymRef_ID = GymRef.push();
@@ -239,7 +291,6 @@ public class fragment_current_reservations_Fragment extends Fragment implements 
     public void deletebuttonclciked() {
         refresh_res_list();
     }
-
 
 
 }

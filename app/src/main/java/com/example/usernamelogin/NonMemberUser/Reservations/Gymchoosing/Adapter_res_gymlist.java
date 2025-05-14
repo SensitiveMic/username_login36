@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.usernamelogin.NonMemberUser.Reservations.Date_picking_res.Abstract_Date_picking_res;
 import com.example.usernamelogin.NonMemberUser.Reservations.Reservations;
 import com.example.usernamelogin.R;
 
@@ -26,8 +27,9 @@ public class Adapter_res_gymlist extends RecyclerView.Adapter<Adapter_res_gymlis
     }
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView gym_name, gym_descrp ,invisible_contactnumber;
+        TextView inigymkey;
 
-        public MyViewHolder(@NonNull View itemView, interface_clicking_gym_res recycleViewInterface ) {
+        public MyViewHolder(@NonNull View itemView, interface_clicking_gym_res recycleViewInterface ,ArrayList<Modelclass> list) {
             super(itemView);
             gym_name = itemView.findViewById(R.id.Gym_Name_res);
             gym_descrp = itemView.findViewById(R.id.gym_descrp);
@@ -43,7 +45,10 @@ public class Adapter_res_gymlist extends RecyclerView.Adapter<Adapter_res_gymlis
                             Reservations.gymnamefromresdialoggymlist = text;
                             String text1 = invisible_contactnumber.getText().toString();
                             Reservations.gym_contact_numberforview = text1;
-                            recycleViewInterface.onItemClick1(pos);
+                            Modelclass fromusers1 = list.get(pos);
+                            String gymkey = fromusers1.getGymkey();
+                            String ownerke = fromusers1.getOwnerkey();
+                            recycleViewInterface.onItemClick1(pos,gymkey,ownerke);
 
                         }
                     }
@@ -56,7 +61,7 @@ public class Adapter_res_gymlist extends RecyclerView.Adapter<Adapter_res_gymlis
     @Override
     public Adapter_res_gymlist.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_gym_list, parent, false);
-        return new MyViewHolder(view, gym_interface_clicking );
+        return new MyViewHolder(view, gym_interface_clicking,list );
     }
 
     @Override
