@@ -1,12 +1,15 @@
 package com.example.usernamelogin.Gym_Owner.Gym_manage;
 
 import android.app.Activity;
+import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -14,10 +17,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.GravityCompat;
 import androidx.core.view.ViewCompat;
@@ -34,12 +40,27 @@ import com.example.usernamelogin.RegisterandLogin.Login;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
 public class Add_Gym_with_details extends AppCompatActivity {
     DrawerLayout drawerLayout;
     ImageView menu;
     LinearLayout home, Gym_management, profile ,gymemployyes,Gym_manage, logoput;
     EditText Gym_name,gym_contact_number,Gym_descp;
     Button confirmbutton;
+    private LinearLayout MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY,SATURDAY,SUNDAY;
+    private TextView Monday_open,Monday_close;
+    private TextView Tuesday_open,Tuesday_close;
+    private TextView Wednesday_open,Wednesday_close;
+    private TextView Thursday_open,Thursday_close;
+    private TextView Friday_open,Friday_close;
+    private TextView Saturday_open,Saturday_close;
+    private TextView Sunday_open,Sunday_close;
+    private Button Mon_btn,Tue_btn,Wed_btn,Thu_btn,Fri_btn,Sat_btn,Sun_btn,Confirm_all;
+   private Boolean Mon_state,Tue_state,Wed_state,Thu_state,Fri_state,Sat_state, Sun_state;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +74,7 @@ public class Add_Gym_with_details extends AppCompatActivity {
         gymemployyes = findViewById(R.id.GYymemployyelist);
         logoput = findViewById(R.id.logout_Button_U);
         Gym_manage = findViewById(R.id.Gym_manage_Manage);
+        ITEMIDS();
 
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,34 +116,260 @@ public class Add_Gym_with_details extends AppCompatActivity {
             logout_prc(Add_Gym_with_details.this, Login.class);
 
         });
-
-     //   confirmbutton = findViewById(R.id.Confirm);
+        confirmbutton = findViewById(R.id.confirm_adding_sched);
         Gym_name = findViewById(R.id.editTextGym_Name);
         Gym_descp = findViewById(R.id.editTextGym_Decrp);
-
         gym_contact_number= findViewById(R.id.editTextGym_Contact_number);
 
-     /*   confirmbutton.setOnClickListener(new View.OnClickListener() {
+        Mon_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Mon_state = !Mon_state; // toggle the state
 
-                Abstract_class_edit_gym_operatingschedule listdialog = new Abstract_class_edit_gym_operatingschedule(Add_Gym_with_details.this) {
+                if (Mon_state) {
+                    Mon_btn.setText("Gym Open");
+                    Mon_btn.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.lightgreen));
+                } else {
+                    Mon_btn.setText("Gym Close");
+                    Mon_btn.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.dark_red));
+                }
+                Log.d("TAGSTATEBUTTON", "Mon_state: " + Mon_state);
+            }
+        });
+        Tue_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Tue_state = !Tue_state; // toggle the state
+
+                if (Tue_state) {
+                    Tue_btn.setText("Gym Open");
+                    Tue_btn.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.lightgreen));
+                } else {
+                    Tue_btn.setText("Gym Close");
+                    Tue_btn.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.dark_red));
+                }
+            }
+        });
+        Wed_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Wed_state = !Wed_state; // toggle the state
+
+                if (Wed_state) {
+                    Wed_btn.setText("Gym Open");
+                    Wed_btn.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.lightgreen));
+                } else {
+                    Wed_btn.setText("Gym Close");
+                    Wed_btn.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.dark_red));
+                }
+            }
+        });
+        Thu_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Thu_state = !Thu_state; // toggle the state
+
+                if (Thu_state) {
+                    Thu_btn.setText("Gym Open");
+                    Thu_btn.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.lightgreen));
+                } else {
+                    Thu_btn.setText("Gym Close");
+                    Thu_btn.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.dark_red));
+                }
+            }
+        });
+        Fri_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Fri_state = !Fri_state; // toggle the state
+
+                if (Fri_state) {
+                    Fri_btn.setText("Gym Open");
+                    Fri_btn.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.lightgreen));
+                } else {
+                    Fri_btn.setText("Gym Close");
+                    Fri_btn.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.dark_red));
+                }
+            }
+        });
+        Sat_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Sat_state = !Sat_state; // toggle the state
+
+                if (Sat_state) {
+                    Sat_btn.setText("Gym Open");
+                    Sat_btn.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.lightgreen));
+                } else {
+                    Sat_btn.setText("Gym Close");
+                    Sat_btn.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.dark_red));
+                }
+            }
+        });
+        Sun_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Sun_state = !Sun_state; // toggle the state
+
+                if (Sun_state) {
+                    Sun_btn.setText("Gym Open");
+                    Sun_btn.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.lightgreen));
+                } else {
+                    Sun_btn.setText("Gym Close");
+                    Sun_btn.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.dark_red));
+                }
+            }
+        });
+
+        MONDAY.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addopshours(Monday_open,Monday_close);
+
+            }
+        });
+        TUESDAY.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addopshours(Tuesday_open,Tuesday_close);
+
+            }
+        });
+        WEDNESDAY.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addopshours(Wednesday_open,Wednesday_close);
+
+            }
+        });
+        THURSDAY.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addopshours(Thursday_open,Thursday_close);
+
+            }
+        });
+        FRIDAY.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addopshours(Friday_open,Friday_close);
+
+            }
+        });
+        SATURDAY.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addopshours(Saturday_open,Saturday_close);
+
+            }
+        });
+        SUNDAY.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addopshours(Sunday_open,Sunday_close);
+
+            }
+        });
+
+        confirmbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(Add_Gym_with_details.this);
+                builder.setTitle("Confirm Add Gym");
+                builder.setMessage("Are you sure you want to add this gym?");
+
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
-                    protected void onCreate(Bundle savedInstanceState) {
-                        super.onCreate(savedInstanceState);
-                    }
-                };
-                listdialog.setCancelable(true);
-                listdialog.show();
-                new Handler(Looper.getMainLooper()).post(() -> {
-                    Window window = listdialog.getWindow();
-                    if (window != null) {
-                        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                    public void onClick(DialogInterface dialog, int which) {
+                        addgym_details();
+
                     }
                 });
 
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss(); // Just close the dialog
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
             }
-        });   */
+        });
+
+    }
+    private void ITEMIDS(){
+
+        Monday_open = findViewById(R.id.Mon_open);
+        Monday_close = findViewById(R.id.Mon_close);
+        Tuesday_open = findViewById(R.id.Tue_open);
+        Tuesday_close = findViewById(R.id.Tue_close);
+        Wednesday_open  = findViewById(R.id.Wed_open);
+        Wednesday_close = findViewById(R.id.Wed_close);
+        Thursday_open = findViewById(R.id.Thu_open);
+        Thursday_close = findViewById(R.id.Thu_close);
+        Friday_open = findViewById(R.id.Fri_open);
+        Friday_close = findViewById(R.id.Fri_close);
+        Saturday_open = findViewById(R.id.Sat_open);
+        Saturday_close = findViewById(R.id.Sat_close);
+        Sunday_open = findViewById(R.id.Sun_open);
+        Sunday_close = findViewById(R.id.Sun_close);
+
+        Mon_btn = findViewById(R.id.Open_Close_mon);
+        Tue_btn = findViewById(R.id.Open_Close_tue);
+        Wed_btn = findViewById(R.id.Open_Close_wed);
+        Thu_btn = findViewById(R.id.Open_Close_thu);
+        Fri_btn = findViewById(R.id.Open_Close_fri);
+        Sat_btn = findViewById(R.id.Open_Close_sat);
+        Sun_btn = findViewById(R.id.Open_Close_sun);
+        Confirm_all = findViewById(R.id.confirm_adding_sched);
+
+        MONDAY = findViewById(R.id.MONDAY_LAYOUT);
+        TUESDAY = findViewById(R.id.TUESDAY_LAYOUT);
+        WEDNESDAY = findViewById(R.id.WEDNESDAY_LAYOUT);
+        THURSDAY = findViewById(R.id.THURSDAY_LAYOUT);
+        FRIDAY = findViewById(R.id.FRIDAY_LAYOUT);
+        SATURDAY = findViewById(R.id.SATURDAY_LAYOUT);
+        SUNDAY = findViewById(R.id.SUNDAY_LAYOUT);
+
+        Mon_state = false;
+        Tue_state = false;
+        Wed_state = false;
+        Thu_state = false;
+        Fri_state = false;
+        Sat_state = false;
+        Sun_state = false;
+    }
+    private void addopshours(TextView opening, TextView closing) {
+        // First TimePickerDialog for opening time
+        Calendar calendar = Calendar.getInstance();
+
+        TimePickerDialog openingDialog = new TimePickerDialog(opening.getContext(),
+                (view, hourOfDay, minute) -> {
+                    // Format and set opening time
+                    calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                    calendar.set(Calendar.MINUTE, minute);
+                    String openingTime = new java.text.SimpleDateFormat("h:mm a").format(calendar.getTime());
+                    opening.setText(openingTime);
+
+                    // Now show the closing time picker
+                    TimePickerDialog closingDialog = new TimePickerDialog(closing.getContext(),
+                            (view2, hourOfDay2, minute2) -> {
+                                calendar.set(Calendar.HOUR_OF_DAY, hourOfDay2);
+                                calendar.set(Calendar.MINUTE, minute2);
+                                String closingTime = new java.text.SimpleDateFormat("h:mm a").format(calendar.getTime());
+                                closing.setText(closingTime);
+                            }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), false);
+
+                    closingDialog.setTitle("Select Closing Time");
+                    closingDialog.show();
+
+                }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), false);
+
+        openingDialog.setTitle("Select Opening Time");
+        openingDialog.show();
     }
     private void addgym_details(){
         String Gym_name1 = Gym_name.getText().toString();
@@ -145,6 +393,12 @@ public class Add_Gym_with_details extends AppCompatActivity {
             );
             addedmyRef.setValue(gymData).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
+
+                    List<GymDay> scheduleList = getGymSchedule();
+
+                    for (GymDay day : scheduleList) {
+                        addgymOperatinghourstodb(myRef, userId, day.dayName, day.isActive, day.opening, day.closing);
+                    }
                     redirectActivity(Add_Gym_with_details.this, Gym_Owner_gymmanagement_add_staff.class);
                 } else {
                     Toast.makeText(this, "Failed to add gym.", Toast.LENGTH_SHORT).show();
@@ -152,6 +406,37 @@ public class Add_Gym_with_details extends AppCompatActivity {
             });
         }
 
+    }
+    private class GymDay {
+        String dayName;
+        boolean isActive;
+        String opening;
+        String closing;
+
+        public GymDay(String dayName, boolean isActive, String opening, String closing) {
+            this.dayName = dayName;
+            this.isActive = isActive;
+            this.opening = opening;
+            this.closing = closing;
+        }
+    }
+    private List<GymDay> getGymSchedule() {
+        List<GymDay> schedule = new ArrayList<>();
+
+        schedule.add(new GymDay("Monday", Mon_state, Monday_open.getText().toString().trim(), Monday_close.getText().toString().trim()));
+        schedule.add(new GymDay("Tuesday", Tue_state, Tuesday_open.getText().toString().trim(), Tuesday_close.getText().toString().trim()));
+        schedule.add(new GymDay("Wednesday", Wed_state, Wednesday_open.getText().toString().trim(), Wednesday_close.getText().toString().trim()));
+        schedule.add(new GymDay("Thursday", Thu_state, Thursday_open.getText().toString().trim(), Thursday_close.getText().toString().trim()));
+        schedule.add(new GymDay("Friday", Fri_state, Friday_open.getText().toString().trim(), Friday_close.getText().toString().trim()));
+        schedule.add(new GymDay("Saturday", Sat_state, Saturday_open.getText().toString().trim(), Saturday_close.getText().toString().trim()));
+        schedule.add(new GymDay("Sunday", Sun_state, Sunday_open.getText().toString().trim(), Sunday_close.getText().toString().trim()));
+
+        return schedule;
+    }
+    private void addgymOperatinghourstodb(DatabaseReference Dbloc, String pushkey, String Nameofday,Boolean dayactive,String opening,String closing){
+            DatabaseReference Mon_db = Dbloc.child(pushkey).child(Nameofday);
+        OpHoursModel_class add_Opshours = new OpHoursModel_class(dayactive,opening,closing);
+        Mon_db.setValue(add_Opshours);
     }
     private void logout_prc(Activity activity, Class secondActivity){
 
