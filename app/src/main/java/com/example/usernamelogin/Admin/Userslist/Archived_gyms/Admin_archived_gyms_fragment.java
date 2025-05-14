@@ -118,7 +118,7 @@ public class Admin_archived_gyms_fragment extends Fragment implements Admin_gym_
                         owner_first = dataSnapshot.child("gym_owner_firstname").getValue().toString();
                     }
                     if(dataSnapshot.child("gym_owner_lastname").exists()){
-                        owner_last  = dataSnapshot.child("gym_owner_firstname").getValue().toString();
+                        owner_last  = dataSnapshot.child("gym_owner_lastname").getValue().toString();
                     }
 
                     if(owner_first != null || owner_last != null){

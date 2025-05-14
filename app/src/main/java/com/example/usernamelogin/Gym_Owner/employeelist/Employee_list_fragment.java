@@ -139,55 +139,59 @@ public class Employee_list_fragment extends Fragment implements  toeditcoachands
         myRefLogin.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                list.clear();
-                for (DataSnapshot gk : snapshot.getChildren()) {
-                    String key1 = gk.getKey();
-                    employeelists_main.Gym_id = key1;
-                    String Gym_name = gk.child("gym_name").getValue().toString();
-                    Log.d("TAGGYMCOACH", "GYM ID : " + key1);
-                    for(DataSnapshot childrenofgk :gk.getChildren()){
-                        String Gymdetailskey = childrenofgk.getKey();
-                        Log.d("TAGGYMCOACH", "next : " + Gymdetailskey);
-                        if("Coach".equals(Gymdetailskey)) {
-                            for(DataSnapshot coachlists: childrenofgk.getChildren()){
+                if(snapshot.exists()){
+                    list.clear();
+                    for (DataSnapshot gk : snapshot.getChildren()) {
+                        String key1 = gk.getKey();
+                        employeelists_main.Gym_id = key1;
+                        String Gym_name = gk.child("gym_name").getValue().toString();
+                        Log.d("TAGGYMCOACH", "GYM ID : " + key1);
+                        for(DataSnapshot childrenofgk :gk.getChildren()){
+                            String Gymdetailskey = childrenofgk.getKey();
+                            Log.d("TAGGYMCOACH", "next : " + Gymdetailskey);
+                            if("Coach".equals(Gymdetailskey)) {
+                                for(DataSnapshot coachlists: childrenofgk.getChildren()){
 
-                                String coachkey = coachlists.getKey();
-                                Log.d("TAGGYMCOACH", "Coach ID : " + coachkey);
+                                    String coachkey = coachlists.getKey();
+                                    Log.d("TAGGYMCOACH", "Coach ID : " + coachkey);
 
-                                Model_class_staffandcoachlist reslist = coachlists.getValue(Model_class_staffandcoachlist.class);
-                                String coachrole = "Coach";
-                                reslist.setGym_name(Gym_name);
-                                reslist.setRole(coachrole);
-                                list.add(reslist);
-                                fullList.add(reslist);
-                                Integer wewnum = 0;
+                                    Model_class_staffandcoachlist reslist = coachlists.getValue(Model_class_staffandcoachlist.class);
+                                    String coachrole1 = "Coach";
+                                    reslist.setGym_name(Gym_name);
+                                    reslist.setRole(coachrole1);
+                                    list.add(reslist);
+                                    fullList.add(reslist);
+                                    Integer wewnum = 0;
 
-                            }
-                            adapter.notifyDataSetChanged();
-                        }
-                        else if("Staff".equals(Gymdetailskey)){
-                            for(DataSnapshot stafflists: childrenofgk.getChildren()){
-
-                                String coachkey = stafflists.getKey();
-                                Log.d("TAGGYMCOACH", "Staff ID : " + coachkey);
-                                Model_class_staffandcoachlist reslist = stafflists.getValue(Model_class_staffandcoachlist.class);
-
-                                Integer wewnum = 1;
-
-                                String coachrole = "Staff";
-                                reslist.setRole(coachrole);
-                                fullList.add(reslist);
-                                list.add(reslist);
+                                }
 
                             }
-                            adapter.notifyDataSetChanged();
-                        }
-                        else{
-                            Log.d("TAGGYMCOACH", "NO COACH ");
-                        }
+                            else if("Staff".equals(Gymdetailskey)){
+                                for(DataSnapshot stafflists: childrenofgk.getChildren()){
 
+                                    String coachkey = stafflists.getKey();
+                                    Log.d("TAGGYMCOACH", "Staff ID : " + coachkey);
+                                    Model_class_staffandcoachlist reslist = stafflists.getValue(Model_class_staffandcoachlist.class);
+
+                                    Integer wewnum = 1;
+
+                                    String coachrole = "Staff";
+                                    reslist.setRole(coachrole);
+                                    fullList.add(reslist);
+                                    list.add(reslist);
+
+                                }
+
+                            }
+                            else{
+                                Log.d("TAGGYMCOACH", "NO COACH ");
+                            }
+
+                        }
                     }
+                    adapter.notifyDataSetChanged();
                 }
+
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

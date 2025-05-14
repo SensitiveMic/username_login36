@@ -126,7 +126,7 @@ public class gym_list_admin_fragment extends Fragment implements RecyclerViewInt
                         owner_first = dataSnapshot.child("gym_owner_firstname").getValue().toString();
                     }
                     if(dataSnapshot.child("gym_owner_lastname").exists()){
-                        owner_last  = dataSnapshot.child("gym_owner_firstname").getValue().toString();
+                        owner_last  = dataSnapshot.child("gym_owner_lastname").getValue().toString();
                     }
 
                     if(owner_first != null || owner_last != null){
@@ -236,7 +236,7 @@ public class gym_list_admin_fragment extends Fragment implements RecyclerViewInt
                 }
 
                 // Now store to Archived_Gym
-                Archiveref.setValue(archivedData).addOnCompleteListener(task -> {
+                Archiveref.updateChildren(archivedData).addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         // Optionally delete original gym data
                         removeREF.removeValue();
