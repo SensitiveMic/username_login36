@@ -66,6 +66,7 @@ public class Adapter_employee_list_fromgymowner extends RecyclerView.Adapter<Ada
         Model_class_staffandcoachlist fromusers = list.get(position);
         holder.employeename.setText(fromusers.getUsername());
         holder.fullname_employee.setText(fromusers.getFullname());
+        holder.gymname.setText(fromusers.getGym_name());
     }
 
     @Override
@@ -76,11 +77,13 @@ public class Adapter_employee_list_fromgymowner extends RecyclerView.Adapter<Ada
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
         TextView employeename, fullname_employee;
+        TextView gymname;
 
         public MyViewHolder(@NonNull View itemView, toeditcoachandstaff itemclick ,interface_Adapter_employee_list holdclick) {
             super(itemView);
             employeename = itemView.findViewById(R.id.Employee_Name);
             fullname_employee = itemView.findViewById(R.id.Employee_fullname);
+            gymname = itemView.findViewById(R.id.Gym_name_of_employee);
 
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override

@@ -4,6 +4,7 @@ public class Model_class_staffandcoachlist {
     String username;
     String role;
     String fullname;
+    String gym_name;
     public Model_class_staffandcoachlist(){
 
     }
@@ -12,6 +13,14 @@ public class Model_class_staffandcoachlist {
         this.role = role;
         this.username = username;
         this.fullname = fullname;
+    }
+
+    public String getGym_name() {
+        return gym_name;
+    }
+
+    public void setGym_name(String gym_name) {
+        this.gym_name = gym_name;
     }
 
     public String getRole() {

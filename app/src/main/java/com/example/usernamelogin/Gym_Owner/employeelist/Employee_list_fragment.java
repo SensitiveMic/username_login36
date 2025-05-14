@@ -136,13 +136,14 @@ public class Employee_list_fragment extends Fragment implements  toeditcoachands
 
         employeeslist.setAdapter(adapter);
 
-        myRefLogin.addListenerForSingleValueEvent(new ValueEventListener() {
+        myRefLogin.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 list.clear();
                 for (DataSnapshot gk : snapshot.getChildren()) {
                     String key1 = gk.getKey();
                     employeelists_main.Gym_id = key1;
+                    String Gym_name = gk.child("gym_name").getValue().toString();
                     Log.d("TAGGYMCOACH", "GYM ID : " + key1);
                     for(DataSnapshot childrenofgk :gk.getChildren()){
                         String Gymdetailskey = childrenofgk.getKey();
@@ -155,6 +156,7 @@ public class Employee_list_fragment extends Fragment implements  toeditcoachands
 
                                 Model_class_staffandcoachlist reslist = coachlists.getValue(Model_class_staffandcoachlist.class);
                                 String coachrole = "Coach";
+                                reslist.setGym_name(Gym_name);
                                 reslist.setRole(coachrole);
                                 list.add(reslist);
                                 fullList.add(reslist);
@@ -279,7 +281,7 @@ public class Employee_list_fragment extends Fragment implements  toeditcoachands
 
                     }
                 }
-                checkUSER();
+
                 FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.framelayout2123, new Archived_employees_frag()); // container = where fragments load
                 transaction.addToBackStack(null); // optional: adds to back stack
@@ -289,6 +291,7 @@ public class Employee_list_fragment extends Fragment implements  toeditcoachands
                 if (targetTab != null) {
                     targetTab.select(); // triggers the onTabSelected
                 }
+                checkUSER();
             }
 
             @Override
@@ -296,5 +299,6 @@ public class Employee_list_fragment extends Fragment implements  toeditcoachands
 
             }
         });
+
     }
 }

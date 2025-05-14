@@ -99,7 +99,7 @@ public class Archived_employees_frag extends Fragment implements interface_Adapt
 
         employeeslist.setAdapter(adapter);
 
-        myRefLogin.addListenerForSingleValueEvent(new ValueEventListener() {
+        myRefLogin.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 list12.clear();
@@ -240,7 +240,7 @@ public class Archived_employees_frag extends Fragment implements interface_Adapt
 
                         }
                     }
-                    checkUSER123();
+
                     FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.framelayout2123, new Employee_list_fragment()); // container = where fragments load
                     transaction.addToBackStack(null); // optional: adds to back stack
@@ -250,6 +250,7 @@ public class Archived_employees_frag extends Fragment implements interface_Adapt
                     if (targetTab != null) {
                         targetTab.select(); // triggers the onTabSelected
                     }
+                    checkUSER123();
                 }
 
                 @Override
@@ -257,5 +258,7 @@ public class Archived_employees_frag extends Fragment implements interface_Adapt
 
                 }
             });
+
+
         }
 }

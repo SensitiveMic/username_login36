@@ -28,6 +28,7 @@ import com.example.usernamelogin.Admin.Userslist.gymanditsmembers.gym_list_admin
 import com.example.usernamelogin.Admin.Userslist.nonmembers.nonmember_list_admin_fragment;
 import com.example.usernamelogin.Gym_Owner.Gym_Owner_Main;
 import com.example.usernamelogin.Gym_Owner.Gym_Owner_gymmanagement_add_staff;
+import com.example.usernamelogin.Gym_Owner.Gym_manage.Gym_Owner_gymmanage_main;
 import com.example.usernamelogin.Gym_Owner.Profile_Main_Gym_Owner;
 import com.example.usernamelogin.R;
 import com.example.usernamelogin.RegisterandLogin.Login;
@@ -44,7 +45,7 @@ import java.util.ArrayList;
 public class employeelists_main extends AppCompatActivity {
     DrawerLayout drawerLayout;
     ImageView menu;
-    LinearLayout home, Gym_management, profile ,gymemployyes,logoput;
+    LinearLayout Gym_manage,home, Gym_management, profile ,gymemployyes,logoput;
     public static String employeeclicked,Gym_id;
     TextView usernametoolbar,username_nav ;
     FrameLayout frameLayoutwew;
@@ -61,6 +62,7 @@ public class employeelists_main extends AppCompatActivity {
         profile = findViewById(R.id.Profile_navdrawer);
         gymemployyes = findViewById(R.id.GYymemployyelist);
         logoput = findViewById(R.id.logout_Button_U);
+        Gym_manage = findViewById(R.id.Gym_manage_Manage);
 
         nav_tool_textviews();
 
@@ -142,6 +144,12 @@ public class employeelists_main extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 redirectActivity(employeelists_main.this, Profile_Main_Gym_Owner.class);
+            }
+        });
+        Gym_manage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                redirectActivity(employeelists_main.this, Gym_Owner_gymmanage_main.class);
             }
         });
         logoput.setOnClickListener(v ->{
