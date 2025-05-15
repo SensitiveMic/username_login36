@@ -29,6 +29,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -120,39 +121,42 @@ public class Gym_Owner_gymmanage_main extends AppCompatActivity implements Inter
     }
     private void refresh_list_gym(){
         String ownerkey = Login.key_GymOwner;
-        Log.d("TAGCHECKKEY12", "refresh_list_gym: " + ownerkey +" = " + Login.key_GymOwner);
         recyclerView = findViewById(R.id.adminallgymList);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         ArrayList<Modelclass_gym_manage_Adapter> list = new ArrayList<>();
-        DatabaseReference db = FirebaseDatabase.getInstance().getReference("/Users/Gym_Owner").child(ownerkey)
-               .child("Gym");
-        Log.d("TAGCHECKKEY12", "Baseline: 1" );
-        Adapter_Gym_Owner_gymmanage_main myadapter1 = new Adapter_Gym_Owner_gymmanage_main(this,list, (Interface_adapter_gyms_list_onclick) this,this::onlongclick);
-        Log.d("TAGCHECKKEY12", "Baseline: 2" );
+        Query db = FirebaseDatabase.getInstance()
+                .getReference("/Users/Gym_Owner")
+                .child(ownerkey)
+                .child("Gym")
+                .orderByChild("timestamp"); // ✅ ORDER BY TIMESTAMP
+
+        Adapter_Gym_Owner_gymmanage_main myadapter1 = new Adapter_Gym_Owner_gymmanage_main(this, list, (Interface_adapter_gyms_list_onclick) this, this::onlongclick);
         recyclerView.setAdapter(myadapter1);
-        Log.d("TAGCHECKKEY12", "Baseline: 3" );
+
         db.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    list.clear();
-                Log.d("TAGCHECKKEY12", "Baseline: 4" );
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                       String gymkey = dataSnapshot.getKey().toString();
-                        Modelclass_gym_manage_Adapter res_list1 = dataSnapshot.getValue(Modelclass_gym_manage_Adapter.class);
-                        res_list1.setGym_key(gymkey);
-                        list.add(res_list1);
-
+                list.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    String gymkey = dataSnapshot.getKey();
+                    Modelclass_gym_manage_Adapter gym = dataSnapshot.getValue(Modelclass_gym_manage_Adapter.class);
+                    if (gym != null) {
+                        gym.setGym_key(gymkey);
+                        list.add(0, gym); // ✅ newest first
                     }
-                    myadapter1.notifyDataSetChanged();
-
+                }
+                myadapter1.notifyDataSetChanged();
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Log.e("TAGCHECKKEY12", "Error fetching gym data", error.toException());
             }
         });
     }
+
     private void logout_prc(Activity activity, Class secondActivity){
 
         SharedPreferences sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);

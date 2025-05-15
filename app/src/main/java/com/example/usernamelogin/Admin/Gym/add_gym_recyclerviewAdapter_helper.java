@@ -1,9 +1,32 @@
 package com.example.usernamelogin.Admin.Gym;
 
+import com.google.firebase.database.ServerValue;
+
 public class add_gym_recyclerviewAdapter_helper {
 
     String gym_owner_username, gym_name, gym_owner_firstname,gym_owner_lastname ;
     String fullname, gymkey,gym_owner_key;
+    private Long timestamp;
+
+    public add_gym_recyclerviewAdapter_helper(String gym_owner_username, String gym_name, String gym_owner_firstname,
+                                              String gym_owner_lastname, String fullname, String gymkey, String gym_owner_key, Long timestamp) {
+        this.gym_owner_username = gym_owner_username;
+        this.gym_name = gym_name;
+        this.gym_owner_firstname = gym_owner_firstname;
+        this.gym_owner_lastname = gym_owner_lastname;
+        this.fullname = fullname;
+        this.gymkey = gymkey;
+        this.gym_owner_key = gym_owner_key;
+        this.timestamp = timestamp;
+    }
+
+    public Long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Long timestamp) {
+        this.timestamp = timestamp;
+    }
 
     public String getGym_owner_key() {
         return gym_owner_key;

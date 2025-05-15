@@ -1,9 +1,12 @@
 package com.example.usernamelogin.Admin;
 
+import com.google.firebase.database.ServerValue;
+
 public class Admin_helper2 {
     String Gym_name, Gym_descrp, Userid;
     String Gym_contact_number;
     String Gym_opening, Gym_closing;
+    Object timestamp;
 
     public Admin_helper2(String gym_name, String gym_descrp, String userid,String gym_contact_number, String gym_opening,String gym_closing) {
         Gym_name = gym_name;
@@ -12,6 +15,7 @@ public class Admin_helper2 {
         Gym_contact_number = gym_contact_number;
         Gym_opening = gym_opening;
         Gym_closing = gym_closing;
+        this.timestamp = ServerValue.TIMESTAMP;
     }
 
     public String getGym_name() {

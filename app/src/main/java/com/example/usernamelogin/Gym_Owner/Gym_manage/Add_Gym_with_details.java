@@ -39,10 +39,13 @@ import com.example.usernamelogin.R;
 import com.example.usernamelogin.RegisterandLogin.Login;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Add_Gym_with_details extends AppCompatActivity {
     DrawerLayout drawerLayout;
@@ -391,9 +394,12 @@ public class Add_Gym_with_details extends AppCompatActivity {
                     null,
                     null
             );
+
+            Map<String, Object> gymData1 = new HashMap<>();
+            gymData1.put("timestamp", ServerValue.TIMESTAMP);
             addedmyRef.setValue(gymData).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
-
+                    addedmyRef.updateChildren(gymData1);
                     List<GymDay> scheduleList = getGymSchedule();
 
                     for (GymDay day : scheduleList) {
