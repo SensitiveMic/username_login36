@@ -28,6 +28,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -75,6 +77,11 @@ public class Employee_list_fragment extends Fragment implements  toeditcoachands
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        checkUSER(); // fetch data again on tab switch
     }
     Adapter_employee_list_fromgymowner adapter;
     private RecyclerView employeeslist;
@@ -139,65 +146,55 @@ public class Employee_list_fragment extends Fragment implements  toeditcoachands
         myRefLogin.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
+                if (snapshot.exists()) {
                     list.clear();
+                    fullList.clear();
+
                     for (DataSnapshot gk : snapshot.getChildren()) {
-                        String key1 = gk.getKey();
-                        employeelists_main.Gym_id = key1;
-                        String Gym_name = gk.child("gym_name").getValue().toString();
-                        Log.d("TAGGYMCOACH", "GYM ID : " + key1);
-                        for(DataSnapshot childrenofgk :gk.getChildren()){
-                            String Gymdetailskey = childrenofgk.getKey();
-                            Log.d("TAGGYMCOACH", "next : " + Gymdetailskey);
-                            if("Coach".equals(Gymdetailskey)) {
-                                for(DataSnapshot coachlists: childrenofgk.getChildren()){
+                        String gymId = gk.getKey();
+                        employeelists_main.Gym_id = gymId;
 
-                                    String coachkey = coachlists.getKey();
-                                    Log.d("TAGGYMCOACH", "Coach ID : " + coachkey);
+                        String gymName = gk.child("gym_name").getValue(String.class);
+                        Log.d("TAGGYMCOACH", "GYM ID : " + gymId);
 
-                                    Model_class_staffandcoachlist reslist = coachlists.getValue(Model_class_staffandcoachlist.class);
-                                    String coachrole1 = "Coach";
-                                    reslist.setGym_name(Gym_name);
-                                    reslist.setRole(coachrole1);
+                        for (DataSnapshot child : gk.getChildren()) {
+                            String section = child.getKey(); // Could be "Coach" or "Staff"
+                            Log.d("TAGGYMCOACH", "next : " + section);
+
+                            if ("Coach".equals(section)) {
+                                for (DataSnapshot coachSnap : child.getChildren()) {
+                                    Model_class_staffandcoachlist reslist = coachSnap.getValue(Model_class_staffandcoachlist.class);
+
+                                    reslist.setRole("Coach");
+                                    Log.d("CHECK_ROLE", "Adding Coach: " + reslist.getUsername() + " | Role: " + reslist.getRole());
+                                    reslist.setGym_name(gymName);
                                     list.add(reslist);
                                     fullList.add(reslist);
-                                    Integer wewnum = 0;
-
                                 }
 
-                            }
-                            else if("Staff".equals(Gymdetailskey)){
-                                for(DataSnapshot stafflists: childrenofgk.getChildren()){
+                            } else if ("Staff".equals(section)) {
+                                for (DataSnapshot staffSnap : child.getChildren()) {
+                                    Model_class_staffandcoachlist reslist = staffSnap.getValue(Model_class_staffandcoachlist.class);
 
-                                    String coachkey = stafflists.getKey();
-                                    Log.d("TAGGYMCOACH", "Staff ID : " + coachkey);
-                                    Model_class_staffandcoachlist reslist = stafflists.getValue(Model_class_staffandcoachlist.class);
-
-                                    Integer wewnum = 1;
-
-                                    String coachrole = "Staff";
-                                    reslist.setRole(coachrole);
-                                    fullList.add(reslist);
+                                    reslist.setRole("Staff");
+                                    Log.d("CHECK_ROLE", "Adding Staff: " + reslist.getUsername() + " | Role: " + reslist.getRole());
+                                    reslist.setGym_name(gymName);
                                     list.add(reslist);
-
+                                    fullList.add(reslist);
                                 }
-
                             }
-                            else{
-                                Log.d("TAGGYMCOACH", "NO COACH ");
-                            }
-
                         }
                     }
+
                     adapter.notifyDataSetChanged();
                 }
-
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
+
     }
 
     @Override
@@ -229,6 +226,12 @@ public class Employee_list_fragment extends Fragment implements  toeditcoachands
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot gk : snapshot.getChildren()) {
                     String gym_id = gk.getKey();
+                    String gym_name;
+                    if(gk.child("gym_name").exists()){
+                        gym_name =gk.child("gym_name").getValue().toString();
+                    } else {
+                        gym_name = null;
+                    }
                     for(DataSnapshot childrenofgk :gk.child("Coach").getChildren()) {
                         String userkey = childrenofgk.getKey();
                         String usernam = childrenofgk.child("username").getValue(String.class);
@@ -244,9 +247,21 @@ public class Employee_list_fragment extends Fragment implements  toeditcoachands
                                     .child("Coach")
                                     .child(userkey);
 
+                            DatabaseReference gyumname = FirebaseDatabase.getInstance()
+                                    .getReference("ArchivedEmployees")
+                                    .child(Login.key_GymOwner)
+                                    .child("Gym")
+                                    .child(gym_id);
+
+
                             newRef.setValue(userData).addOnCompleteListener(task ->{
                                 if (task.isSuccessful()) {
                                     // Remove from old location only if the write was successful
+                                    if (gym_name != null) {
+                                        Map<String, Object> gymNameMap = new HashMap<>();
+                                        gymNameMap.put("gym_name", gym_name);
+                                        gyumname.updateChildren(gymNameMap);
+                                    }
                                     oldref.removeValue();
                                     Log.d("TAGREMOVALOFEMP", "Moved and deleted: " + userkey);
                                 } else {
@@ -272,9 +287,20 @@ public class Employee_list_fragment extends Fragment implements  toeditcoachands
                                     .child(gym_id)
                                     .child("Staff")
                                     .child(userkey2);
+                            DatabaseReference gyumname = FirebaseDatabase.getInstance()
+                                    .getReference("ArchivedEmployees")
+                                    .child(Login.key_GymOwner)
+                                    .child("Gym")
+                                    .child(gym_id);
+
                             newRef2.setValue(userData2).addOnCompleteListener(task ->{
                                 if (task.isSuccessful()) {
                                     // Remove from old location only if the write was successful
+                                    if (gym_name != null) {
+                                        Map<String, Object> gymNameMap = new HashMap<>();
+                                        gymNameMap.put("gym_name", gym_name);
+                                        gyumname.updateChildren(gymNameMap);
+                                    }
                                     oldref2.removeValue();
                                     Log.d("TAGREMOVALOFEMP", "Moved and deleted: " + userkey2);
                                 } else {
@@ -284,18 +310,21 @@ public class Employee_list_fragment extends Fragment implements  toeditcoachands
                         }
 
                     }
+
+                    requireActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.framelayout2123, new Archived_employees_frag())
+                            .addToBackStack(null)
+                            .commit();
+
+                    TabLayout tabLayout = requireActivity().findViewById(R.id.tablayout223);
+                    if (tabLayout != null) {
+                        TabLayout.Tab tabToSelect = tabLayout.getTabAt(1); // 1 = Archived tab
+                        if (tabToSelect != null) {
+                            tabToSelect.select();
+                        }
+                    }
                 }
 
-                FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.framelayout2123, new Archived_employees_frag()); // container = where fragments load
-                transaction.addToBackStack(null); // optional: adds to back stack
-                transaction.commit();
-                TabLayout tabLayout = requireActivity().findViewById(R.id.tablayout223);
-                TabLayout.Tab targetTab = tabLayout.getTabAt(1); // or the desired tab index
-                if (targetTab != null) {
-                    targetTab.select(); // triggers the onTabSelected
-                }
-                checkUSER();
             }
 
             @Override

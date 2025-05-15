@@ -64,6 +64,7 @@ public class employeelists_main extends AppCompatActivity {
         logoput = findViewById(R.id.logout_Button_U);
         Gym_manage = findViewById(R.id.Gym_manage_Manage);
 
+
         nav_tool_textviews();
 
         frameLayoutwew =findViewById(R.id.framelayout2123);
@@ -150,6 +151,12 @@ public class employeelists_main extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 redirectActivity(employeelists_main.this, Gym_Owner_gymmanage_main.class);
+            }
+        });
+        gymemployyes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               recreate();
             }
         });
         logoput.setOnClickListener(v ->{

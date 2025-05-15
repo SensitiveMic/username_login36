@@ -5,6 +5,7 @@ public class Model_class_staffandcoachlist {
     String role;
     String fullname;
     String gym_name;
+    String gym_id;
     public Model_class_staffandcoachlist(){
 
     }
@@ -13,6 +14,14 @@ public class Model_class_staffandcoachlist {
         this.role = role;
         this.username = username;
         this.fullname = fullname;
+    }
+
+    public String getGym_id() {
+        return gym_id;
+    }
+
+    public void setGym_id(String gym_id) {
+        this.gym_id = gym_id;
     }
 
     public String getGym_name() {

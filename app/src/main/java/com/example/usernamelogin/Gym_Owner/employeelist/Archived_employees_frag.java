@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.usernamelogin.R;
 import com.example.usernamelogin.RegisterandLogin.Login;
@@ -71,6 +72,11 @@ public class Archived_employees_frag extends Fragment implements interface_Adapt
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        checkUSER123(); // fetch data again on tab switch
+    }
     Adapter_employee_list_fromgymowner adapter;
     View view;
     @Override
@@ -105,8 +111,11 @@ public class Archived_employees_frag extends Fragment implements interface_Adapt
                 list12.clear();
                 for (DataSnapshot gk : snapshot.getChildren()) {
                     String key1 = gk.getKey();
-                    employeelists_main.Gym_id = key1;
                     Log.d("TAGGYMCOACH", "GYM ID : " + key1);
+
+                    String gymName = gk.child("gym_name").getValue(String.class);
+
+
                     for(DataSnapshot childrenofgk :gk.getChildren()){
                         String Gymdetailskey = childrenofgk.getKey();
                         Log.d("TAGGYMCOACH", "next : " + Gymdetailskey);
@@ -120,7 +129,9 @@ public class Archived_employees_frag extends Fragment implements interface_Adapt
 
                                 String coachrole = "Coach";
                                 if (reslist != null) {
+                                    reslist.setGym_id(key1);
                                     reslist.setRole(coachrole);
+                                    reslist.setGym_name(gymName);
                                     list12.add(reslist);
                                 }
                                 Integer wewnum = 0;
@@ -138,7 +149,9 @@ public class Archived_employees_frag extends Fragment implements interface_Adapt
 
                                 String coachrole = "Staff";
                                 if (reslist != null) {
+                                    reslist.setGym_id(key1);
                                     reslist.setRole(coachrole);
+                                    reslist.setGym_name(gymName);
                                     list12.add(reslist);
                                 }
 
@@ -167,12 +180,43 @@ public class Archived_employees_frag extends Fragment implements interface_Adapt
                 .setTitle("Archive Item?")
                 .setMessage("Are you sure you want to Unarchive the account?")
                 .setPositiveButton("Open", (dialog, which) -> {
-                    archivemethod();
+                    checkifthereisGym();
 
                 })
                 .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
                 .show();
 
+    }
+
+    private void checkifthereisGym(){
+        String gymId = employeelists_main.Gym_id;
+
+        if (gymId == null || gymId.isEmpty()) {
+            Toast.makeText(requireContext(), "There is no Gym to return to", Toast.LENGTH_SHORT).show();
+            Log.d("TAGCHENGAED", "gym id: " + gymId);
+            return;
+        }
+
+        DatabaseReference myRefLogin1 = FirebaseDatabase.getInstance().getReference("Users/Gym_Owner")
+                .child(Login.key_GymOwner)
+                .child("Gym")
+                .child(gymId);
+
+        myRefLogin1.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    Log.d("TAGCHENGAED", "archivemethid() run: ");
+                    archivemethod();
+                }
+                else{
+                    Toast.makeText(requireContext(), "There is no Gym to return to", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
     }
         private void archivemethod(){
 
@@ -240,17 +284,18 @@ public class Archived_employees_frag extends Fragment implements interface_Adapt
 
                         }
                     }
+                    requireActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.framelayout2123, new Employee_list_fragment())
+                            .addToBackStack(null)
+                            .commit();
 
-                    FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.framelayout2123, new Employee_list_fragment()); // container = where fragments load
-                    transaction.addToBackStack(null); // optional: adds to back stack
-                    transaction.commit();
                     TabLayout tabLayout = requireActivity().findViewById(R.id.tablayout223);
-                    TabLayout.Tab targetTab = tabLayout.getTabAt(0); // or the desired tab index
-                    if (targetTab != null) {
-                        targetTab.select(); // triggers the onTabSelected
+                    if (tabLayout != null) {
+                        TabLayout.Tab tabToSelect = tabLayout.getTabAt(0); // 1 = Archived tab
+                        if (tabToSelect != null) {
+                            tabToSelect.select();
+                        }
                     }
-                    checkUSER123();
                 }
 
                 @Override

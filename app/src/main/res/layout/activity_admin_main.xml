@@ -39,7 +39,7 @@
             android:backgroundTint="@color/Greenish_wew"
             android:elevation="4dp"
             android:padding="12dp"
-            android:text="Users List"
+            android:text="Gym List"
             android:textAllCaps="false"
             android:textColor="@android:color/white"
             app:layout_constraintEnd_toEndOf="parent"
