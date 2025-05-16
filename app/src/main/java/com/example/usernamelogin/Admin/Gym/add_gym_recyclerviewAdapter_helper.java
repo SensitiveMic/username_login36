@@ -7,7 +7,9 @@ public class add_gym_recyclerviewAdapter_helper {
     String gym_owner_username, gym_name, gym_owner_firstname,gym_owner_lastname ;
     String fullname, gymkey,gym_owner_key;
     private Long timestamp;
-
+    public add_gym_recyclerviewAdapter_helper() {
+        // Needed for Firebase deserialization
+    }
     public add_gym_recyclerviewAdapter_helper(String gym_owner_username, String gym_name, String gym_owner_firstname,
                                               String gym_owner_lastname, String fullname, String gymkey, String gym_owner_key, Long timestamp) {
         this.gym_owner_username = gym_owner_username;
